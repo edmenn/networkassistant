@@ -4,6 +4,8 @@
 
 Cada sprint produce software o evidencia verificable y termina con un gate. La IA implementadora debe crear un plan detallado del sprint activo en `docs/superpowers/plans/`, con tareas pequenas, pruebas primero, archivos exactos y commits frecuentes. No debe expandir sprints futuros hasta cerrar el actual.
 
+Marcar un sprint `done` exige `docs/SPRINT_GATE_CHECKLIST.md` completado y verificado (secciones A, B y C) y evidencia reproducible por comando; el build verde no basta. Ninguna tarea se cierra con evidencia faltante "documentada como pendiente".
+
 Estados permitidos: `not_started`, `in_progress`, `blocked`, `done`.
 
 Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una rama/PR por sprint; sin Git, trabajar en modo directo y guardar evidencia equivalente. Arquitectura, seguridad, migraciones, vault y politicas requieren el modelo/revisor mas fuerte disponible; tareas mecanicas pueden usar el modelo normal.

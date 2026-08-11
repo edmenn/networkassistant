@@ -51,3 +51,15 @@ Si dos requisitos se contradicen, **detener la tarea** y resolver con un ADR ant
 - No aparecen secretos en UI, API, logs, trazas, auditoría ni prompts.
 - Documentación y `docs/IMPLEMENTATION_STATUS.md` actualizados.
 - La evidencia de cierre es reproducible por otra IA.
+
+## Reglas de cierre (obligatorias)
+
+Estas reglas evitan declarar `done` algo que no cumple el gate. Incumplirlas invalida el cierre del sprint.
+
+- **`entregado` ≠ `gate cumplido`.** El sprint solo pasa a `done` cuando los entregables existen Y la evidencia del gate está verificada. Si falta la verificación, el estado correcto es `in_progress`, no `done`.
+- **Nada de "documentar que falta algo" como sustituto del gate.** Ninguna tarea se marca `done` sin evidencia verificada por comando en el estado actual (pegar la salida real). Una fila `pending` deja el sprint abierto.
+- **Checklist de gate obligatoria.** Antes de marcar un sprint `done`, completar `docs/SPRINT_GATE_CHECKLIST.md` (secciones A evidencia, B revisión adversarial y C confirmación) y registrarla.
+- **Revisión adversarial obligatoria** (blueprint §17). Antes de cerrar, registrar quién revisó y la fecha. Si no hay una segunda IA disponible, marcarlo explícitamente como limitación y hacer segunda pasada en contexto limpio. Nunca afirmar revisión independiente que no ocurrió.
+- **Prohibido cerrar con pendientes bloqueantes.** Un sprint no se cierra si quedan hallazgos críticos/altos abiertos o ADR con decisiones abiertas necesarias para el siguiente sprint. Los bloqueantes se documentan como condiciones del siguiente sprint, no como deuda oculta.
+- **Commit de cierre separado** con prefijo `gate(sprint-N)`, identificable para auditoría.
+- El build verde no basta: el gate exige probar el flujo real y evidencia reproducible.
