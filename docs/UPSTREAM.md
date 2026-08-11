@@ -4,19 +4,20 @@
 
 - **Repo:** `https://github.com/braedonsaunders/steward`
 - **Licencia:** MIT (Copyright 2026 Steward Contributors).
-- **Fork privado:** por crear a partir del commit de referencia.
+- **Mirror privado:** `https://github.com/edmenn/asistente-networking-steward` (`PRIVATE`). GitHub no permite un fork privado de un repositorio publico, por eso se usa un mirror independiente.
 
 ## Commit fijado
 
 | Tipo | Hash | Fecha | Nota |
 |---|---|---|---|
-| Referencia Sprint 0 | `ea6a476` | 2026-04-28 | Último commit (bot "codeflow-card") |
+| Baseline auditado | `ea6a4762737dc9ce57f21ff1d3e536bdfe102125` | 2026-04-28 | HEAD upstream auditado; el cambio del commit solo agrega la card de Codeflow |
+| Último cambio sustantivo anterior | `e0b51e70047c5a596930a9735265dafb59e0c036` | 2026-04-28 | Referencia para revisar cambios funcionales |
 
-> **Acción pendiente:** el clon para auditoría fue shallow (`--depth 1`). Antes de fijar el commit definitivo para producción, hacer un clon completo y elegir el último commit sustantivo de código (excluyendo commits `[skip ci]` del bot de cards). Registrar aquí el hash elegido.
+El baseline se obtuvo con un clon completo y se publico con la etiqueta anotada `upstream-ea6a476-sprint0` en el mirror privado.
 
 ## Estrategia de sincronización
 
-- Mantener un **fork privado** como única fuente para este proyecto.
+- Mantener el **mirror privado** como unica fuente para este proyecto.
 - Fijar el commit elegido en un ref inmutable (tag/`pin`).
 - Actualizar el fork solo de forma deliberada y tras re-auditar (no pull automático).
 - No incorporar cambios de código nuevo del upstream sin revisión de seguridad.
