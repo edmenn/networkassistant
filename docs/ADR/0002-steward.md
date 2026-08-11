@@ -10,7 +10,7 @@ El blueprint requiere decidir con evidencia qué partes de Steward se reutilizan
 ## Datos de la auditoría
 
 - **Upstream:** `https://github.com/braedonsaunders/steward`.
-- **Commit fijado (referencia):** `ea6a4762737dc9ce57f21ff1d3e536bdfe102125` (2026-04-28, bot "codeflow-card"; verificar el último commit de código para fijar el definitivo).
+- **Commit fijado:** `ea6a4762737dc9ce57f21ff1d3e536bdfe102125` (clon completo; tag `upstream-ea6a476-sprint0` en mirror privado). El commit solo agrega la card de Codeflow; el ultimo cambio sustantivo anterior es `e0b51e70047c5a596930a9735265dafb59e0c036`.
 - **Licencia:** MIT (Copyright 2026 Steward Contributors) — compatible con fork privado.
 - **Dependencias:** ~44 (vía `better-sqlite3`, `@ai-sdk/*`, `next-auth`, `jose`, `ldapts`, `mqtt`, etc.).
 - **Estado:** SQLite (`steward_state.db`, `steward_audit.db`); vault AES-256-GCM con `vault.key` + OS-keystore (fallback "machine-derived key" en Linux).
@@ -21,9 +21,9 @@ El blueprint requiere decidir con evidencia qué partes de Steward se reutilizan
 |---|---|---|
 | UI (Next 16/React 19) | `reuse` | Base de consola operacional densa ya implementada |
 | API / rutas REST | `adapt` | Requiere versionado, envelope y autorización por recurso |
-| RBAC y auth (next-auth/jose/ldapts/OIDC) | `reuse`/`adapt` | Base sólida; extender a recurso y sitio |
-| Playbooks, aprobaciones, preflight, verificación | `reuse` | Cumple contrato de trabajo del blueprint |
-| Adaptadores / packs (manifiestos, firma Ed25519) | `reuse` | Es el formato de plugin a conservar (ADR-0005) |
+| RBAC y auth (next-auth/jose/ldapts/OIDC) | `adapt` | Actualizar dependencias vulnerables, reauditar y extender a recurso y sitio |
+| Playbooks, aprobaciones, preflight, verificación | `adapt` | Conservar conceptos; auditar autorizacion, shell, idempotencia y rollback antes del codigo |
+| Adaptadores / packs (manifiestos, firma Ed25519) | `adapt` | Conservar formato sujeto a pruebas de firma, permisos y aislamiento (ADR-0005) |
 | Auditoría | `reuse`/`adapt` | Hacerla append-only con evidencia de integridad |
 | Persistencia (SQLite) | `replace` | → Postgres (ADR-0006) |
 | Cola/jobs (workers en proceso, MQTT) | `replace` | → Redis (ADR-0006) |
@@ -40,4 +40,4 @@ El blueprint requiere decidir con evidencia qué partes de Steward se reutilizan
 
 ## Estado de cierre
 
-Decisión sustentada con commit y licencia; hay un camino mínimo para adaptar/reemplazar cada módulo bloqueante.
+Decision sustentada con commit, licencia, SCA, pruebas y mapa Graphify. Las 16 vulnerabilidades npm impiden reutilizar el baseline sin remediacion, pero cada modulo bloqueante tiene ruta de adaptacion, reemplazo o exclusion.

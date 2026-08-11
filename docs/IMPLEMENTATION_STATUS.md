@@ -8,7 +8,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 
 | # | Requisito | Estado | Nota |
 |---|---|---|---|
-| R01 | Instalación vacía reproducible | `in_progress` | Bootstrap iniciado en Sprint 0 |
+| R01 | Instalación vacía reproducible | `done` | Baseline Steward validado por `npm ci`, build y Docker Linux AMD64; ver evidencia de Sprint 0 |
 | R02 | Alta transaccional multi-método | `not_started` | Sprint 2 |
 | R03 | Secretos no recuperables fuera del vault | `not_started` | Sprint 1 |
 | R04 | Rotación y restore del vault | `not_started` | Sprint 1 |
@@ -33,12 +33,12 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | DB Postgres + cola Redis | 0006 | `done` |
 | Alcance del laboratorio | 0007 | `done` |
 
-## Hallazgos pendientes de resolver
+## Bloqueantes heredados clasificados
 
 | Hallazgo | Severidad | Acción |
 |---|---|---|
-| Commit definitivo de Steward (clon shallow) | Media | Clon completo y fijar último commit de código |
-| Auditoría CVE de dependencias | Alta | Ejecutar `npm audit`/SCA al instalar (env de dev) |
-| `ecc@ecc` no instalado | Baja | Registrar y usar sustitutos; ver `docs/TOOLING.md` |
-| Graphify instalado pero sin `graphify-out/` | Baja | Generar con `/graphify .` cuando haya código |
-| Skills ECC ausentes | Baja | Sustituir con skills instaladas |
+| Baseline Steward | Resuelto | Mirror privado y tag fijados a `ea6a4762737dc9ce57f21ff1d3e536bdfe102125` |
+| 16 vulnerabilidades npm (2 critical, 11 high) | Bloqueante para produccion | No reutilizar dependencias/auth/playbooks/adapters sin actualizar y reauditar en Sprint 1 |
+| Control plane con `NET_ADMIN`, `NET_RAW` y shell | Bloqueante arquitectonico | Excluir esa ejecucion y moverla a workers aislados en Sprint 3 |
+| Vault local y SQLite | Bloqueante arquitectonico | Reemplazar en Sprints 1 y 2 segun ADR-0003/0006 |
+| Graphify | Resuelto | Mapa: 4.531 nodos, 12.857 relaciones, 0 endpoints invalidos |

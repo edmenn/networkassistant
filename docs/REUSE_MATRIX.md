@@ -18,7 +18,7 @@ Leyenda: `reuse` (usar tal cual) · `adapt` (modificar) · `replace` (sustituir)
 
 | Módulo | Clasificación | Nota |
 |---|---|---|
-| Auth (session/API token/OIDC/LDAP) | `reuse` | Base sólida |
+| Auth (session/API token/OIDC/LDAP) | `adapt` | Reutilizacion condicional: `next-auth` tiene advisories criticos; actualizar, reauditar y probar antes de conservar |
 | RBAC | `adapt` | Extender a usuario/sitio/equipo/método/secreto/clase de acción; `deny` prevalece |
 | Identidad worker/sensor mTLS | `replace` | No existe; construirlo (ADR-0004) |
 
@@ -35,8 +35,8 @@ Leyenda: `reuse` (usar tal cual) · `adapt` (modificar) · `replace` (sustituir)
 
 | Módulo | Clasificación | Nota |
 |---|---|---|
-| Playbooks, aprobaciones, preflight, verificación, rollback | `reuse` | Cumple contrato de trabajo |
-| Adaptadores / packs (manifiestos, firma Ed25519) | `reuse` | Formato de plugin (ADR-0005) |
+| Playbooks, aprobaciones, preflight, verificación, rollback | `adapt` | Conceptos reutilizables; el codigo queda condicionado a auditoria de autorizacion, shell e idempotencia |
+| Adaptadores / packs (manifiestos, firma Ed25519) | `adapt` | Conservar el formato solo tras verificar firma, permisos y aislamiento (ADR-0005) |
 | Policy engine / maintenance windows | `adapt` | Alinear a clasificación de riesgo del blueprint |
 | Incidentes / findings / investigaciones | `reuse`/`adapt` | Reescribir investigaciones para IA redactada |
 
