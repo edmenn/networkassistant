@@ -32,6 +32,11 @@ Si dos requisitos se contradicen, **detener la tarea** y resolver con un ADR ant
 - Lint / typecheck / test / build: ver README de cada sprint y `package.json`. No asumir; confirmar antes de usarlos.
 - No commitear sin revisar `git status`, `git diff` y que no haya secretos.
 
+## Flujo de trabajo en Git
+
+- **Trabajar siempre en `main`** con commits frecuentes y revisando `git status`/`git diff` antes de cada commit.
+- **No crear ramas nuevas sin consultar.** Si una tarea justifica una rama, pedir confirmación explícita y documentar el motivo antes de crearla.
+
 ## Principios no negociables (resumen)
 
 - Una IP/hostname es un endpoint, no la identidad de un equipo.

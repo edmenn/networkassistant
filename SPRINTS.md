@@ -6,6 +6,8 @@ Cada sprint produce software o evidencia verificable y termina con un gate. La I
 
 Marcar un sprint `done` exige `docs/SPRINT_GATE_CHECKLIST.md` completado y verificado (secciones A, B y C) y evidencia reproducible por comando; el build verde no basta. Ninguna tarea se cierra con evidencia faltante "documentada como pendiente".
 
+**Trabajo en `main`.** Todo el trabajo se hace directamente sobre la rama `main` con commits frecuentes. **No crear otras ramas sin consultar antes.** Si se necesita una rama (p. ej. para un experimento), pedir confirmación explícita y documentar el motivo.
+
 Estados permitidos: `not_started`, `in_progress`, `blocked`, `done`.
 
 Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una rama/PR por sprint; sin Git, trabajar en modo directo y guardar evidencia equivalente. Arquitectura, seguridad, migraciones, vault y politicas requieren el modelo/revisor mas fuerte disponible; tareas mecanicas pueden usar el modelo normal.
