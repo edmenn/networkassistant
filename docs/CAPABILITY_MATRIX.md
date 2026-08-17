@@ -1,8 +1,12 @@
 # Matriz de capacidades
 
+## Alcance del primer piloto
+
+El primer piloto real cubre exclusivamente firewall, routers, switches y puntos de acceso de la red propia. PCs, IoT y cualquier operación de cambio están fuera de alcance. Una capacidad solo pasa de `planned` a `lab` o `pilot` cuando existe evidencia reproducible.
+
 Capacidades previstas para recolección read-only y operación, con fuente, protocolo, permisos, soporte y evidencia de laboratorio. Se amplía al construir los adaptadores (Sprint 4).
 
-Leyenda de soporte: `planned` (definido en ADR, no implementado) · `reuse` (heredado de Steward) · `lab` (probado en laboratorio, se completa en Sprint 4).
+Leyenda de soporte: `planned` (definido en ADR, no implementado) · `reuse` (heredado de Steward) · `lab` (probado en laboratorio) · `pilot` (verificado en la red propia read-only).
 
 | Capacidad | Fuente | Protocolo | Permisos mínimos | Soporte | Evidencia |
 |---|---|---|---|---|---|
@@ -15,6 +19,7 @@ Leyenda de soporte: `planned` (definido en ADR, no implementado) · `reuse` (her
 | Host/versión/OS | SSH/SNMP | SSH/SNMPv3 | Lectura | `planned` | Pendiente lab |
 | Conectividad TCP | Ping/port probe | ICMP/TCP | Allowlist | `planned` | Pendiente lab |
 | Conectividad y auth | Método de conexión | SSH/SNMPv3 | Confirmación explícita | `planned` | Pendiente lab |
+| Inventario parcial web-only | API oficial o browser aislado | API/NETCONF/RESTCONF; Playwright solo posterior | Lectura, sesión temporal | `planned` | No incluido en primer piloto sin caso concreto |
 | Playbooks/aprobaciones | Operación | interno | RBAC | `reuse` | Pendiente |
 | Descubrimiento de red (legacy) | Steward | nmap/ARP/mDNS/... | — | `exclude` | Excluido del control plane |
 

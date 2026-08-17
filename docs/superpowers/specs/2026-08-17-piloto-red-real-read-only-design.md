@@ -16,7 +16,7 @@ El primer producto usable será un piloto self-hosted que observe una red real c
 
 El piloto no ejecutará configuraciones, instalaciones, reinicios, cambios de credenciales ni comandos libres.
 
-Steward queda como referencia de UX y conceptos. No será una dependencia de ejecución privilegiada. NetBox será una integración opcional para inventario/IPAM declarado, no un requisito para arrancar. Netdisco, Nornir, Scrapli y Oxidized se tratarán como componentes especializados, no como núcleo del producto.
+Steward será la base principal del control plane: UI, API, chat, inventario, grafo, jobs, políticas, aprobaciones y playbooks. Se adaptarán o reemplazarán únicamente los módulos que no cumplen el blueprint. NetBox será una integración opcional para inventario/IPAM declarado; Netdisco, Nornir, Scrapli y Oxidized serán componentes complementarios.
 
 ## 2. Arquitectura
 
@@ -45,9 +45,13 @@ Límites:
 
 - el control plane autoriza, planifica, almacena y presenta; no administra la red directamente;
 - el worker ejecuta únicamente trabajos `observe` dentro de la allowlist;
-- PostgreSQL conserva el modelo propio de evidencia y relaciones;
+- PostgreSQL sustituye SQLite y conserva el modelo adaptado de Steward para evidencia y relaciones;
 - NetBox puede importar inventario declarado mediante dry-run y reconciliación, sin sobrescritura silenciosa;
 - la IA solo recibe contexto redactado y no puede seleccionar objetivos ni ejecutar acciones.
+
+### Equipos con interfaz web
+
+El orden de integración es API oficial, NETCONF/RESTCONF, SNMPv3 y SSH. Playwright no entra en el primer piloto ni en el control plane. Un equipo que solo ofrece web queda parcial como `unknown`/`unsupported` hasta justificar un `BrowserObservationAdapter` aislado, read-only y posterior.
 
 ## 3. Modelo mínimo
 
@@ -150,7 +154,7 @@ El piloto se considera exitoso si, para el sitio elegido:
 
 ## 9. Roadmap de implementación propuesto
 
-Se conserva la seguridad y las decisiones de Sprint 0, pero se ajusta la prioridad al piloto real:
+Se conserva la seguridad, la arquitectura de Steward y el orden general de `SPRINTS.md`. Esta secuencia identifica el primer camino de entrega; no reduce el objetivo final del producto:
 
 1. Seguridad, vault, redacción y RBAC mínimo.
 2. Modelo local de dominio y alta transaccional.
@@ -159,9 +163,12 @@ Se conserva la seguridad y las decisiones de Sprint 0, pero se ajusta la priorid
 5. Reconciliación, evidencia, cobertura y topología.
 6. UI de inventario, ficha de equipo e investigación.
 7. IA por API sobre contexto redactado.
-8. Hardening, backup/restore y piloto real.
+8. Diagnóstico, aprobaciones y playbooks.
+9. Guacamole, aplicaciones e integraciones opcionales.
+10. Hardening, backup/restore y supply chain.
+11. Piloto real read-only como primera validación operativa del producto.
 
-Guacamole, Nautobot, Oxidized, diagnóstico activo, playbooks y cambios quedan después del piloto y solo se agregan si la evidencia lo justifica.
+Guacamole, Nautobot, Oxidized y automatización web siguen siendo integraciones opcionales. Diagnóstico, aprobaciones, playbooks y cambios forman parte del producto final basado en Steward; el piloto inicial los mantiene deshabilitados hasta cerrar la evidencia read-only. La automatización web futura requiere ADR-0008.
 
 ## 10. Referencias externas evaluadas
 
@@ -171,4 +178,3 @@ Guacamole, Nautobot, Oxidized, diagnóstico activo, playbooks y cambios quedan d
 - Nornir: https://github.com/nornir-automation/nornir
 - Scrapli: https://github.com/scrapli/scrapli
 - Oxidized: https://github.com/ytti/oxidized
-

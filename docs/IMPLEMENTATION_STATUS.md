@@ -1,5 +1,9 @@
 # Estado de implementación
 
+## Producto objetivo actual
+
+El producto final es el copiloto de infraestructura basado en Steward: chat, inventario, evidencia, topología, investigación, diagnóstico, aprobaciones, playbooks, verificación, documentación y auditoría. El primer gate usable es un piloto read-only sobre la red propia, limitado a firewall, routers, switches y puntos de acceso; PCs, IoT, cambios de configuración, instalaciones, Guacamole y aplicaciones quedan fuera de ese primer gate, no del producto final.
+
 Matriz de requisitos del blueprint y su estado. Se actualiza en cada sprint (Definición de Done).
 
 Estados: `done` · `in_progress` · `not_started` · `blocked`.
@@ -16,10 +20,10 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | R06 | Workers/sensores aislados | `not_started` | Sprint 3 |
 | R07 | Evidencia/topología con fuente, tiempo, confianza y clasificación | `not_started` | Sprints 4-5 |
 | R08 | `unknown` ante falta de evidencia | `not_started` | Sprint 4 |
-| R09 | IA configurable y explicable sin secretos | `not_started` | Sprint 6 |
+| R09 | IA configurable y explicable sin secretos | `not_started` | Sprint 6; solo investigación read-only en el primer piloto |
 | R10 | Cambios con preflight/aprobación/idempotencia/verificación/rollback | `not_started` | Sprint 7 |
-| R11 | Backup/restore completo en host limpio | `not_started` | Sprint 10 |
-| R12 | Piloto read-only cerrado | `not_started` | Sprint 11 |
+| R11 | Backup/restore completo en host limpio | `not_started` | Sprint 10, antes de la red real |
+| R12 | Piloto read-only cerrado | `not_started` | Sprint 11; red propia, equipos de red/firewall |
 
 ## Decisiones de Sprint 0
 

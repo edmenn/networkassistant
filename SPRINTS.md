@@ -27,7 +27,7 @@ Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una
 | 8 | Guacamole e integraciones opcionales | 5, 7 | not_started |
 | 9 | Aplicaciones y autoinspeccion | 7 | not_started |
 | 10 | Hardening, recuperacion y supply chain | 1-9 | not_started |
-| 11 | Piloto controlado de solo lectura | 10 | not_started |
+| 11 | Piloto real read-only de red y firewall | 10 | not_started |
 
 ## Grafo de dependencias y paralelismo
 
@@ -217,6 +217,7 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - Implementar SSH read-only con host key policy.
 - Implementar SNMPv3 read-only; marcar v1/v2c como riesgo si se habilitan.
 - Incorporar API read-only solo para un equipo real del laboratorio si aporta cobertura necesaria.
+- Priorizar API oficial/NETCONF/RESTCONF; no usar Playwright ni scraping web en el primer piloto.
 - Guardar artefacto crudo cifrado/redactado y observaciones normalizadas.
 - Implementar TTL, `stale`, contradicciones y reconciliacion determinista.
 - Medir cobertura y explicar por que un dato es `unknown`.
@@ -234,6 +235,8 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 **Gate de cierre:** dos protocolos producen inventario estructurado, evidencia trazable y reconciliacion reproducible en laboratorio.
 
 **Rollback:** deshabilitar adaptador por feature flag operativo y conservar evidencia previa como `stale`.
+
+Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker de navegador aislado y pruebas explícitas de no mutación.
 
 ---
 
@@ -432,16 +435,17 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 
 ## Sprint 11 - Piloto read-only
 
-**Objetivo:** validar valor y limites con infraestructura controlada sin habilitar cambios.
+**Objetivo:** validar valor y limites sobre la red real propia, limitada a firewall, routers, switches y puntos de acceso, sin habilitar cambios.
 
 **Dependencias:** Sprint 10.
 
 **Tareas:**
 
-- Elegir sitio piloto, propietario, ventana, rangos y equipos autorizados.
+- Elegir el sitio propio, propietario, ventana, rangos y equipos de red/firewall autorizados.
 - Mantener todos los equipos en `observe_only`.
 - Cargar credenciales de minimo privilegio y protocolo seguro.
-- Ejecutar onboarding, collectors, reconciliacion, topologia e investigacion IA.
+- Ejecutar onboarding, collectors SSH/SNMPv3, reconciliacion, topologia e investigacion IA.
+- Excluir expresamente PCs, IoT y dispositivos no administrables del alcance.
 - Medir cobertura, falsos positivos, `unknown`, carga y experiencia del operador.
 - Realizar backup/restore posterior al piloto.
 - Registrar incidentes, feedback y decisiones de go/no-go.

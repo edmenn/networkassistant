@@ -1,8 +1,10 @@
 # Arquitectura objetivo
 
-Ver ADR-0001 a ADR-0007. Este documento describe la arquitectura objetivo derivada de la auditoría de Steward.
+Ver ADR-0001 a ADR-0008. Este documento describe la arquitectura objetivo derivada de la auditoría de Steward.
 
 ## Vista de contenedores
+
+Steward es el control plane y la base del producto. NetBox, Nautobot, Guacamole, Oxidized y LiteLLM son integraciones opcionales; los módulos inseguros de Steward se sustituyen detrás de contratos estables sin descartar su experiencia ni su orquestación.
 
 ```text
 Navegador

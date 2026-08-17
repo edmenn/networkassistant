@@ -1,5 +1,9 @@
 # Matriz de reutilización — Steward
 
+## Decisión de producto del piloto
+
+Steward es la base principal de UI, API, chat, inventario, grafo, jobs, políticas, aprobaciones y playbooks, sujeto a hardening. El primer piloto no reutiliza su ejecución de red dentro del control plane. La recolección se mueve a un worker aislado con Nornir/Scrapli/SNMPv3; NetBox, Netdisco y Oxidized complementan Steward cuando aporten cobertura.
+
 Commit de referencia: `ea6a476` (upstream `braedonsaunders/steward`, MIT).
 Ver ADR-0002 para el razonamiento.
 
