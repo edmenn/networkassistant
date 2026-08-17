@@ -49,7 +49,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | 16 vulnerabilidades npm (2 critical, 11 high) | Bloqueante para produccion | No reutilizar dependencias/auth/playbooks/adapters sin actualizar y reauditar en Sprint 1 |
 | Control plane con `NET_ADMIN`, `NET_RAW` y shell | Bloqueante arquitectonico | Excluir esa ejecucion y moverla a workers aislados en Sprint 3 |
 | Vault local y SQLite | Bloqueante arquitectonico | Reemplazar en Sprints 1 y 2 segun ADR-0003/0006 |
-| Graphify | Resuelto | Mapa: 4.531 nodos, 12.857 relaciones, 0 endpoints invalidos |
+| Mapa estructural | Histórico | El mapa del baseline no se usa como contexto operativo; regenerar desde el checkout vigente |
 
 ## Próximo gate obligatorio
 

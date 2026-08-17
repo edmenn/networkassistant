@@ -17,7 +17,7 @@ En este proyecto la web es mínima: onboarding, métodos de conexión, pruebas, 
 ## Lectura obligatoria antes de cada sprint
 
 - `idea.md`, `BLUEPRINT.md`, `SPRINTS.md`, `AGENTS.md` y ADR relacionados.
-- Si existe `graphify-out/graph.json`, consultarlo; actualizarlo si cambió la estructura.
+- No usar mapas Graphify históricos como contexto operativo; regenerar un mapa solo desde el checkout de implementación vigente.
 - Descomponer solo el sprint activo en `docs/superpowers/plans/` con TDD y cambio mínimo.
 
 ## Stack de referencia (ADR-0001 / ADR-0006)

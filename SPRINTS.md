@@ -82,7 +82,7 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 
 - Crear fork privado, fijar commit upstream y registrar licencia/procedencia.
 - Ejecutar la aplicacion heredada en macOS/Docker y Linux AMD64 de laboratorio.
-- Mapear el repositorio con Graphify y documentar entrypoints, persistencia, auth, jobs y secretos.
+- Mapear el checkout de implementación vigente y documentar entrypoints, persistencia, auth, jobs y secretos; no reutilizar el mapa histórico.
 - Inventariar dependencias y vulnerabilidades; clasificar bloqueantes.
 - Crear `docs/REUSE_MATRIX.md` con `reuse/adapt/replace/exclude` por modulo.
 - Crear `docs/UPSTREAM.md` con commit, estrategia de sincronizacion y conflictos esperados.

@@ -29,10 +29,10 @@ Decision: el baseline sirve como referencia de arquitectura y UX, no como imagen
 
 Brechas confirmadas: control plane con `NET_ADMIN`/`NET_RAW`, ejecucion `runShell`, vault local con `vault.key`/fallback derivado de maquina y SQLite. Sus destinos estan definidos en `docs/REUSE_MATRIX.md`.
 
-## Graphify
+## Mapa estructural histórico
 
 - `graphify update . --force`: 423 archivos analizados.
-- `graphify-out/graph.json`: 4.531 nodos, 12.857 relaciones, 227 comunidades.
+- El baseline histórico produjo 4.531 nodos, 12.857 relaciones y 227 comunidades. Los artefactos se eliminaron del árbol actual para evitar que agentes los usen como contexto del nuevo proyecto.
 - `graphify diagnose multigraph`: 0 endpoints ausentes, 0 aristas colgantes, 0 duplicados y 0 colisiones por endpoint.
 
 ## Runtime Linux AMD64

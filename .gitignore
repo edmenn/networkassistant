@@ -12,10 +12,6 @@ node_modules/
 # Estado local de Steward / runtime
 .steward/
 
-# Salida pesada/transitoria de Graphify; conservar mapa y reporte auditables
-graphify-out/graph.html
-graphify-out/.graphify_*
-
 # Build y caché
 .next/
 dist/

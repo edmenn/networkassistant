@@ -8,9 +8,9 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría), documentaci
 
 ## Tareas
 
-1. **Preparar/registrar herramientas** — ECC 2.2.0, Graphify 0.9.22, Superpowers y hooks TK verificados. → `docs/TOOLING.md`. ✅
+1. **Preparar/registrar herramientas** — ECC 2.2.0 y Superpowers verificados. → `docs/TOOLING.md`. ✅
 2. **Bootstrap** — `git init -b main`, `.gitignore`, `AGENTS.md`. ✅
-3. **Auditar Steward** — clon completo, mirror privado y tag; licencia MIT, Graphify, SCA, tests, lint, build y runtime Docker AMD64. ✅
+3. **Auditar Steward** — clon completo, mirror privado y tag; licencia MIT, mapa estructural histórico, SCA, tests, lint, build y runtime Docker AMD64. ✅
 4. **ADR** — 0001 a 0007. ✅
 5. **Matrices y docs** — REUSE_MATRIX, UPSTREAM, ARCHITECTURE, THREAT_MODEL, CAPABILITY_MATRIX, IMPLEMENTATION_STATUS, TOOLING. ✅
 6. **Laboratorio sintético** — definir alcance (ADR-0007). ✅
@@ -28,7 +28,7 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría), documentaci
 
 - Clon de Steward en temp; commit `ea6a476`; licencia MIT.
 - Mirror privado `edmenn/asistente-networking-steward`, tag `upstream-ea6a476-sprint0`.
-- Graphify: 4.531 nodos, 12.857 relaciones, diagnostico sin endpoints invalidos ni colisiones.
+- Mapa estructural histórico del baseline: 4.531 nodos, 12.857 relaciones, diagnóstico sin endpoints inválidos ni colisiones; no se usa como contexto operativo actual.
 - `npm test`: 34 archivos, 91 pruebas aprobadas; lint y build aprobados.
 - `npm audit`: 16 vulnerabilidades (2 critical, 11 high, 1 moderate, 2 low), clasificadas como bloqueo de produccion.
 - Confirmacion en codigo de: vault local, SQLite, `runShell` y capacidades de red en control plane.

@@ -391,7 +391,7 @@ Una tarea se cierra cuando:
 Antes de cada sprint:
 
 1. Leer `idea.md`, `BLUEPRINT.md`, `SPRINTS.md`, `AGENTS.md` y ADR relacionados.
-2. Consultar Graphify si existe `graphify-out/graph.json`; actualizarlo si cambio la estructura.
+2. Consultar el mapa estructural del checkout de implementación vigente; no usar artefactos históricos del baseline.
 3. Usar Superpowers `writing-plans` para descomponer solo el sprint activo.
 4. Aplicar las skills ECC instaladas y pertinentes, especialmente `product-capability`, `api-design`, `security-review`, `tdd-workflow` y `architecture-decision-records`.
 5. Usar UI/UX Pro Max en cualquier cambio visual o de interaccion.
