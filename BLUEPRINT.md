@@ -42,6 +42,7 @@ La plataforma nunca debe presentarse como un escaner que conoce toda la red. Su 
 El primer resultado util debe permitir:
 
 - instalar la plataforma vacia;
+- abrir el entorno web, crear un sitio y agregar un primer firewall por SSH read-only desde la UI;
 - crear usuarios, sitios, rangos autorizados y sensores;
 - registrar un equipo con varios metodos de conexion;
 - almacenar referencias de secretos en un vault robusto;

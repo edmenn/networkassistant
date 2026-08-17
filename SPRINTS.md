@@ -16,7 +16,7 @@ Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una
 
 | Sprint | Resultado | Depende de | Estado |
 |---|---|---|---|
-| 0 | Base y decisiones comprobadas | Ninguno | done |
+| 0 | Base, entorno web y primer firewall SSH read-only | Ninguno | in_progress |
 | 1 | Seguridad fundacional y vault | 0 | not_started |
 | 2 | Modelo de dominio y alta transaccional | 1 | not_started |
 | 3 | Jobs, workers y sensor aislado | 1, 2 | not_started |
@@ -72,11 +72,11 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 
 ---
 
-## Sprint 0 - Fundacion y reuse gate
+## Sprint 0 - Fundacion, entorno web y primer firewall SSH read-only
 
-**Objetivo:** decidir con evidencia que partes de Steward se reutilizan y dejar un entorno reproducible sin secretos reales.
+**Objetivo:** decidir con evidencia que partes de Steward se reutilizan y demostrar el primer recorrido funcional desde el navegador hasta un firewall por SSH read-only.
 
-**Alcance:** fork, auditoria, arquitectura inicial, threat model, matriz de reutilizacion, stack y laboratorio sintetico.
+**Alcance:** fork, auditoria, arquitectura inicial, threat model, matriz de reutilizacion, stack, laboratorio sintetico, entorno web y alta/probe inicial de un firewall SSH.
 
 **Tareas:**
 
@@ -90,6 +90,11 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - Crear `docs/CAPABILITY_MATRIX.md` con capacidad, fuente, protocolo, permisos, soporte y evidencia de laboratorio.
 - Verificar que `ecc@ecc` siga instalado, habilitado y con cache valido; seleccionar solo las skills necesarias y no confiar en hooks o MCP sin una decision explicita.
 - Definir laboratorio sin credenciales reales: dispositivos simulados o dedicados, rangos y datos ficticios.
+- Levantar el entorno web desde Docker y comprobar acceso desde navegador en la URL documentada.
+- Crear el primer sitio desde la UI vacía.
+- Agregar un firewall de laboratorio con endpoint SSH y credencial sintética de solo lectura.
+- Ejecutar la prueba SSH read-only con confirmación explícita y mostrar identidad, estado, interfaces o el motivo `unknown`.
+- Verificar que el dispositivo aparece en la ficha web con método, resultado, timestamp y evidencia redactada.
 - Crear `docs/IMPLEMENTATION_STATUS.md` con matriz de requisitos del blueprint.
 
 **Riesgos:** heredar vulnerabilidades, licencia incompatible, stack obsoleto, vault inseguro o acoplamiento que impida separar workers.
@@ -99,10 +104,11 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - arranque reproducible desde checkout limpio;
 - inventario de componentes y CVE guardado;
 - flujo heredado principal recorrido en laboratorio;
+- navegador -> sitio -> firewall -> SSH read-only -> evidencia recorrido de extremo a extremo;
 - secretos de prueba ausentes de Git y logs;
 - ADR sin decisiones abiertas necesarias para Sprint 1.
 
-**Gate de cierre:** existe una decision sustentada sobre Steward y un camino minimo para adaptar o reemplazar cada modulo bloqueante. Si falla, no se inicia desarrollo funcional.
+**Gate de cierre:** existe una decision sustentada sobre Steward y el flujo web -> sitio -> firewall SSH read-only funciona con evidencia reproducible. Si falla, Sprint 0 permanece `in_progress` y no se declara cerrado.
 
 **Rollback:** eliminar el entorno sintetico y volver al commit fijado; conservar documentos de auditoria.
 

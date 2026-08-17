@@ -1,4 +1,6 @@
-# Evidencia de cierre - Sprint 0
+# Evidencia parcial - Sprint 0
+
+Estado actual: `in_progress`. La evidencia histórica de abajo prueba el baseline de Steward, pero no cierra Sprint 0 porque todavía falta el recorrido web -> sitio -> firewall SSH read-only.
 
 Fecha: 2026-08-11. Baseline: `braedonsaunders/steward@ea6a4762737dc9ce57f21ff1d3e536bdfe102125`.
 
@@ -41,3 +43,13 @@ Brechas confirmadas: control plane con `NET_ADMIN`/`NET_RAW`, ejecucion `runShel
 - `GET http://127.0.0.1:3010/api/health`: HTTP 200, `ok: true`, 0 dispositivos y 0 incidentes.
 - `GET http://127.0.0.1:3010/`: HTTP 200.
 - `guacd` y `steward` quedaron ejecutandose en el proyecto Compose `steward-sprint0` con datos sinteticos.
+
+## Evidencia funcional pendiente
+
+| Paso | Resultado requerido | Estado |
+|---|---|---|
+| Abrir entorno web desde navegador | UI visible y operable | `pending` |
+| Crear sitio vacío | Registro persistido sin datos parciales | `pending` |
+| Agregar firewall de laboratorio | Identidad separada del endpoint | `pending` |
+| Probar SSH read-only | Identidad/estado/evidencia o `unknown` | `pending` |
+| Ver ficha del firewall | Método, resultado, timestamp y evidencia redactada | `pending` |

@@ -1,10 +1,10 @@
-# Plan — Sprint 0: Fundación y reuse gate
+# Plan — Sprint 0: Fundación, entorno web y primer firewall SSH read-only
 
-Fecha: 2026-08-11. TDD no aplica (sprint de decisión y documentación, sin código de producto).
+Fecha: 2026-08-17. El sprint combina decisiones heredadas con un vertical slice funcional; el código nuevo debe verificarse con TDD cuando corresponda.
 
 ## Resultado observable
 
-Decisión sustentada sobre Steward (commit + licencia + auditoría) y un set de documentos/ADR que deja un camino mínimo para adaptar/reemplazar cada módulo bloqueante. No se inicia desarrollo funcional hasta cerrar el gate.
+Decisión sustentada sobre Steward (commit + licencia + auditoría), documentación de arquitectura y un vertical slice funcional desde el navegador hasta un firewall SSH read-only de laboratorio.
 
 ## Tareas
 
@@ -14,7 +14,9 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría) y un set de 
 4. **ADR** — 0001 a 0007. ✅
 5. **Matrices y docs** — REUSE_MATRIX, UPSTREAM, ARCHITECTURE, THREAT_MODEL, CAPABILITY_MATRIX, IMPLEMENTATION_STATUS, TOOLING. ✅
 6. **Laboratorio sintético** — definir alcance (ADR-0007). ✅
-7. **Gate y actualización de SPRINTS.md** — evidencia reproducible y Sprint 0 `done`. ✅
+7. **Entorno web** — levantar Compose, abrir la UI desde navegador y verificar el empty state de sitio/equipo. → evidencia pendiente.
+8. **Primer firewall SSH** — crear sitio, registrar firewall, endpoint SSH y credencial sintética; ejecutar prueba read-only y mostrar evidencia. → evidencia pendiente.
+9. **Gate y actualización de SPRINTS.md** — cerrar solo cuando el recorrido funcional y la checklist A/B/C tengan salida real. → Sprint 0 `in_progress` hasta entonces.
 
 ## Archivos creados
 
@@ -33,8 +35,8 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría) y un set de 
 
 ## Criterio de aceptación / gate
 
-Existe decisión sustentada sobre Steward y un camino mínimo para adaptar/reemplazar cada módulo bloqueante. Si falla, no se inicia desarrollo funcional.
+Existe decisión sustentada sobre Steward y funciona el recorrido `web -> sitio -> firewall -> SSH read-only -> evidencia`. Si falla, Sprint 0 permanece `in_progress` y no se inicia Sprint 1.
 
 ## Cierre
 
-Gate cerrado con evidencia en `docs/SPRINT_0_EVIDENCE.md`. La remediacion de dependencias y la seguridad fundacional son condiciones de Sprint 1, no deuda oculta de Sprint 0.
+El baseline histórico está documentado en `docs/SPRINT_0_EVIDENCE.md`, pero Sprint 0 permanece `in_progress` hasta completar el vertical slice web -> sitio -> firewall SSH read-only y registrar su evidencia real. La remediación profunda de dependencias y la seguridad fundacional siguen siendo condiciones de Sprint 1.

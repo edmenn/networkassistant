@@ -12,8 +12,8 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 
 | # | Requisito | Estado | Nota |
 |---|---|---|---|
-| R01 | Instalación vacía reproducible | `done` | Baseline Steward validado por `npm ci`, build y Docker Linux AMD64; ver evidencia de Sprint 0 |
-| R02 | Alta transaccional multi-método | `not_started` | Sprint 2 |
+| R01 | Instalación vacía reproducible | `in_progress` | Baseline validado; falta comprobar el recorrido web funcional de Sprint 0 |
+| R02 | Alta transaccional multi-método | `not_started` | Sprint 2; Sprint 0 valida primero el caso mínimo SSH |
 | R03 | Secretos no recuperables fuera del vault | `not_started` | Sprint 1 |
 | R04 | Rotación y restore del vault | `not_started` | Sprint 1 |
 | R05 | Control plane sin privilegios de red | `not_started` | Sprint 3 (brecha detectada en Sprint 0) |
@@ -24,6 +24,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | R10 | Cambios con preflight/aprobación/idempotencia/verificación/rollback | `not_started` | Sprint 7 |
 | R11 | Backup/restore completo en host limpio | `not_started` | Sprint 10, antes de la red real |
 | R12 | Piloto read-only cerrado | `not_started` | Sprint 11; red propia, equipos de red/firewall |
+| R13 | Web -> sitio -> firewall SSH read-only | `in_progress` | Nuevo gate funcional de Sprint 0; falta evidencia actual del recorrido |
 
 ## Decisiones de Sprint 0
 
@@ -46,3 +47,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | Control plane con `NET_ADMIN`, `NET_RAW` y shell | Bloqueante arquitectonico | Excluir esa ejecucion y moverla a workers aislados en Sprint 3 |
 | Vault local y SQLite | Bloqueante arquitectonico | Reemplazar en Sprints 1 y 2 segun ADR-0003/0006 |
 | Graphify | Resuelto | Mapa: 4.531 nodos, 12.857 relaciones, 0 endpoints invalidos |
+
+## Próximo gate obligatorio
+
+No se considera Sprint 0 cerrado hasta registrar la ejecución real del entorno web, la creación del sitio, el alta del firewall SSH read-only y la evidencia redactada en `docs/SPRINT_0_EVIDENCE.md`.
