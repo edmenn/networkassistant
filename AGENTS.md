@@ -12,6 +12,8 @@ Este repositorio implementa la plataforma de infraestructura verificable descrit
 
 Si dos requisitos se contradicen, **detener la tarea** y resolver con un ADR antes de escribir código.
 
+En este proyecto la web es mínima: onboarding, métodos de conexión, pruebas, inventario y reportes. Codex/OpenCode operan por API/MCP; no se debe construir una consola gráfica completa. Los equipos web-only se atienden mediante el Browser Web Adapter aislado y sus capabilities/playbooks.
+
 ## Lectura obligatoria antes de cada sprint
 
 - `idea.md`, `BLUEPRINT.md`, `SPRINTS.md`, `AGENTS.md` y ADR relacionados.
@@ -46,7 +48,7 @@ Si dos requisitos se contradicen, **detener la tarea** y resolver con un ADR ant
 - El control plane no usa `NET_ADMIN`, `NET_RAW` ni acceso directo irrestricto a redes.
 - Los workers/sensores reciben privilegios, secretos, destinos y TTL mínimos por trabajo.
 - No usar credenciales ni infraestructura reales hasta superar los gates de vault, aislamiento, auditoría, backup y restore.
-- Guacamole y Nautobot son integraciones opcionales; Netclaw y SubNetree no forman parte del runtime.
+- Browser Web Adapter y Nautobot son integraciones condicionadas; Guacamole, Netclaw y SubNetree no forman parte del runtime.
 
 ## Definición de Done
 

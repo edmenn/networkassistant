@@ -42,7 +42,7 @@ Brechas confirmadas: control plane con `NET_ADMIN`/`NET_RAW`, ejecucion `runShel
 - Healthcheck de `steward`: `healthy`.
 - `GET http://127.0.0.1:3010/api/health`: HTTP 200, `ok: true`, 0 dispositivos y 0 incidentes.
 - `GET http://127.0.0.1:3010/`: HTTP 200.
-- `guacd` y `steward` quedaron ejecutandose en el proyecto Compose `steward-sprint0` con datos sinteticos.
+- `guacd` y `steward` quedaron ejecutandose en el proyecto Compose `steward-sprint0` con datos sinteticos; `guacd` pertenece únicamente a la evidencia histórica del baseline y queda excluido del runtime objetivo.
 
 ## Evidencia funcional pendiente
 

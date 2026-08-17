@@ -6,7 +6,7 @@ Se construirá una plataforma self-hosted de operación de infraestructura guiad
 
 No es un simple escáner ni una herramienta que muestra un mapa bonito de la red. Es un configurador y operador automático supervisado: entiende la solicitud, reúne la evidencia necesaria, diseña un plan, solicita las aprobaciones que correspondan, ejecuta acciones deterministas sobre los equipos autorizados, comprueba el resultado y deja la documentación actualizada.
 
-El usuario conversa con un asistente técnico desde una única pantalla. No necesita decidir de entrada qué comandos, APIs o fabricantes intervienen. La plataforma determina qué información falta, consulta los equipos registrados mediante los accesos permitidos y responde en un lenguaje entendible. Cuando la tarea requiere cambiar algo, presenta antes un plan concreto: alcance, equipos afectados, comandos o acciones, impacto esperado, validaciones, reversión y nivel de riesgo. Solo después aplica la política de autonomía configurada.
+La web propia se limita a registrar sitios, equipos, credenciales y métodos de conexión, probar accesos y consultar inventario y reportes. El operador conversa y trabaja desde Codex y/o OpenCode mediante API/MCP. La plataforma determina qué información falta, consulta los equipos registrados mediante los accesos permitidos y devuelve contexto, planes, evidencia y resultados. Cuando la tarea requiere cambiar algo, aplica políticas, aprobaciones y playbooks antes de ejecutar.
 
 La plataforma debe servir para cualquier entorno autorizado —una oficina, varias sucursales, un laboratorio o un cliente administrado— sin IPs, marcas, VLANs, aplicaciones ni reglas preconfiguradas. El descubrimiento, inventario y topología existen para que la IA no configure a ciegas: son la memoria técnica y la evidencia sobre las que el configurador toma decisiones.
 
@@ -56,9 +56,9 @@ Compara una plantilla aprobada con el estado observado; genera una brecha explí
 
 Flujo de uso esperado
 
-El administrador crea un sitio y carga los equipos y métodos de acceso que autoriza; también puede cargar una plantilla, una incidencia o un objetivo directamente desde el chat.
+El administrador crea un sitio y carga los equipos y métodos de acceso que autoriza desde la web mínima o la API. Las plantillas, incidencias, investigaciones y objetivos se solicitan desde Codex/OpenCode.
 
-El chat interpreta la intención, identifica el alcance y consulta la memoria existente. Si falta información, ordena recolecciones de solo lectura dentro del alcance permitido.
+Codex/OpenCode interpretan la intención mediante la API de la plataforma, identifican el alcance y consultan la memoria existente. Si falta información, solicitan recolecciones de solo lectura dentro del alcance permitido.
 
 La plataforma relaciona la evidencia obtenida con equipos, configuraciones, dependencias y topología. Lo no comprobado se mantiene como unknown.
 
@@ -144,7 +144,7 @@ El producto no promete descubrir todo automáticamente: la cobertura depende de 
 
 3. Base reutilizada y cómo se adapta al producto
 
-No se ensamblarán herramientas independientes sin integración. Se parte de un fork privado de Steward y se modifica para implementar el flujo anterior; Guacamole y LiteLLM cubren funciones especializadas detrás de las pantallas, permisos y auditoría del producto.
+No se ensamblarán herramientas independientes sin integración. Se audita Steward y se reutilizan solo módulos que reduzcan trabajo sin heredar sus límites inseguros. Codex/OpenCode son clientes API/MCP; LiteLLM cubre proveedores de IA y el Browser Web Adapter cubre equipos web-only.
 
 Repositorios evaluados
 
@@ -158,19 +158,13 @@ Steward
 
 github.com/braedonsaunders/steward
 
-Base del control plane mediante fork privado y hardening obligatorio.
+Fuente de módulos seleccionados mediante fork privado; no se adopta todo el control plane sin auditoría.
 
 LiteLLM
 
 github.com/BerriAI/litellm
 
 Gateway interno de proveedores y modelos de IA por API.
-
-Apache Guacamole
-
-github.com/apache/guacamole-client
-
-Acceso remoto interactivo opcional desde la ficha de equipos.
 
 Nautobot
 
@@ -196,8 +190,6 @@ Steward: https://github.com/braedonsaunders/steward
 
 LiteLLM: https://github.com/BerriAI/litellm
 
-Apache Guacamole: https://github.com/apache/guacamole-client
-
 Nautobot: https://github.com/nautobot/nautobot
 
 Netclaw: https://github.com/automateyournetwork/netclaw
@@ -220,13 +212,7 @@ LiteLLM
 
 Capa interna que llama a modelos de IA por API
 
-La UI y el control plane envían solicitudes al gateway, no a cada proveedor. Se configuran OpenAI, Anthropic, Gemini, OpenRouter y proveedores compatibles; las políticas del producto deciden qué modelos puede usar cada tarea.
-
-Apache Guacamole
-
-Sesión interactiva cuando un equipo solo se administra por RDP, VNC o SSH visual
-
-Se publica como una función opcional dentro de la ficha del equipo. La plataforma crea la sesión autorizada y audita su uso; Guacamole no se usa para descubrir topología ni reemplaza los adaptadores API/SSH/SNMP.
+La API y el control plane envían solicitudes al gateway, no a cada proveedor. Se configuran OpenAI, Anthropic, Gemini, OpenRouter y proveedores compatibles; las políticas del producto deciden qué modelos puede usar cada tarea.
 
 Nautobot
 
@@ -246,7 +232,7 @@ Ninguna función de runtime
 
 No se incorpora.
 
-La instalación base contendrá el control plane adaptado de Steward, base de datos, cola, vault, workers/sensores y LiteLLM. Guacamole se activa solo cuando se necesite acceso remoto interactivo; Nautobot se conecta solo en instalaciones que ya lo tengan.
+La instalación base contendrá el control plane adaptado selectivamente de Steward, base de datos, cola, vault, workers/sensores, Browser Web Adapter y LiteLLM opcional. Nautobot se conecta solo en instalaciones que ya lo tengan.
 
 Condiciones para usar Steward
 
@@ -268,7 +254,7 @@ Si Steward no supera esas condiciones, se reutilizarán únicamente los módulos
 
 4.1 Chat operativo e IA
 
-El chat es la interfaz principal del producto y debe conservar el contexto de la conversación, del sitio, de los equipos autorizados y de las tareas en curso. Debe permitir que el usuario:
+Codex/OpenCode son los clientes operativos principales y deben conservar el contexto de la conversación, del sitio, de los equipos autorizados y de las tareas en curso mediante API/MCP. Deben permitir que el usuario:
 
 describa objetivos, incidentes o cambios sin conocer la implementación técnica;
 
@@ -406,9 +392,9 @@ Sensor de sitio
 
 Ejecución remota y observación dentro de cada red autorizada
 
-Guacamole opcional
+Browser Web Adapter para equipos web-only
 
-Acceso remoto interactivo
+Browser Web Adapter
 
 El control plane no debe tener NET_ADMIN ni NET_RAW. Las herramientas de exploración, captura o protocolos se ejecutan en workers aislados con privilegios, redes y allowlists mínimos.
 
@@ -420,7 +406,7 @@ Un sensor no puede capturar tráfico que no llega a su interfaz. Para observaci�
 
 5.3 Métodos de conexión
 
-Priorizar interfaces estructuradas: API, SSH, SNMP, WinRM y protocolos específicos con adaptador. Web, RDP y VNC son acceso asistido y de mejor esfuerzo; no se presentan como una fuente universal de configuración automatizable.
+Priorizar interfaces estructuradas: API, SSH, SNMP, WinRM y protocolos específicos con adaptador. Para equipos web-only se usa un Browser Web Adapter basado en Playwright, aislado y limitado por capabilities/playbooks; no se promete scraping universal.
 
 Usar adaptadores por fabricante o familia solo cuando agreguen valor. El núcleo no debe contener datos ni reglas propias de un entorno de prueba.
 
@@ -464,7 +450,7 @@ Requisitos mínimos: cifrado con separación de clave y datos, permisos restrict
 
 El runtime final usa únicamente APIs de IA. Los proveedores iniciales configurables son OpenAI, Anthropic, Google Gemini, OpenRouter y endpoints compatibles que se validen realmente.
 
-La UI debe permitir registrar proveedores, credenciales, base URL, modelos permitidos, límites de gasto y reglas de privacidad. El catálogo de un proveedor puede provenir de su API, de configuración del operador o de pruebas controladas; no se infieren capacidades por el nombre del modelo.
+La API y una configuración administrativa mínima deben registrar proveedores, credenciales, base URL, modelos permitidos, límites de gasto y reglas de privacidad. El catálogo de un proveedor puede provenir de su API, de configuración del operador o de pruebas controladas; no se infieren capacidades por el nombre del modelo.
 
 El router elige según capacidad requerida, calidad validada, privacidad, contexto, latencia, salud, costo, presupuesto y preferencia del usuario. Debe registrar el modelo elegido y el motivo. El fallback no debe duplicar herramientas ni reenviar secretos.
 
@@ -536,11 +522,11 @@ separar workers y sensores;
 
 implementar descubrimiento, reconciliación y topología;
 
-integrar LiteLLM y proveedores API;
+integrar LiteLLM, proveedores API y API/MCP para Codex/OpenCode;
 
 implementar operaciones, aprobaciones y auditoría;
 
-habilitar Guacamole opcional;
+habilitar Browser Web Adapter por fabricante/capability;
 
 implementar framework de aplicaciones y autoinspección;
 

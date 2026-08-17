@@ -9,9 +9,9 @@ Sprint 0 debe fijar el stack del control plane. Steward (upstream `braedonsaunde
 
 ## Decisión
 
-Conservar el stack de UI/API de Steward y sustituir la persistencia y el vault:
+Conservar el stack de API/web mínima de Steward y sustituir la persistencia, el vault y la ejecución de red:
 
-- **UI/API:** Next.js 16 + React 19 + TypeScript (reutilizado de Steward).
+- **API/web mínima:** Next.js 16 + React 19 + TypeScript (reutilizado selectivamente de Steward).
 - **Base de datos:** Postgres (sustituye a SQLite).
 - **Cola:** Redis (sustituye al broker/workers DB-backed en proceso).
 - **Vault:** OpenBao tras la interfaz `SecretBackend` (sustituye al vault AES-GCM).
@@ -20,7 +20,7 @@ Conservar el stack de UI/API de Steward y sustituir la persistencia y el vault:
 
 ## Consecuencias
 
-- Positivas: base de UI/RBAC/playbooks ya probada; stack de datos común y auditable.
+- Positivas: API/RBAC/playbooks y modelos potencialmente reutilizables; stack de datos común y auditable.
 - Negativas: migración de SQLite a Postgres y reescritura del vault; requiere adaptar el acceso a estado.
 - Se abren ADR-0003 (vault) y ADR-0006 (db/cola).
 

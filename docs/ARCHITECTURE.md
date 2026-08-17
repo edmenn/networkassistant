@@ -1,16 +1,16 @@
 # Arquitectura objetivo
 
-Ver ADR-0001 a ADR-0008. Este documento describe la arquitectura objetivo derivada de la auditoría de Steward.
+Ver ADR-0001 a ADR-0009. Este documento describe la arquitectura objetivo derivada de la auditoría de Steward.
 
 ## Vista de contenedores
 
-Steward es el control plane y la base del producto. NetBox, Nautobot, Guacamole, Oxidized y LiteLLM son integraciones opcionales; los módulos inseguros de Steward se sustituyen detrás de contratos estables sin descartar su experiencia ni su orquestación.
+La API y los workers son el núcleo. La web propia es onboarding/reportes. Codex/OpenCode operan por API/MCP. Steward aporta módulos seleccionados; sus módulos inseguros se sustituyen detrás de contratos estables.
 
 ```text
-Navegador
+Web mínima / Codex / OpenCode
    |
    v
-Control plane: UI + API + RBAC + políticas + auditoría
+Control plane: API + web mínima + RBAC + políticas + auditoría
    |              |                 |
    v              v                 v
 Postgres        Redis            OpenBao
@@ -25,21 +25,23 @@ Orquestador de trabajos (Redis/BullMQ)
              v
        redes y equipos permitidos
 
-Opcionales: LiteLLM (IA), Guacamole (RDP/VNC/SSH interactivo), conector Nautobot
+   +---- browser worker Playwright --saliente/mTLS--> equipos web autorizados
+
+Opcionales: LiteLLM (IA), conector Nautobot, Oxidized
 ```
 
 ## Componentes y responsabilidades
 
 | Componente | Responsabilidad | Procedencia |
 |---|---|---|
-| Control plane (Next 16) | UI, API, RBAC, políticas, auditoría, orquestación | `reuse`/`adapt` de Steward |
+| Control plane (Next 16) | API, web mínima, RBAC, políticas, auditoría, orquestación | `reuse`/`adapt` selectivo de Steward |
 | Postgres | Estado persistente, dominio, auditoría | `replace` |
 | Redis | Cola de jobs, idempotencia, dead-letter | `replace` |
 | OpenBao | Custodia/entrega temporal de secretos (`SecretBackend`) | `replace` |
 | Worker aislado | Ejecuta tareas firmadas y acotadas; redes permitidas | nuevo |
 | Sensor de sitio | Ejecución remota; conexión saliente mTLS | nuevo |
 | LiteLLM (opcional) | Gateway de IA; sin secretos ni autorización | `add` |
-| Guacamole (opcional) | Sesiones interactivas auditadas | `adapt` |
+| Browser worker | Sesiones web temporales y capabilities Playwright | `adapt` |
 | Conector Nautobot (opcional) | Importación/sincronización | `add` |
 
 ## Límites de confianza
@@ -51,6 +53,7 @@ Opcionales: LiteLLM (IA), Guacamole (RDP/VNC/SSH interactivo), conector Nautobot
 | LiteLLM/modelos | Procesar contexto redactado | Recibir secretos, cookies, claves o PCAP |
 | Worker | Ejecutar tarea firmada y acotada | Elegir objetivos fuera de allowlist |
 | Sensor | Acceder a redes autorizadas del sitio | Aceptar conexiones administrativas públicas por defecto |
+| Browser worker | Abrir sesión web temporal y ejecutar capabilities aprobadas | Exponer credenciales, navegar fuera de allowlist o ejecutar acciones libres |
 | OpenBao | Entregar secreto temporal a identidad autorizada | Exponer valor por UI/API/logs/auditoría |
 
 ## Contrato de trabajo

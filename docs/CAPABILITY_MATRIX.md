@@ -19,7 +19,7 @@ Leyenda de soporte: `planned` (definido en ADR, no implementado) · `reuse` (her
 | Host/versión/OS | SSH/SNMP | SSH/SNMPv3 | Lectura | `planned` | Pendiente lab |
 | Conectividad TCP | Ping/port probe | ICMP/TCP | Allowlist | `planned` | Pendiente lab |
 | Conectividad y auth | Método de conexión | SSH/SNMPv3 | Confirmación explícita | `planned` | Pendiente lab |
-| Inventario parcial web-only | API oficial o browser aislado | API/NETCONF/RESTCONF; Playwright solo posterior | Lectura, sesión temporal | `planned` | No incluido en primer piloto sin caso concreto |
+| Inventario/operación web-only | Browser Web Adapter | Playwright en worker aislado | Vault, URL allowlist, capability/playbook | `planned` | Sprint 4 lab; cambios Sprint 7 |
 | Playbooks/aprobaciones | Operación | interno | RBAC | `reuse` | Pendiente |
 | Descubrimiento de red (legacy) | Steward | nmap/ARP/mDNS/... | — | `exclude` | Excluido del control plane |
 

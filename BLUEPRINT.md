@@ -31,7 +31,7 @@ La plataforma nunca debe presentarse como un escaner que conoce toda la red. Su 
 - El control plane no usa `NET_ADMIN`, `NET_RAW` ni acceso directo irrestricto a redes administradas.
 - Los workers y sensores reciben privilegios, secretos, destinos y tiempo de vida minimos por trabajo.
 - No se usan credenciales o infraestructura reales hasta superar los gates de vault, aislamiento, auditoria, backup y restore.
-- Guacamole es acceso interactivo opcional, no una fuente automatica de descubrimiento.
+- Browser Web Adapter es un worker opcional por equipo web-only; no recibe credenciales en el agente ni permite navegación libre.
 - Nautobot es una integracion opcional, no una dependencia base.
 - Netclaw y SubNetree no forman parte del runtime.
 
@@ -61,7 +61,7 @@ Se agrega despues del piloto:
 - diagnosticos guiados;
 - planes de cambio, aprobaciones y playbooks de bajo riesgo;
 - verificacion posterior y rollback real cuando exista;
-- Guacamole opcional;
+- Browser Web Adapter para equipos web-only;
 - manifiestos versionados para aplicaciones;
 - sincronizacion opcional con Nautobot.
 
@@ -69,7 +69,7 @@ Se agrega despues del piloto:
 
 - descubrimiento indiscriminado de Internet o redes no autorizadas;
 - captura pasiva sin SPAN, TAP, firewall o interfaz que reciba el trafico;
-- soporte universal de configuracion mediante scraping web;
+- scraping web universal sin adapter, capabilities ni playbook específico;
 - comandos, Compose o scripts generados y ejecutados directamente por IA;
 - cambios destructivos en el piloto;
 - facturacion SaaS, marketplace publico o multi-tenancy comercial;
@@ -98,7 +98,7 @@ Si un modulo no supera el gate, se reemplaza solo ese modulo. No se reescribe el
 | Componente | Uso permitido | Limite |
 |---|---|---|
 | LiteLLM | Gateway interno para proveedores de IA | No recibe secretos ni decide autorizaciones |
-| Guacamole | Sesiones RDP, VNC o SSH interactivas | Opt-in, auditado, sin descubrimiento automatico |
+| Browser Web Adapter | Sesiones web y acciones por capabilities/playbooks | Worker aislado, URL allowlist, credenciales inyectadas desde vault |
 | Nautobot | Importacion o sincronizacion | Conector opcional, reconciliacion sin sobrescritura silenciosa |
 | Vault | Custodia y entrega temporal | Backend desacoplado por `SecretBackend` |
 
@@ -108,7 +108,7 @@ Si un modulo no supera el gate, se reemplaza solo ese modulo. No se reescribe el
 Navegador
    |
    v
-Control plane: UI + API + RBAC + politicas + auditoria
+Control plane: API + web minima + RBAC + politicas + auditoria
    |             |                    |
    v             v                    v
 Base/cola      Vault                LiteLLM
@@ -123,7 +123,9 @@ Orquestador de trabajos
              v
        redes y equipos permitidos
 
-Opcionales: Guacamole y conector Nautobot
+Opcional: Browser Web Worker (Playwright) --saliente/mTLS--> equipos web autorizados
+
+Opcionales: LiteLLM, conector Nautobot y Oxidized
 ```
 
 ### Limites de confianza
@@ -166,7 +168,8 @@ El worker rechaza trabajos vencidos, alterados, sin autorizacion, fuera de allow
 | `Sensor` | Punto de ejecucion remoto | site, identity, version, capabilities, health |
 | `Device` | Identidad estable del activo | name, type, site, criticality, labels, lifecycle_state |
 | `Endpoint` | Direccion alcanzable | device, address, port, transport, validity |
-| `ConnectionMethod` | Forma autorizada de acceso | device, endpoint, type, secret_ref, security_policy, status |
+| `ConnectionMethod` | Forma autorizada de acceso | device, endpoint, type (`ssh`, `snmpv3`, `api`, `web`), secret_ref, security_policy, status |
+| `BrowserSession` | Sesion web temporal | device, worker, connection_method, capabilities, expires_at, audit_ref |
 | `Capability` | Funcion comprobada | subject, name, source, last_verified_at |
 | `Observation` | Hecho recolectado | subject, field, value, source, observed_at, ttl |
 | `Evidence` | Prueba y procedencia | classification, confidence, collector, raw_ref, redaction_state |
@@ -206,7 +209,7 @@ La creacion de equipo, endpoints, metodos y referencias debe ser transaccional. 
 
 1. Resolver el alcance efectivo del sitio y sensor.
 2. Programar collectors compatibles con capacidades verificadas.
-3. Entregar credenciales temporales solo al worker asignado.
+3. Entregar credenciales temporales solo al worker asignado; para web, inyectarlas dentro de la sesión aislada sin exponerlas a Codex/OpenCode.
 4. Recopilar salida estructurada y guardar artefactos crudos cifrados/redactados.
 5. Normalizar observaciones.
 6. Correlacionar vecinos, interfaces, rutas, MAC, ARP/ND, LLDP/CDP, STP y Wi-Fi disponibles.
@@ -215,7 +218,7 @@ La creacion de equipo, endpoints, metodos y referencias debe ser transaccional. 
 
 ### Investigacion con IA
 
-1. El usuario formula una consulta sobre un alcance autorizado.
+1. Codex/OpenCode formulan una consulta sobre un alcance autorizado mediante API/MCP.
 2. El control plane recupera evidencia permitida y la redacta.
 3. LiteLLM selecciona un modelo segun politica, salud, costo y privacidad.
 4. Se registra modelo, motivo y presupuesto; no se registra contenido sensible sin redaccion.
@@ -229,7 +232,7 @@ La creacion de equipo, endpoints, metodos y referencias debe ser transaccional. 
 3. Ejecutar preflight de solo lectura.
 4. Mostrar impacto, evidencia, rollback o irreversibilidad.
 5. Obtener aprobacion requerida.
-6. Ejecutar con timeout y cancelacion segura.
+6. Ejecutar con timeout y cancelación segura; para web, solo capabilities y playbooks validados.
 7. Verificar el estado posterior con una lectura independiente.
 8. Ejecutar rollback solo si fue declarado y probado.
 9. Cerrar con auditoria y evidencia redactada.
@@ -298,54 +301,20 @@ Los permisos se evaluan sobre usuario, sitio, equipo, metodo, secreto y clase de
 - Builds reproducibles en lo razonable y artefactos firmados.
 - Excepciones de vulnerabilidad con riesgo, mitigacion, propietario y vencimiento.
 
-## 11. UX y sistema visual
+## 11. Web mínima y clientes API
 
-La experiencia es una consola de operaciones densa pero legible, no un panel decorativo. Direccion inicial recomendada por UI/UX Pro Max:
+La web es una superficie administrativa mínima, no una consola gráfica de operaciones. Debe permitir alta de sitios/equipos, métodos de conexión, prueba de acceso, inventario, evidencia y reportes.
 
-- estilo `Data-Dense Dashboard`, moderno y sobrio;
-- modo claro y oscuro, ambos WCAG AA;
-- Fira Sans para interfaz y Fira Code solo para identificadores, direcciones y datos tecnicos;
-- azul como estructura, ambar para atencion y rojo solo para riesgo/destruccion;
-- movimiento sutil de 150-300 ms y respeto por `prefers-reduced-motion`;
-- iconos SVG consistentes, sin emojis estructurales.
+Codex/OpenCode consumen la API/MCP para investigación, diagnóstico, sesiones web, jobs, planes, aprobaciones y ejecución. No se construyen como requisito inicial un dashboard avanzado, chat web, grafo visual sofisticado ni editor visual de playbooks.
 
-### Navegacion principal
+### Reglas mínimas
 
-- Overview
-- Sites
-- Inventory
-- Topology
-- Investigations
-- Jobs & Approvals
-- Applications
-- System Health
-- Settings
-
-### Pantallas prioritarias
-
-| Pantalla | Resultado principal |
-|---|---|
-| Empty state | Crear primer sitio sin asumir red o marca |
-| Alta de equipo | Wizard con progreso, borrador, validacion y prueba explicita |
-| Ficha de equipo | Identidad, endpoints, metodos, capacidades, evidencia, relaciones y jobs |
-| Inventario | Tabla filtrable con cobertura, salud, contradicciones y datos vencidos |
-| Topologia | Grafo con vista tabular equivalente y filtros por evidencia/confianza/fecha |
-| Investigacion | Pregunta, alcance, fuentes citadas, inferencias y faltantes |
-| Aprobacion | Impacto, preflight, diff, riesgo, rollback y decision |
-| Salud del sistema | Matriz `present/missing/misconfigured/degraded/unknown` con recuperacion |
-
-### Reglas de interaccion
-
-- Nunca representar estados solo por color; incluir texto e icono.
-- Formularios con labels visibles, errores junto al campo y foco en el primer error.
-- Botones asincronos deshabilitados durante envio y con progreso visible.
-- Un solo CTA primario por vista.
-- Acciones destructivas separadas espacialmente y con confirmacion contextual.
-- Navegacion por teclado completa, foco visible y deep links para pantallas clave.
-- Objetivos tactiles de al menos 44x44 px.
-- Responsive comprobado en 375, 768, 1024 y 1440 px.
-- Tablas anchas usan vista adaptada o scroll contenido, nunca rompen el viewport.
-- El grafo de topologia siempre tiene alternativa accesible en tabla/lista.
+- labels visibles, validación y errores junto al campo;
+- ningún secreto en UI, API, logs, trazas, auditoría o prompts;
+- estados no expresados solo por color;
+- teclado, foco visible y contraste suficiente;
+- tablas y reportes consultables en móvil y escritorio;
+- todas las funciones operativas disponibles por API/MCP sin depender de clicks.
 
 ## 12. Observabilidad y operacion
 
@@ -370,7 +339,7 @@ Los logs son estructurados, redactados y con retencion definida. Las metricas no
 | Contrato | Adaptadores, `SecretBackend`, workers, sensores, LiteLLM y eventos |
 | Integracion | DB/cola/vault, alta transaccional, jobs e idempotencia |
 | Seguridad | RBAC por recurso, SSRF, fuga de secretos, aislamiento y supply chain |
-| End-to-end | Sitio -> equipo -> secreto -> prueba -> observacion -> evidencia -> UI |
+| End-to-end | Sitio -> equipo -> secreto -> prueba -> observacion -> evidencia -> API/reporte |
 | Resiliencia | reinicio, perdida de sensor, timeout, cancelacion, cola duplicada y rollback |
 | Recuperacion | backup y restore en host limpio |
 | UX | teclado, lector de pantalla, contraste, responsive, errores y carga |

@@ -2,7 +2,7 @@
 
 ## Producto objetivo actual
 
-El producto final es el copiloto de infraestructura basado en Steward: chat, inventario, evidencia, topología, investigación, diagnóstico, aprobaciones, playbooks, verificación, documentación y auditoría. El primer gate usable es un piloto read-only sobre la red propia, limitado a firewall, routers, switches y puntos de acceso; PCs, IoT, cambios de configuración, instalaciones, Guacamole y aplicaciones quedan fuera de ese primer gate, no del producto final.
+El producto final es un copiloto de infraestructura API-first operado desde Codex/OpenCode. La web cubre onboarding, credenciales referenciadas, pruebas de conexión, inventario, evidencia y reportes. El Browser Web Adapter permite operar equipos web-only desde capabilities/playbooks aislados. Steward se reutiliza selectivamente; no se adopta toda su UI.
 
 Matriz de requisitos del blueprint y su estado. Se actualiza en cada sprint (Definición de Done).
 
@@ -25,6 +25,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | R11 | Backup/restore completo en host limpio | `not_started` | Sprint 10, antes de la red real |
 | R12 | Piloto read-only cerrado | `not_started` | Sprint 11; red propia, equipos de red/firewall |
 | R13 | Web -> sitio -> firewall SSH read-only | `in_progress` | Nuevo gate funcional de Sprint 0; falta evidencia actual del recorrido |
+| R14 | Browser Web Adapter seguro para equipos web-only | `not_started` | Sprint 4; Playwright aislado, API/MCP, vault y capabilities |
 
 ## Decisiones de Sprint 0
 
@@ -37,6 +38,8 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | Formato de adaptador | 0005 | `done` |
 | DB Postgres + cola Redis | 0006 | `done` |
 | Alcance del laboratorio | 0007 | `done` |
+| Browser Web Adapter para equipos web-only | 0008 | `done` |
+| Web mínima y operación API/MCP desde Codex/OpenCode | 0009 | `done` |
 
 ## Bloqueantes heredados clasificados
 

@@ -6,7 +6,7 @@ Alcance: equipos de red y firewall administrables; no PCs ni IoT; sin cambios op
 
 ## 1. Decisión
 
-El primer producto usable será un piloto self-hosted que observe una red real controlada y entregue:
+El primer producto usable será un piloto self-hosted, API-first, que observe una red real controlada y entregue:
 
 - inventario de firewall, routers, switches y puntos de acceso;
 - evidencia de interfaces, direcciones, rutas, vecinos y capacidades comprobadas;
@@ -16,7 +16,7 @@ El primer producto usable será un piloto self-hosted que observe una red real c
 
 El piloto no ejecutará configuraciones, instalaciones, reinicios, cambios de credenciales ni comandos libres.
 
-Steward será la base principal del control plane: UI, API, chat, inventario, grafo, jobs, políticas, aprobaciones y playbooks. Se adaptarán o reemplazarán únicamente los módulos que no cumplen el blueprint. NetBox será una integración opcional para inventario/IPAM declarado; Netdisco, Nornir, Scrapli y Oxidized serán componentes complementarios.
+Steward se evaluará selectivamente como fuente de módulos de API, modelos, jobs, evidencia, políticas y playbooks. No se adopta toda su UI ni su chat web. NetBox será una integración opcional para inventario/IPAM declarado; Netdisco, Nornir, Scrapli y Oxidized serán componentes complementarios.
 
 ## 2. Arquitectura
 
@@ -51,7 +51,7 @@ Límites:
 
 ### Equipos con interfaz web
 
-El orden de integración es API oficial, NETCONF/RESTCONF, SNMPv3 y SSH. Playwright no entra en el primer piloto ni en el control plane. Un equipo que solo ofrece web queda parcial como `unknown`/`unsupported` hasta justificar un `BrowserObservationAdapter` aislado, read-only y posterior.
+El orden de integración es API oficial, NETCONF/RESTCONF, SNMPv3, SSH y `BrowserWebAdapter`. Playwright no entra en el control plane: Codex/OpenCode lo invocan mediante API/MCP y el worker inyecta credenciales desde el vault sin exponerlas al agente. Un equipo web-only se opera mediante capabilities y playbooks específicos, no scraping universal.
 
 ## 3. Modelo mínimo
 
@@ -161,14 +161,14 @@ Se conserva la seguridad, la arquitectura de Steward y el orden general de `SPRI
 3. Worker/sensor aislado y contrato de jobs read-only.
 4. Collectors SSH y SNMPv3 con fixtures y laboratorio.
 5. Reconciliación, evidencia, cobertura y topología.
-6. UI de inventario, ficha de equipo e investigación.
+6. Web mínima de inventario, alta, reportes y API de evidencia.
 7. IA por API sobre contexto redactado.
 8. Diagnóstico, aprobaciones y playbooks.
-9. Guacamole, aplicaciones e integraciones opcionales.
+9. Browser Web Adapter por fabricante/capability, aplicaciones e integraciones opcionales.
 10. Hardening, backup/restore y supply chain.
 11. Piloto real read-only como primera validación operativa del producto.
 
-Guacamole, Nautobot, Oxidized y automatización web siguen siendo integraciones opcionales. Diagnóstico, aprobaciones, playbooks y cambios forman parte del producto final basado en Steward; el piloto inicial los mantiene deshabilitados hasta cerrar la evidencia read-only. La automatización web futura requiere ADR-0008.
+Nautobot y Oxidized siguen siendo integraciones opcionales. El Browser Web Adapter es parte del producto para equipos web-only y requiere ADR-0008; los cambios web solo se habilitan con snapshot, aprobación, playbook y verificación. Diagnóstico, aprobaciones, playbooks y cambios forman parte del producto final basado en Steward.
 
 ## 10. Referencias externas evaluadas
 

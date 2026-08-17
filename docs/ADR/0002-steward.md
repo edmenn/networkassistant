@@ -19,7 +19,7 @@ El blueprint requiere decidir con evidencia qué partes de Steward se reutilizan
 
 | Módulo | Clasificación | Motivo |
 |---|---|---|
-| UI (Next 16/React 19) | `reuse` | Base de consola operacional densa ya implementada |
+| UI/API (Next 16/React 19) | `adapt` | Reutilizar web mínima y API; no adoptar consola densa completa |
 | API / rutas REST | `adapt` | Requiere versionado, envelope y autorización por recurso |
 | RBAC y auth (next-auth/jose/ldapts/OIDC) | `adapt` | Actualizar dependencias vulnerables, reauditar y extender a recurso y sitio |
 | Playbooks, aprobaciones, preflight, verificación | `adapt` | Conservar conceptos; auditar autorizacion, shell, idempotencia y rollback antes del codigo |
@@ -34,7 +34,7 @@ El blueprint requiere decidir con evidencia qué partes de Steward se reutilizan
 
 ## Consecuencias
 
-- El control plane conserva UI/API/RBAC/playbooks/adapters, pero NO ejecuta escaneo de red ni guarda secretos.
+- El control plane conserva API/web mínima, RBAC, playbooks y adapters comprobados, pero NO ejecuta escaneo de red ni guarda secretos.
 - Los módulos de red se reimplementan en workers/sensores aislados en sprints posteriores.
 - No se reescribe el producto completo: se reemplaza por módulo lo que no supera el gate.
 

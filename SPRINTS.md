@@ -21,10 +21,10 @@ Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una
 | 2 | Modelo de dominio y alta transaccional | 1 | not_started |
 | 3 | Jobs, workers y sensor aislado | 1, 2 | not_started |
 | 4 | Recoleccion read-only y reconciliacion | 3 | not_started |
-| 5 | Inventario, evidencia y topologia UX | 4 | not_started |
+| 5 | Inventario, evidencia y reportes | 4 | not_started |
 | 6 | IA por API sobre contexto redactado | 4, 5 | not_started |
 | 7 | Diagnostico, aprobaciones y playbooks | 6 | not_started |
-| 8 | Guacamole e integraciones opcionales | 5, 7 | not_started |
+| 8 | Integraciones opcionales | 5, 7 | not_started |
 | 9 | Aplicaciones y autoinspeccion | 7 | not_started |
 | 10 | Hardening, recuperacion y supply chain | 1-9 | not_started |
 | 11 | Piloto real read-only de red y firewall | 10 | not_started |
@@ -40,7 +40,7 @@ Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una
 - Sprint 8 puede avanzar en paralelo con Sprint 9 despues de cerrar 7, porque sus archivos y contratos deben permanecer separados.
 - Dentro de Sprint 0 pueden paralelizarse auditoria de seguridad, mapa de arquitectura y laboratorio, pero los ADR se escriben despues de reunir sus resultados.
 - Dentro de Sprint 4 los adaptadores SSH y SNMP pueden implementarse en paralelo una vez fijado el contrato comun.
-- Dentro de Sprint 5 inventario y topologia pueden avanzar en paralelo despues de fijar API y tokens visuales compartidos.
+- Dentro de Sprint 5 inventario y reportes pueden avanzar en paralelo despues de fijar API y contratos de evidencia compartidos.
 - No paralelizar vault/RBAC, modelo transaccional, contrato de jobs ni hardening final.
 
 ## Protocolo de cambios al plan
@@ -74,7 +74,7 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 
 ## Sprint 0 - Fundacion, entorno web y primer firewall SSH read-only
 
-**Objetivo:** decidir con evidencia que partes de Steward se reutilizan y demostrar el primer recorrido funcional desde el navegador hasta un firewall por SSH read-only.
+**Objetivo:** decidir con evidencia que partes de Steward se reutilizan y demostrar el primer recorrido funcional desde la web mínima hasta un firewall por SSH read-only.
 
 **Alcance:** fork, auditoria, arquitectura inicial, threat model, matriz de reutilizacion, stack, laboratorio sintetico, entorno web y alta/probe inicial de un firewall SSH.
 
@@ -90,7 +90,7 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - Crear `docs/CAPABILITY_MATRIX.md` con capacidad, fuente, protocolo, permisos, soporte y evidencia de laboratorio.
 - Verificar que `ecc@ecc` siga instalado, habilitado y con cache valido; seleccionar solo las skills necesarias y no confiar en hooks o MCP sin una decision explicita.
 - Definir laboratorio sin credenciales reales: dispositivos simulados o dedicados, rangos y datos ficticios.
-- Levantar el entorno web desde Docker y comprobar acceso desde navegador en la URL documentada.
+- Levantar la web mínima desde Docker y comprobar acceso desde navegador en la URL documentada.
 - Crear el primer sitio desde la UI vacía.
 - Agregar un firewall de laboratorio con endpoint SSH y credencial sintética de solo lectura.
 - Ejecutar la prueba SSH read-only con confirmación explícita y mostrar identidad, estado, interfaces o el motivo `unknown`.
@@ -223,7 +223,7 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - Implementar SSH read-only con host key policy.
 - Implementar SNMPv3 read-only; marcar v1/v2c como riesgo si se habilitan.
 - Incorporar API read-only solo para un equipo real del laboratorio si aporta cobertura necesaria.
-- Priorizar API oficial/NETCONF/RESTCONF; no usar Playwright ni scraping web en el primer piloto.
+- Implementar `BrowserWebAdapter` read-only para un equipo web-only del laboratorio, con Playwright en worker aislado y capabilities declaradas.
 - Guardar artefacto crudo cifrado/redactado y observaciones normalizadas.
 - Implementar TTL, `stale`, contradicciones y reconciliacion determinista.
 - Medir cobertura y explicar por que un dato es `unknown`.
@@ -242,13 +242,13 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 
 **Rollback:** deshabilitar adaptador por feature flag operativo y conservar evidencia previa como `stale`.
 
-Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker de navegador aislado y pruebas explícitas de no mutación.
+El adapter web no permite navegación libre: cada operación debe pertenecer a una capability y playbook versionado. Los cambios web quedan para Sprint 7, después de snapshot, aprobación y verificación.
 
 ---
 
-## Sprint 5 - Inventario, evidencia y topologia
+## Sprint 5 - Inventario, evidencia y reportes
 
-**Objetivo:** hacer comprensible la infraestructura y sus limites de visibilidad.
+**Objetivo:** hacer comprensible la infraestructura mediante inventario, evidencia y reportes consumibles desde web, API, Codex y OpenCode.
 
 **Dependencias:** Sprint 4.
 
@@ -258,18 +258,18 @@ Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker d
 - Implementar ficha de equipo con endpoints, metodos, capacidades, historial y jobs.
 - Correlacionar interfaces, vecinos, rutas, MAC, ARP/ND y LLDP/CDP disponibles.
 - Implementar Relationship con evidencia, confianza y vigencia.
-- Crear topologia interactiva y alternativa accesible tabular.
+- Crear reportes de topología y relaciones; una vista gráfica avanzada no es requisito.
 - Agregar filtros por sitio, tipo, fecha, fuente, confianza y clasificacion.
-- Probar UI en 375, 768, 1024 y 1440 px, teclado y reduced motion.
+- Probar formularios y tablas en 375, 768, 1024 y 1440 px, teclado y accesibilidad básica.
 
-**Riesgos:** grafo ilegible, relaciones duplicadas, color como unico significado o falsa precision.
+**Riesgos:** reportes incompletos, relaciones duplicadas, estados ambiguos o falsa precision.
 
 **Pruebas y evidencia:**
 
 - relacion confirmada e inferida visualmente distinguibles con texto;
 - cada arista abre evidencia y fecha;
 - datos vencidos cambian a `stale` sin desaparecer;
-- topologia operable sin mouse y consultable como tabla;
+- reporte de relaciones consultable por API y tabla;
 - dataset grande de laboratorio mantiene interaccion aceptable.
 
 **Gate de cierre:** un operador puede explicar de donde sale cada dispositivo y relacion, y reconocer lo desconocido.
@@ -293,6 +293,7 @@ Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker d
 - Exigir salida estructurada con hechos, inferencias, faltantes y citas internas.
 - Registrar modelo, motivo, costo, latencia y fallback sin contenido sensible.
 - Implementar limites, cancelacion y comportamiento cuando no hay proveedor sano.
+- Publicar contrato API/MCP para que Codex/OpenCode soliciten contexto, jobs, sesiones web y reportes sin depender de la UI.
 
 **Riesgos:** prompt injection desde evidencia, exfiltracion, alucinaciones, fallback que duplica acciones o gasto.
 
@@ -324,7 +325,7 @@ Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker d
 - Implementar un playbook real de bajo riesgo elegido por el laboratorio.
 - Implementar preflight, diff/impacto, timeout, verificacion independiente y auditoria.
 - Implementar rollback solo si el mecanismo fue probado; si no, mostrar `unavailable` antes de aprobar.
-- Crear UI de aprobacion accesible y resistente a doble envio.
+- Publicar aprobaciones y estados por API/MCP; la web solo muestra el resultado si se necesita consulta.
 
 **Riesgos:** parametros libres, aprobacion reutilizable, TOCTOU, falso rollback o verificacion basada en la misma escritura.
 
@@ -343,7 +344,7 @@ Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker d
 
 ---
 
-## Sprint 8 - Acceso e integraciones opcionales
+## Sprint 8 - Integraciones opcionales
 
 **Objetivo:** agregar funciones especializadas sin acoplarlas al nucleo.
 
@@ -351,26 +352,20 @@ Un futuro adaptador web queda fuera de este sprint y requiere ADR-0008, worker d
 
 **Tareas:**
 
-- Integrar Guacamole como perfil opcional con autorizacion y auditoria.
-- Usar credenciales temporales cuando el protocolo lo permita.
-- Implementar cierre, timeout y revocacion de sesiones.
 - Definir contrato de importacion/sincronizacion y conector Nautobot.
 - Implementar dry-run y resolucion explicita de conflictos.
 - Demostrar que la instalacion base funciona sin ambos componentes.
 
-**Riesgos:** sesiones huerfanas, grabaciones sensibles, credenciales persistentes o sincronizacion destructiva.
+**Riesgos:** sincronizacion destructiva, credenciales persistentes o integraciones que amplien el alcance.
 
 **Pruebas y evidencia:**
 
-- usuario sin permiso no obtiene sesion;
-- cierre/revocacion corta acceso;
-- logs no contienen credenciales;
 - dry-run de Nautobot muestra altas/cambios/conflictos;
 - deshabilitar opcionales no rompe el nucleo.
 
 **Gate de cierre:** opcionales se activan y desactivan de forma independiente, con RBAC y auditoria.
 
-**Rollback:** eliminar perfiles opcionales, revocar sesiones/tokens y conservar inventario previo.
+**Rollback:** deshabilitar integraciones opcionales y conservar inventario previo.
 
 ---
 

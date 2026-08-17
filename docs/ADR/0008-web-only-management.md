@@ -9,17 +9,17 @@ Algunos firewalls, switches o puntos de acceso exponen únicamente una interfaz 
 
 ## Decisión
 
-El orden de integración read-only será:
+El orden de integración será:
 
 1. API oficial del fabricante.
 2. NETCONF/RESTCONF cuando el equipo lo soporte.
 3. SNMPv3 para inventario y estado.
 4. SSH con comandos read-only y host-key policy.
-5. Interfaz web solo mediante un adaptador aislado posterior.
+5. Interfaz web mediante `BrowserWebAdapter` en worker aislado.
 
-Playwright no forma parte del control plane ni del primer piloto. Si un equipo solo tiene web y no ofrece un método estructurado suficiente, sus campos se marcan `unknown` o `unsupported`, se conserva el motivo y no se intenta automatizar configuración.
+Playwright no forma parte del control plane. Codex/OpenCode podrán invocar `BrowserWebAdapter` mediante API/MCP con un contrato de sesión limitado. Si un equipo solo tiene web, el adapter podrá observarlo y operar únicamente capabilities declaradas por playbook; lo no comprobado queda `unknown`.
 
-El futuro `BrowserObservationAdapter` podrá usar Playwright dentro de un worker separado, con URL allowlist, identidad temporal, sesión efímera, navegación read-only, límites de tiempo y evidencia redactada. No podrá enviar formularios de configuración, pulsar acciones destructivas, ejecutar JavaScript arbitrario recibido de la IA ni convertir texto de pantalla en autorización.
+`BrowserWebAdapter` usará Playwright dentro de un worker separado, con URL allowlist, identidad temporal, sesión efímera, evidencia redactada y límites de tiempo. El agente no recibe credenciales ni puede ejecutar JavaScript arbitrario; solo puede solicitar capabilities y acciones de playbooks validados. Las acciones de cambio requieren snapshot, preflight, aprobación y verificación.
 
 ## Consecuencias
 
@@ -29,6 +29,6 @@ El futuro `BrowserObservationAdapter` podrá usar Playwright dentro de un worker
 - Si se implementa, requerirá pruebas de no mutación, aislamiento, expiración de sesión, redacción y revisión por fabricante.
 - Una API oficial siempre tiene prioridad sobre Playwright.
 
-## Criterio de incorporación posterior
+## Criterio de incorporación por equipo
 
-Solo se agrega el adaptador web si un equipo concreto del piloto carece de API, NETCONF/RESTCONF, SNMPv3 y SSH, y si el valor de los datos read-only justifica mantener un flujo browser automatizado verificable.
+Se habilita el adaptador web por equipo cuando carece de un método estructurado suficiente o cuando la web es el método autorizado. Cada fabricante/modelo necesita capabilities y playbooks probados; no se promete scraping universal.

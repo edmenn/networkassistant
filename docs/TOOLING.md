@@ -9,7 +9,8 @@ Registro del estado real de las herramientas exigidas por el blueprint y su deci
 | Skills ECC | **Presentes** en el plugin ECC 2.2.0 | Seleccionar solo las aplicables; no copiar reglas genericas al contrato local. |
 | Hooks TK (`tk`) | **Presentes** en `.github/hooks/` | Usar `tk` para salida eficiente de shell. |
 | Docker Desktop | **Engine v29.1.3** | Runtime de laboratorio; baseline validado como `linux/amd64`. |
+| Browser Web Adapter | **Diseño fijado** | Playwright en worker aislado; invocado por API/MCP, no desde el control plane. |
 
 ## Regla operativa
 
-ECC, Superpowers, Graphify y UI/UX son capacidades globales. Las decisiones de producto, seguridad y entrega siguen viviendo en este repositorio. La evidencia exacta del gate esta en `docs/SPRINT_0_EVIDENCE.md`.
+ECC, Superpowers, Graphify y UI/UX son capacidades globales. Las decisiones de producto, seguridad y entrega siguen viviendo en este repositorio. Codex/OpenCode consumen el contrato de `docs/AGENT_TOOL_CONTRACT.md`. La evidencia exacta del gate esta en `docs/SPRINT_0_EVIDENCE.md`.

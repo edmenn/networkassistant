@@ -2,7 +2,7 @@
 
 ## Decisión de producto del piloto
 
-Steward es la base principal de UI, API, chat, inventario, grafo, jobs, políticas, aprobaciones y playbooks, sujeto a hardening. El primer piloto no reutiliza su ejecución de red dentro del control plane. La recolección se mueve a un worker aislado con Nornir/Scrapli/SNMPv3; NetBox, Netdisco y Oxidized complementan Steward cuando aporten cobertura.
+Steward se evalúa módulo por módulo para API, inventario, jobs, evidencia, políticas y playbooks. La web y el chat completo no son obligatorios. La recolección se mueve a un worker aislado con Nornir/Scrapli/SNMPv3; NetBox, Netdisco y Oxidized complementan cuando aporten cobertura.
 
 Commit de referencia: `ea6a476` (upstream `braedonsaunders/steward`, MIT).
 Ver ADR-0002 para el razonamiento.
@@ -16,7 +16,7 @@ Leyenda: `reuse` (usar tal cual) · `adapt` (modificar) · `replace` (sustituir)
 | Next.js 16 + React 19 + TypeScript | `reuse` | Base de la consola |
 | Rutas API REST | `adapt` | Versionado, envelope `data/meta/links`, errores estructurados, autorización por recurso |
 | Pantallas (devices, topology, approvals, jobs, etc.) | `adapt` | Alinear a la navegación y pantallas prioritarias del blueprint |
-| Sistema visual (tokens, dark/light) | `adapt` | Aplicar Data-Dense Dashboard y WCAG AA |
+| Sistema visual/formularios/reportes | `adapt` | Mantener accesibilidad básica; no construir dashboard gráfico completo |
 
 ## Identidad y autorización
 
@@ -50,7 +50,7 @@ Leyenda: `reuse` (usar tal cual) · `adapt` (modificar) · `replace` (sustituir)
 |---|---|---|
 | Descubrimiento de red (nmap/tshark/ARP/SSDP/mDNS) | `exclude` | Se reimplementa en workers/sensores aislados |
 | `runShell`/ejecución shell en el control plane | `exclude` | Quitar del control plane |
-| Navegador/playwright | `exclude` | Mejor esfuerzo; no fuente universal de configuración |
+| Navegador/Playwright | `adapt` | Browser Web Adapter aislado; capabilities/playbooks por fabricante, no scraping universal |
 | Collector SSH read-only | `replace` | Reimplementar con contrato de adaptador y host key policy |
 | Collector SNMPv3 read-only | `replace` | Reimplementar; marcar v1/v2c como riesgo |
 
@@ -58,7 +58,7 @@ Leyenda: `reuse` (usar tal cual) · `adapt` (modificar) · `replace` (sustituir)
 
 | Módulo | Clasificación | Nota |
 |---|---|---|
-| Guacamole / `guacd` | `adapt` (opcional) | Perfil opt-in auditado; sin descubrimiento |
+| Guacamole / `guacd` | `exclude` | No se incorpora; no resuelve la operación API-first ni el rollback |
 | LiteLLM | `add` (opcional) | Gateway de IA interno (Sprint 6+) |
 | Nautobot | `add` (opcional) | Conector de importación/sincronización |
 | Netclaw / SubNetree | `exclude` | No forman parte del runtime |
