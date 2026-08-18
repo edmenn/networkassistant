@@ -78,7 +78,7 @@ export class OpenBaoSecretBackend implements SecretBackend {
     const keyFile = path.join(backupDir, "bao-backup-key.bin");
     let key: Buffer;
     try {
-      key = Buffer.from(await readFile(keyFile), "binary");
+      key = await readFile(keyFile);
     } catch {
       key = randomBytes(32);
       await writeFile(keyFile, key, { mode: 0o600 });
