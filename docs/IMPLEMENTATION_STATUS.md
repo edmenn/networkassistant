@@ -12,7 +12,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 
 | # | Requisito | Estado | Nota |
 |---|---|---|---|
-| R01 | Instalación vacía reproducible | `in_progress` | Web + laboratorio reproducibles desde checkout limpio (`lab/`); falta alta de sitio desde UI (Sprint 2) |
+| R01 | Instalación vacía reproducible | `in_progress` | Web + laboratorio reproducibles desde checkout limpio (`lab/`); el alta de sitios pertenece a Sprint 2 |
 | R02 | Alta transaccional multi-método | `not_started` | Sprint 2; Sprint 0 valida el caso mínimo SSH end-to-end |
 | R03 | Secretos no recuperables fuera del vault | `not_started` | Sprint 1 |
 | R04 | Rotación y restore del vault | `not_started` | Sprint 1 |
@@ -24,7 +24,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | R10 | Cambios con preflight/aprobación/idempotencia/verificación/rollback | `not_started` | Sprint 7 |
 | R11 | Backup/restore completo en host limpio | `not_started` | Sprint 10, antes de la red real |
 | R12 | Piloto read-only cerrado | `not_started` | Sprint 11; red propia, equipos de red/firewall |
-| R13 | Web -> sitio -> firewall SSH read-only | `in_progress` | SSH read-only verificado end-to-end; la creación de sitio desde la UI queda pendiente (baseline solo siembra `site.local.default`) -> Sprint 2 |
+| R13 | Web -> firewall SSH read-only | `in_progress` | Flujo verificado end-to-end sobre el sitio sintético por defecto; el CRUD de sitios se implementa en Sprint 2 |
 | R14 | Browser Web Adapter seguro para equipos web-only | `not_started` | Sprint 4; Playwright aislado, API/MCP, vault y capabilities |
 
 ## Decisiones de Sprint 0
@@ -53,7 +53,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 
 ## Próximo gate obligatorio
 
-No se considera Sprint 0 cerrado hasta registrar la **creación de un sitio distinto al por defecto** desde la web (tarea que el baseline no soporta y que vive en Sprint 2), y la evidencia redactada en `docs/SPRINT_0_EVIDENCE.md`. El resto del recorrido `web -> firewall SSH read-only` ya esta verificado (2026-08-18) y es reproducible desde `lab/`.
+No se considera Sprint 0 cerrado hasta repetir la verificación final sobre el alcance actualizado, completar la checklist y registrar el commit `gate(sprint-0)`. El recorrido `web -> firewall SSH read-only` ya esta verificado (2026-08-18) y es reproducible desde `lab/`. El alta de sitios no bloquea este sprint y será el objetivo de Sprint 2.
 
 ## Laboratorio de Sprint 0
 

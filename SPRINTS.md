@@ -91,7 +91,7 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - Verificar que `ecc@ecc` siga instalado, habilitado y con cache valido; seleccionar solo las skills necesarias y no confiar en hooks o MCP sin una decision explicita.
 - Definir laboratorio sin credenciales reales: dispositivos simulados o dedicados, rangos y datos ficticios.
 - Levantar la web mínima desde Docker y comprobar acceso desde navegador en la URL documentada.
-- Crear el primer sitio desde la UI vacía.
+- Usar el sitio sintético por defecto del laboratorio.
 - Agregar un firewall de laboratorio con endpoint SSH y credencial sintética de solo lectura.
 - Ejecutar la prueba SSH read-only con confirmación explícita y mostrar identidad, estado, interfaces o el motivo `unknown`.
 - Verificar que el dispositivo aparece en la ficha web con método, resultado, timestamp y evidencia redactada.
@@ -104,11 +104,11 @@ YYYY-MM-DD | accion | sprint(s) | motivo | impacto | aprobado por
 - arranque reproducible desde checkout limpio;
 - inventario de componentes y CVE guardado;
 - flujo heredado principal recorrido en laboratorio;
-- navegador -> sitio -> firewall -> SSH read-only -> evidencia recorrido de extremo a extremo;
+- navegador -> firewall -> SSH read-only -> evidencia recorrido de extremo a extremo;
 - secretos de prueba ausentes de Git y logs;
 - ADR sin decisiones abiertas necesarias para Sprint 1.
 
-**Gate de cierre:** existe una decision sustentada sobre Steward y el flujo web -> sitio -> firewall SSH read-only funciona con evidencia reproducible. Si falla, Sprint 0 permanece `in_progress` y no se declara cerrado.
+**Gate de cierre:** existe una decision sustentada sobre Steward y el flujo web -> firewall SSH read-only funciona con evidencia reproducible dentro del sitio sintético por defecto. El alta y la gestión de sitios pertenecen al Sprint 2.
 
 **Rollback:** eliminar el entorno sintetico y volver al commit fijado; conservar documentos de auditoria.
 

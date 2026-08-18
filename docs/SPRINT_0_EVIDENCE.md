@@ -1,6 +1,6 @@
 # Evidencia - Sprint 0
 
-Estado actual: `in_progress`. El recorrido funcional `web -> dispositivo -> credencial SSH -> prueba read-only` se verifico el 2026-08-17/18 contra el baseline `ea6a476` en el laboratorio. El cierre completo no se declara porque el baseline no permite **crear sitios** desde la UI/API (solo siembra `site.local.default`); esa tarea queda como condicion para el cierre del gate.
+Estado actual: `in_progress`. El recorrido funcional `web -> dispositivo -> credencial SSH -> prueba read-only` se verifico el 2026-08-17/18 contra el baseline `ea6a476` en el laboratorio. El laboratorio usa intencionalmente `site.local.default`; el alta y la gestión de sitios quedan fuera de Sprint 0 y se verifican en Sprint 2.
 
 Fecha: 2026-08-11 (baseline) + 2026-08-17/18 (recorrido funcional). Baseline: `braedonsaunders/steward@ea6a4762737dc9ce57f21ff1d3e536bdfe102125`.
 
@@ -97,7 +97,7 @@ Pantallazos del recorrido en `lab/evidence/` (01-web-home.png a 07-ssh-readonly-
 
 | Hallazgo | Evidencia | Implica |
 |---|---|---|
-| El baseline no permite **crear sitios** | `POST /api/sites` devuelve 404; no hay ruta/UI; `sites` solo contiene el por defecto `site.local.default`; el dispositivo queda en `siteId="site.local.default"` | Tarea "crear el primer sitio desde la UI vacia" queda pendiente -> Sprint 0 sigue `in_progress` |
+| El baseline no permite **crear sitios** | `POST /api/sites` devuelve 404; no hay ruta/UI; `sites` solo contiene el por defecto `site.local.default`; el dispositivo queda en `siteId="site.local.default"` | Fuera del alcance de Sprint 0; se implementa y verifica como CRUD de sitios en Sprint 2 |
 | El baseline no tiene un paso de "confirmacion explicita" antes de la prueba | El terminal remoto ejecuta el comando directamente con la sesion autenticada | La confirmacion explicita se implementa en el onboarding wizard (Sprint 2) |
 | El runtime del baseline no instala `sshpass`/`openssh-client` (los exige su broker SSH) | Se agrego la capa `lab/steward-tools.Dockerfile` | El collector SSH de produccion se reimplementa en Sprint 4 |
 | `StrictHostKeyChecking=no` en el broker SSH | Codigo `protocol-broker.ts` | Reemplazo en Sprint 4 (host key policy) |
@@ -107,7 +107,7 @@ Pantallazos del recorrido en `lab/evidence/` (01-web-home.png a 07-ssh-readonly-
 
 | Paso | Resultado requerido | Estado |
 |---|---|---|
-| Crear un sitio desde la UI vacia | Alta persistida de un sitio distinto al por defecto | `pending` (bloqueado por el baseline; Sprint 2) |
+| Crear un sitio desde la UI vacia | Alta persistida de un sitio distinto al por defecto | `out_of_scope` (Sprint 2) |
 | Resto del recorrido (dispositivo, credencial SSH, prueba read-only, ficha) | Verificado arriba | `verified` |
 
 ## Anexo (historial del baseline, 2026-08-11)

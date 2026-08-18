@@ -15,8 +15,8 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría), documentaci
 5. **Matrices y docs** — REUSE_MATRIX, UPSTREAM, ARCHITECTURE, THREAT_MODEL, CAPABILITY_MATRIX, IMPLEMENTATION_STATUS, TOOLING. ✅
 6. **Laboratorio sintético** — definir alcance (ADR-0007). ✅
 7. **Entorno web** — levantar Compose, abrir la UI desde navegador y verificar el empty state de sitio/equipo. ✅ (2026-08-18, `lab/`)
-8. **Primer firewall SSH** — crear sitio, registrar firewall, endpoint SSH y credencial sintética; ejecutar prueba read-only y mostrar evidencia. Parcial: el firewall SSH read-only quedo verificado; **crear sitio** no es soportado por el baseline (solo siembra `site.local.default`) y queda para Sprint 2. → evidencia en `docs/SPRINT_0_EVIDENCE.md`.
-9. **Gate y actualización de SPRINTS.md** — cerrar solo cuando el recorrido funcional y la checklist A/B/C tengan salida real. → Sprint 0 `in_progress` hasta que exista alta de sitio.
+8. **Primer firewall SSH** — usar el sitio sintético por defecto, registrar firewall, endpoint SSH y credencial sintética; ejecutar prueba read-only y mostrar evidencia. ✅ Verificado en `lab/`.
+9. **Gate y actualización de SPRINTS.md** — cerrar solo cuando el recorrido funcional y la checklist A/B/C tengan salida real. El alta de sitios queda asignada a Sprint 2.
 
 ## Archivos creados
 
@@ -35,8 +35,8 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría), documentaci
 
 ## Criterio de aceptación / gate
 
-Existe decisión sustentada sobre Steward y funciona el recorrido `web -> sitio -> firewall -> SSH read-only -> evidencia`. Si falla, Sprint 0 permanece `in_progress` y no se inicia Sprint 1.
+Existe decisión sustentada sobre Steward y funciona el recorrido `web -> firewall -> SSH read-only -> evidencia` dentro del sitio sintético por defecto. El CRUD de sitios se verifica en Sprint 2.
 
 ## Cierre
 
-El baseline histórico está documentado en `docs/SPRINT_0_EVIDENCE.md`, pero Sprint 0 permanece `in_progress` hasta completar el vertical slice web -> sitio -> firewall SSH read-only y registrar su evidencia real. La remediación profunda de dependencias y la seguridad fundacional siguen siendo condiciones de Sprint 1.
+El baseline histórico y el vertical slice web -> firewall SSH read-only están documentados en `docs/SPRINT_0_EVIDENCE.md`. Sprint 0 permanece `in_progress` hasta completar el cierre formal del gate; la remediación profunda de dependencias y la seguridad fundacional siguen siendo condiciones de Sprint 1. El CRUD de sitios pertenece a Sprint 2.
