@@ -14,7 +14,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 |---|---|---|---|
 | R01 | Instalación vacía reproducible | `in_progress` | Web + laboratorio reproducibles desde checkout limpio (`lab/`); el alta de sitios pertenece a Sprint 2 |
 | R02 | Alta transaccional multi-método | `not_started` | Sprint 2; Sprint 0 valida el caso mínimo SSH end-to-end |
-| R03 | Secretos no recuperables fuera del vault | `not_started` | Sprint 1 |
+| R03 | Secretos no recuperables fuera del vault | `in_progress` | OpenBao integrado en runtime (Sprint 1): el control plane guarda secretos en OpenBao vía `SecretBackend`; falta el drill end-to-end del gate |
 | R04 | Rotación y restore del vault | `not_started` | Sprint 1 |
 | R05 | Control plane sin privilegios de red | `not_started` | Sprint 3 (brecha detectada en Sprint 0) |
 | R06 | Workers/sensores aislados | `not_started` | Sprint 3 |

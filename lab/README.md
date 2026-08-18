@@ -6,7 +6,8 @@ Red ficticia dedicada `172.28.200.0/24` (privada y aislada, ADR-0007; se eligio 
 
 | Servicio | Contenedor | IP | Rol |
 |---|---|---|---|
-| Steward (baseline `ea6a476` + capa de herramientas) | `steward-sprint0-web` | dinamica | Control plane / web minima (`http://127.0.0.1:3010`) |
+| Steward (baseline `ea6a476` + capa de herramientas + OpenBao vault) | `steward-sprint0-web` | dinamica | Control plane / web minima (`http://127.0.0.1:3010`) |
+| OpenBao (dev, auto-unseal) | `bao-s1-lab` | dinamica | Vault de secretos (`SecretBackend`, ADR-0003) |
 | SSH sintetico (firewall simulado) | `fw-lab-01` | `172.28.200.10` | Dispositivo de laboratorio, usuario read-only `fwlab` |
 
 Credenciales sinteticas (solo laboratorio, nunca reales):
@@ -41,4 +42,4 @@ docker compose -f lab/compose.lab.yml down -v --rmi local
 - El contenedor del control plane corre **sin** `NET_ADMIN` ni `NET_RAW` (`cap_drop` en `lab/compose.lab.yml`); se verifica en runtime (U6). El descubrimiento con nmap funciona con escaneo TCP connect (`-sT`) por ser no-root.
 - `sshpass`/`openssh-client`: capa de laboratorio porque el broker SSH del baseline los requiere y la imagen original no los instala (el collector SSH de produccion se reimplementa en Sprint 4).
 - El baseline no permite crear sitios desde la UI (siembra uno por defecto, `site.local.default`); la creacion de sitios es Sprint 2.
-- Vault del baseline (AES-GCM + `vault.key`): fragil; la clave derivada de la maquina cambia al recrear el contenedor y rompe el descifrado. Confirmado en Sprint 1 (U6); se reemplaza por OpenBao (`SecretBackend`, ADR-0003).
+- Vault: el control plane ahora persiste secretos en **OpenBao** (Sprint 1, `SecretBackend`); el vault de archivo del baseline (AES-GCM + `vault.key`) queda como fallback y su clave derivada de la maquina es fragil (se rompe al recrear el contenedor), motivo por el que se reemplaza.
