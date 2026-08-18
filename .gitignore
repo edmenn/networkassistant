@@ -11,6 +11,7 @@ node_modules/
 
 # Estado local de Steward / runtime
 .steward/
+.superpowers/
 
 # Build y caché
 .next/
