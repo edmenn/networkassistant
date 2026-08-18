@@ -7,7 +7,7 @@ Regla: seguridad primero; cambio mínimo; TDD. No usar secretos reales (solo can
 ## Unidades (cada una con prueba que falla antes)
 
 - **U1 — Contrato `SecretBackend` + backend de desarrollo + canario.** Interfaz `put/lease/revoke/rotate/backup/restore` (ADR-0003). Backend dev autocontenido (cifrado con clave separada de datos). Prueba: el valor secreto NO es recuperable por ninguna superficie publica salvo un lease autorizado; el canario no aparece en claro en estado persistido. ✅ (2026-08-18, `steward/src/lib/security/secret-backend/secret-backend.ts`, 6 canarios con `node --test`)
-- **U2 — Backend OpenBao** (produccion) + contenedor de desarrollo con auto-unseal. Prueba: put/lease/revoke/rotate/backup/restore contra OpenBao real en contenedor; restauracion en host limpio reproduce secretos utilizables solo por workloads autorizados.
+- **U2 — Backend OpenBao** (produccion) + contenedor de desarrollo con auto-unseal. Prueba: put/lease/revoke/rotate/backup/restore contra OpenBao real en contenedor; restauracion en host limpio reproduce secretos utilizables solo por workloads autorizados. ✅ (2026-08-18, `steward/src/lib/security/secret-backend/openbao.ts`, OpenBao 2.6.1 dev en `bao-s1-dev`, 1 canario de integracion). El restore "host limpio" definitivo se refuerza en U8/gate.
 - **U3 — Redaccion central.** Canarios no aparecen en respuestas API, logs, errores, auditoria, trazas ni prompts. Prueba: canarios buscados en cada superficie.
 - **U4 — RBAC por recurso.** usuario/sitio/equipo/metodo/secreto/clase de accion; `deny` prevalece. Prueba: matriz de casos permitidos y denegados.
 - **U5 — Politicas de red y SSRF.** allowlist, bloqueo loopback/metadata cloud, revalidacion DNS. Prueba: intentos SSRF contra loopback/metadata/DNS cambiante bloqueados.
@@ -25,4 +25,4 @@ Restaurar backup cifrado anterior y revocar todos los leases emitidos durante la
 
 ## Estado
 
-`in_progress`. U1 completada. Siguiente: U2 (OpenBao).
+`in_progress`. U1 y U2 completadas. Siguiente: U3 (redaccion central).
