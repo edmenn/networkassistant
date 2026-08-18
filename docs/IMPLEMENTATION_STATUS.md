@@ -24,7 +24,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 | R10 | Cambios con preflight/aprobación/idempotencia/verificación/rollback | `not_started` | Sprint 7 |
 | R11 | Backup/restore completo en host limpio | `not_started` | Sprint 10, antes de la red real |
 | R12 | Piloto read-only cerrado | `not_started` | Sprint 11; red propia, equipos de red/firewall |
-| R13 | Web -> firewall SSH read-only | `in_progress` | Flujo verificado end-to-end sobre el sitio sintético por defecto; el CRUD de sitios se implementa en Sprint 2 |
+| R13 | Web -> firewall SSH read-only | `done` | Verificado end-to-end sobre el sitio sintético por defecto (gate de Sprint 0); el CRUD de sitios se implementa en Sprint 2 |
 | R14 | Browser Web Adapter seguro para equipos web-only | `not_started` | Sprint 4; Playwright aislado, API/MCP, vault y capabilities |
 
 ## Decisiones de Sprint 0
@@ -53,7 +53,7 @@ Estados: `done` · `in_progress` · `not_started` · `blocked`.
 
 ## Próximo gate obligatorio
 
-No se considera Sprint 0 cerrado hasta repetir la verificación final sobre el alcance actualizado, completar la checklist y registrar el commit `gate(sprint-0)`. El recorrido `web -> firewall SSH read-only` ya esta verificado (2026-08-18) y es reproducible desde `lab/`. El alta de sitios no bloquea este sprint y será el objetivo de Sprint 2.
+Sprint 0 esta `done` (2026-08-18): el recorrido `web -> firewall SSH read-only -> evidencia` quedo verificado sobre el sitio sintético por defecto y se emitio el commit `gate(sprint-0)` (`af29a37`). El próximo gate es Sprint 1 (seguridad fundacional y vault). El alta de sitios se implementa en Sprint 2.
 
 ## Laboratorio de Sprint 0
 

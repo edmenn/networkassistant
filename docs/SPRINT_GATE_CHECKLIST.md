@@ -27,8 +27,8 @@ Plantilla obligatoria. Un sprint solo se marca `done` cuando esta checklist esta
 ## B. Revision adversarial (blueprint 17)
 
 - **Revisado por:** OpenCode (deepseek-v4-flash) — ejecutor unico disponible en esta sesion.
-- **Fecha:** 2026-08-18
-- **Independiente (SI/NO):** NO. Limitacion registrada: no hay una segunda IA disponible en esta sesion; se hace segunda pasada en contexto limpio y se marca explicitamente que la revision independiente no ocurrio.
+- **Fecha:** 2026-08-18 (primera pasada) y 2026-08-18 (segunda pasada en contexto limpio).
+- **Independiente (SI/NO):** NO. Limitacion registrada: no hay una segunda IA disponible en esta sesion. Se realizo una segunda pasada en contexto limpio verificando de nuevo: arbol git limpio, commits de cierre presentes (`gate(sprint-0)` `af29a37`), evidencia JSON coherente (protocolo SSH, servicio 22, terminal `ok:true transport:ssh`, interfaces/IP), y ausencia de secretos reales fuera del baseline. La revision independiente por una IA distinta no ocurrio; se deja constancia explicita.
 
 Checklist:
 
@@ -55,5 +55,6 @@ Solo marco este sprint `done` cuando:
 
 ## Resultado
 
-- Estado del sprint: `in_progress` hasta emitir el commit formal `gate(sprint-0)` después de limpiar el árbol y repetir la verificación final.
-- No se crea todavía el commit `gate(sprint-0)` porque esta edición corrige el alcance; la comprobación final debe ejecutarse sobre el estado actualizado.
+- Estado del sprint: `done`
+- El commit formal `gate(sprint-0)` (`af29a37`) se emitio tras repetir la verificacion final sobre el alcance actualizado y completar esta checklist.
+- Se deja registrada la limitacion de la revision adversarial (misma IA, segunda pasada en contexto limpio); no se afirma revision independiente.

@@ -16,7 +16,7 @@ Cada sprint es un cambio revisable por separado. En un repositorio Git, usar una
 
 | Sprint | Resultado | Depende de | Estado |
 |---|---|---|---|
-| 0 | Base, entorno web y primer firewall SSH read-only | Ninguno | in_progress |
+| 0 | Base, entorno web y primer firewall SSH read-only | Ninguno | done |
 | 1 | Seguridad fundacional y vault | 0 | not_started |
 | 2 | Modelo de dominio y alta transaccional | 1 | not_started |
 | 3 | Jobs, workers y sensor aislado | 1, 2 | not_started |
