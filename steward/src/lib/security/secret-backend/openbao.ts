@@ -177,6 +177,25 @@ export class OpenBaoSecretBackend implements SecretBackend {
     await this.writeValue(ref, value, this.cfg.token);
   }
 
+  /** Lectura directa del custodio (control plane) con el token admin. */
+  async read(ref: string): Promise<string> {
+    return this.readValue(ref, this.cfg.token);
+  }
+
+  /** Borrado del custodio. */
+  async remove(ref: string): Promise<void> {
+    const r = await http("DELETE", this.dataPath(ref), this.cfg.token);
+    if (r.status !== 204 && r.status !== 200) {
+      throw new Error(`OpenBao: no se pudo borrar ${ref} (${r.status})`);
+    }
+    this.refs.delete(ref);
+  }
+
+  /** Lista de refs conocidos (para el custodio). */
+  async list(): Promise<string[]> {
+    return Array.from(this.refs).sort();
+  }
+
   async version(ref: string): Promise<number> {
     const r = await http("GET", this.dataPath(ref), this.cfg.token);
     return Number(r.data?.data?.metadata?.version ?? 1);

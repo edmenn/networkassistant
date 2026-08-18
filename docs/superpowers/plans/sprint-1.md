@@ -14,6 +14,7 @@ Regla: seguridad primero; cambio mínimo; TDD. No usar secretos reales (solo can
 - **U6 — Control plane sin `NET_ADMIN`/`NET_RAW`.** Prueba: inspeccion de capabilities del contenedor (sin NET_ADMIN/NET_RAW en runtime). ✅ (2026-08-18, `cap_drop` en `lab/compose.lab.yml`; runtime `CapBnd=...05fb`, `NET_ADMIN=0`, `NET_RAW=0`, `CapEff=0`; flujo E2E SSH re-verificado sin esos caps). Hallazgo confirmado: el vault del baseline (clave derivada de la maquina) se rompe al recrear el contenedor; refuerza la necesidad de OpenBao.
 - **U7 — Auditoria append-only / integridad.** Prueba: no se puede reescribir/borrar un evento previo sin detectarlo. ✅ (2026-08-18, `steward/src/lib/security/audit.ts`, `AppendOnlyAudit` con cadena de hashes, 5 canarios).
 - **U8 — Backup/restore cifrado del vault** con datos ficticios. Prueba: restore en entorno limpio reproduce los secretos. ✅ (2026-08-18, `tests/lib/security/backup-restore.test.ts`, drill OpenBao: backup cifrado -> simular perdida -> restore en backend nuevo -> usable solo por lease autorizado).
+- **U9 — Vault del runtime respaldado por OpenBao.** Expone la misma API del baseline (isInitialized/isUnlocked/ensureUnlocked/setSecret/getSecret/deleteSecret/listSecretKeys); el control plane es custodio (read/write/delete/list con token admin) y la entrega a workers usa leases. `vault.ts` selecciona OpenBao cuando `OPENBAO_ADDR`/`OPENBAO_TOKEN` estan configurados (fallback al vault de archivo). ✅ (2026-08-18, `steward/src/lib/security/vault-openbao.ts` + wiring en `vault.ts`; canario U9 contra OpenBao real).
 
 ## Gate de cierre
 
@@ -25,4 +26,4 @@ Restaurar backup cifrado anterior y revocar todos los leases emitidos durante la
 
 ## Estado
 
-`in_progress`. **U1-U8 completadas a nivel de unidad** (35 canarios pasan, `node --test`). Siguiente: integracion en el runtime (reemplazar el vault del baseline por OpenBao via `SecretBackend`, aplicar redaccion/RBAC/SSRF/auditoria en las superficies reales) y drill end-to-end del gate.
+`in_progress`. **U1-U9 completadas a nivel de unidad** (36 canarios, `node --test`). Integracion en runtime: vault.ts ya selecciona OpenBao cuando se configura; falta el drill end-to-end (reconstruir imagen, exponer OpenBao al contenedor, re-correr el flujo) y aplicar redaccion/RBAC/SSRF/auditoria en las superficies reales.

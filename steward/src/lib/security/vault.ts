@@ -122,8 +122,7 @@ const removeLegacyVault = async (): Promise<void> => {
 // Public API
 // ---------------------------------------------------------------------------
 
-export const vault = {
-  async isInitialized(): Promise<boolean> {
+const fileVault = {  async isInitialized(): Promise<boolean> {
     return fileExists(vaultKeyFile);
   },
 
@@ -245,3 +244,18 @@ export const vault = {
     return Object.keys(cachedPayload?.secrets ?? {}).sort();
   },
 };
+
+// ---------------------------------------------------------------------------
+// Backend selection (integracion Sprint 1 / ADR-0003)
+// ---------------------------------------------------------------------------
+// Cuando OpenBao esta configurado (env OPENBAO_ADDR + OPENBAO_TOKEN), el vault
+// del runtime pasa a estar respaldado por OpenBao (misma API publica). Si no,
+// se conserva el vault de archivo como fallback. La clave derivada de la
+// maquina del vault de archivo es fragil (se rompe al recrear el contenedor);
+// OpenBao la reemplaza (separacion de clave y datos, autenticacion de workload).
+
+import { openBaoVault, type VaultLike } from "./vault-openbao";
+
+const openBaoConfigured = Boolean(process.env.OPENBAO_ADDR && process.env.OPENBAO_TOKEN);
+
+export const vault: VaultLike = openBaoConfigured ? openBaoVault : (fileVault as unknown as VaultLike);
