@@ -1,0 +1,551 @@
+import { randomUUID } from "node:crypto";
+import dns from "node:dns/promises";
+import net from "node:net";
+import { runShell } from "@/lib/utils/shell";
+import { buildObservation } from "@/lib/discovery/evidence";
+import {
+  getLocalIpv4Interfaces,
+  hostsForSubnet,
+  prefixLengthFromNetmask,
+  sameSubnet,
+  subnetCidrForIp,
+} from "@/lib/discovery/local";
+import type { DiscoveryCandidate } from "@/lib/discovery/types";
+import type { ServiceFingerprint } from "@/lib/state/types";
+
+export interface ActiveDiscoveryOptions {
+  deepScan?: boolean;
+  targetOffset?: number;
+  maxTargets?: number;
+  maxPortScanHosts?: number;
+  nmapSubnetSweepTimeoutMs?: number;
+}
+
+const COMMON_TCP_SERVICES: Array<{ port: number; name: string; secure: boolean }> = [
+  { port: 21, name: "ftp", secure: false },
+  { port: 22, name: "ssh", secure: true },
+  { port: 23, name: "telnet", secure: false },
+  { port: 53, name: "dns", secure: false },
+  { port: 80, name: "http", secure: false },
+  { port: 88, name: "kerberos", secure: true },
+  { port: 135, name: "msrpc", secure: false },
+  { port: 139, name: "netbios-ssn", secure: false },
+  { port: 389, name: "ldap", secure: false },
+  { port: 443, name: "https", secure: true },
+  { port: 445, name: "smb", secure: false },
+  { port: 554, name: "rtsp", secure: false },
+  { port: 631, name: "ipp", secure: false },
+  { port: 993, name: "imaps", secure: true },
+  { port: 995, name: "pop3s", secure: true },
+  { port: 1433, name: "mssql", secure: false },
+  { port: 1521, name: "oracle", secure: false },
+  { port: 1883, name: "mqtt", secure: false },
+  { port: 8883, name: "mqtts", secure: true },
+  { port: 2375, name: "docker", secure: false },
+  { port: 2376, name: "docker-tls", secure: true },
+  { port: 3306, name: "mysql", secure: false },
+  { port: 3389, name: "rdp", secure: true },
+  { port: 5900, name: "vnc", secure: false },
+  { port: 5432, name: "postgresql", secure: false },
+  { port: 5985, name: "winrm", secure: false },
+  { port: 5986, name: "winrm-https", secure: true },
+  { port: 6443, name: "kubernetes", secure: true },
+  { port: 7443, name: "https-alt", secure: true },
+  { port: 8000, name: "http-alt", secure: false },
+  { port: 8080, name: "http-proxy", secure: false },
+  { port: 8443, name: "https-alt", secure: true },
+  { port: 9000, name: "http-admin", secure: false },
+  { port: 9100, name: "jetdirect", secure: false },
+  { port: 5000, name: "web-console", secure: false },
+  { port: 5001, name: "web-console-ssl", secure: true },
+];
+
+const serviceFromNmap = (
+  port: number,
+  transport: "tcp" | "udp",
+  name: string,
+): ServiceFingerprint => {
+  const secureByName = /(https|ssh|tls|ssl|imaps|ldaps|snmpv3)/i.test(name);
+
+  return {
+    id: randomUUID(),
+    port,
+    transport,
+    name: name || "unknown",
+    secure: secureByName,
+    lastSeenAt: new Date().toISOString(),
+  };
+};
+
+const parseNmapProductVersion = (raw: string | undefined): { product?: string; version?: string } => {
+  if (!raw) {
+    return {};
+  }
+
+  const normalized = raw.replace(/\s+/g, " ").replace(/^\/+|\/+$/g, "").trim();
+  if (!normalized) {
+    return {};
+  }
+
+  const versionMatch = normalized.match(/\b(\d+(?:\.\d+){0,3}(?:[a-z][a-z0-9._-]*)?)\b/i);
+  if (!versionMatch || versionMatch.index === undefined) {
+    return { product: normalized };
+  }
+
+  const product = normalized.slice(0, versionMatch.index).trim().replace(/[/:-]+$/, "");
+  return {
+    product: product || undefined,
+    version: versionMatch[1],
+  };
+};
+
+const parseNmapLine = (line: string): DiscoveryCandidate | undefined => {
+  if (!line.startsWith("Host:")) {
+    return undefined;
+  }
+
+  const hostMatch = line.match(/^Host:\s+(\d+\.\d+\.\d+\.\d+)\s+\(([^)]*)\)\s+Ports:\s+(.+)$/);
+  if (!hostMatch) {
+    return undefined;
+  }
+
+  const ip = hostMatch[1];
+  const hostname = hostMatch[2].trim() || undefined;
+  const portBlob = hostMatch[3];
+  const statusUp = /status:\s*up/i.test(line);
+
+  const services: ServiceFingerprint[] = [];
+
+  for (const chunk of portBlob.split(",")) {
+    const fields = chunk.trim().split("/");
+    if (fields.length < 5) {
+      continue;
+    }
+
+    const port = Number(fields[0]);
+    const state = fields[1];
+    const transport = fields[2] as "tcp" | "udp";
+    const service = fields[4] || "unknown";
+    const versionBlob = fields.slice(6).join("/").trim() || undefined;
+    const parsedVersion = parseNmapProductVersion(versionBlob);
+
+    if (!Number.isFinite(port) || state !== "open") {
+      continue;
+    }
+
+    services.push({
+      ...serviceFromNmap(port, transport, service),
+      product: parsedVersion.product,
+      version: parsedVersion.version ?? versionBlob,
+    });
+  }
+
+  if (services.length === 0 && !statusUp) {
+    return undefined;
+  }
+
+  const observations = [
+    ...(statusUp
+      ? [
+          buildObservation({
+            ip,
+            source: "active",
+            evidenceType: "nmap_host_up",
+            confidence: 0.9,
+            observedAt: new Date().toISOString(),
+            ttlMs: 20 * 60_000,
+            details: {
+              scanner: "nmap",
+            },
+          }),
+        ]
+      : []),
+    ...services.map((service) =>
+      buildObservation({
+        ip,
+        source: "active",
+        evidenceType: "tcp_open",
+        confidence: 0.95,
+        observedAt: new Date().toISOString(),
+        ttlMs: 30 * 60_000,
+        details: {
+          transport: service.transport,
+          port: service.port,
+          name: service.name,
+          scanner: "nmap",
+        },
+      })),
+  ];
+
+  return {
+    ip,
+    hostname,
+    services,
+    source: "active",
+    observations,
+    metadata: {
+      scanner: "nmap",
+    },
+  };
+};
+
+const preferredNmapTcpScanMode = (): "-sS" | "-sT" => {
+  if (process.platform !== "win32" && typeof process.getuid === "function" && process.getuid() !== 0) {
+    return "-sT";
+  }
+
+  return "-sS";
+};
+
+const tryGetLocalIps = async (): Promise<string[]> => {
+  const localInterfaces = getLocalIpv4Interfaces();
+  if (localInterfaces.length > 0) {
+    return localInterfaces.map((entry) => entry.ip);
+  }
+
+  const candidates = [
+    "ipconfig",
+    "ipconfig getifaddr en0",
+    "ipconfig getifaddr en1",
+    "hostname -I",
+    "ip -4 route get 1.1.1.1 | awk '{print $7}'",
+  ];
+
+  for (const command of candidates) {
+    const result = await runShell(command, 2_500);
+    if (!result.stdout) {
+      continue;
+    }
+
+    const ip = result.stdout.split(/\s+/).find((item) => isEligibleIp(item));
+    if (ip) {
+      return [ip];
+    }
+  }
+
+  return [];
+};
+
+const sliceWithOffset = <T>(items: T[], offset: number, maxItems: number): T[] => {
+  if (items.length <= maxItems) {
+    return items;
+  }
+
+  const safeOffset = Math.max(0, offset % items.length);
+  const first = items.slice(safeOffset, safeOffset + maxItems);
+  if (first.length >= maxItems) {
+    return first;
+  }
+
+  return [...first, ...items.slice(0, maxItems - first.length)];
+};
+
+const isEligibleIp = (ip: string): boolean => {
+  const octets = ip.split(".").map((value) => Number(value));
+  if (octets.length !== 4 || octets.some((value) => !Number.isInteger(value) || value < 0 || value > 255)) {
+    return false;
+  }
+
+  const a = octets[0];
+  const b = octets[1];
+  const d = octets[3];
+  if (a === 127 || a >= 224 || a === 0 || d === 255) {
+    return false;
+  }
+
+  return a === 10 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168);
+};
+
+const uniqueSubnetsFromIps = (
+  ips: string[],
+  interfaces = getLocalIpv4Interfaces(),
+): string[] => {
+  return Array.from(new Set(
+    ips
+      .filter(isEligibleIp)
+      .map((ip) =>
+        interfaces
+          .map((entry) => sameSubnetCandidateCidr(ip, entry.ip, entry.netmask))
+          .find((value): value is string => Boolean(value))
+        ?? subnetCidrForIp(ip)
+        ?? null)
+      .filter((value): value is string => Boolean(value)),
+  )).sort();
+};
+
+const sameSubnetCandidateCidr = (ip: string, interfaceIp: string, netmask?: string): string | null => {
+  if (!sameSubnet(ip, interfaceIp, netmask)) {
+    return null;
+  }
+  return discoverySweepSubnetForIp(interfaceIp, netmask);
+};
+
+const discoverySweepSubnetForIp = (ip: string, netmask?: string): string | null => {
+  const prefixLength = prefixLengthFromNetmask(netmask);
+  if (prefixLength !== null && prefixLength >= 22) {
+    return subnetCidrForIp(ip, netmask);
+  }
+  return subnetCidrForIp(ip);
+};
+
+const buildHostCandidatesFromLocalInterfaces = (
+  interfaces = getLocalIpv4Interfaces(),
+): string[] => {
+  const all = interfaces.flatMap((entry) => {
+    const subnet = discoverySweepSubnetForIp(entry.ip, entry.netmask);
+    if (!subnet) {
+      return [];
+    }
+    return hostsForSubnet(subnet).filter((ip) => ip !== entry.ip);
+  });
+  return Array.from(new Set(all)).filter(isEligibleIp).sort((a, b) => a.localeCompare(b));
+};
+
+const buildHostCandidatesFromSubnets = (subnets: string[]): string[] => {
+  const all = subnets.flatMap((subnet) => hostsForSubnet(subnet));
+  return Array.from(new Set(all)).filter(isEligibleIp).sort((a, b) => a.localeCompare(b));
+};
+
+const probeTcpPort = (ip: string, port: number, timeoutMs = 450): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
+    let settled = false;
+
+    const settle = (value: boolean) => {
+      if (settled) return;
+      settled = true;
+      socket.destroy();
+      resolve(value);
+    };
+
+    socket.setTimeout(timeoutMs);
+    socket.once("connect", () => settle(true));
+    socket.once("timeout", () => settle(false));
+    socket.once("error", () => settle(false));
+    socket.once("close", () => settle(false));
+    socket.connect(port, ip);
+  });
+};
+
+const scanTcpServices = async (ip: string): Promise<ServiceFingerprint[]> => {
+  const discovered: ServiceFingerprint[] = [];
+  const maxConcurrency = 24;
+
+  for (let idx = 0; idx < COMMON_TCP_SERVICES.length; idx += maxConcurrency) {
+    const chunk = COMMON_TCP_SERVICES.slice(idx, idx + maxConcurrency);
+    const chunkResults = await Promise.all(
+      chunk.map(async (service) => ({ service, open: await probeTcpPort(ip, service.port) })),
+    );
+
+    for (const result of chunkResults) {
+      if (!result.open) continue;
+      discovered.push({
+        id: randomUUID(),
+        port: result.service.port,
+        transport: "tcp",
+        name: result.service.name,
+        secure: result.service.secure,
+        lastSeenAt: new Date().toISOString(),
+      });
+    }
+  }
+
+  return discovered;
+};
+
+const reverseLookup = async (ip: string): Promise<string | undefined> => {
+  try {
+    const names = await Promise.race<string[]>([
+      dns.reverse(ip),
+      new Promise<string[]>((resolve) => setTimeout(() => resolve([]), 1_500)),
+    ]);
+    const first = names.find((value) => value.trim().length > 0);
+    return first;
+  } catch {
+    return undefined;
+  }
+};
+
+const pingSweep = async (ips: string[]): Promise<DiscoveryCandidate[]> => {
+  const pingCommand = process.platform === "win32"
+    ? (ip: string) => `ping -n 1 -w 1000 ${ip}`
+    : (ip: string) => `ping -c 1 -W 1 ${ip}`;
+
+  const results: Array<DiscoveryCandidate | undefined> = await Promise.all(
+    ips.map(async (ip) => {
+      const ping = await runShell(pingCommand(ip), 2_500);
+      if (!ping.ok) {
+        return undefined;
+      }
+
+      return {
+        ip,
+        services: [] as ServiceFingerprint[],
+        source: "active" as const,
+        observations: [
+          buildObservation({
+            ip,
+            source: "active",
+            evidenceType: "icmp_reply",
+            confidence: 0.9,
+            observedAt: new Date().toISOString(),
+            ttlMs: 15 * 60_000,
+            details: {
+              scanner: "ping",
+            },
+          }),
+        ],
+        metadata: {
+          scanner: "ping",
+        },
+      };
+    }),
+  );
+
+  return results.filter((item): item is DiscoveryCandidate => Boolean(item));
+};
+
+export const collectActiveCandidates = async (
+  seedIps: string[] = [],
+  options: ActiveDiscoveryOptions = {},
+): Promise<DiscoveryCandidate[]> => {
+  const targetOffset = options.targetOffset ?? 0;
+  const deepScan = options.deepScan ?? false;
+  const maxTargets = options.maxTargets ?? (deepScan ? 256 : 32);
+  const maxPortScanHosts = options.maxPortScanHosts ?? (deepScan ? 96 : 16);
+  const maxNmapSubnets = deepScan ? 8 : 2;
+  const subnetSweepTimeoutMs = Math.max(
+    15_000,
+    Math.min(120_000, Math.floor(options.nmapSubnetSweepTimeoutMs ?? 120_000)),
+  );
+
+  const hasNmap = await runShell(process.platform === "win32" ? "where nmap" : "command -v nmap", 1_500);
+
+  const localInterfaces = getLocalIpv4Interfaces();
+  const localIps = new Set(
+    localInterfaces.length > 0
+      ? localInterfaces.map((entry) => entry.ip)
+      : await tryGetLocalIps(),
+  );
+  const isRemoteIp = (ip: string): boolean => !localIps.has(ip);
+  const nmapSubnets = uniqueSubnetsFromIps([
+    ...seedIps,
+    ...localIps,
+  ], localInterfaces).slice(0, maxNmapSubnets);
+
+  if (deepScan && hasNmap.ok && hasNmap.stdout && nmapSubnets.length > 0) {
+    const targetArgs = nmapSubnets.join(" ");
+    const scan = await runShell(
+      `nmap ${preferredNmapTcpScanMode()} -sV --version-light -Pn -T4 -F ${targetArgs} -oG -`,
+      subnetSweepTimeoutMs,
+    );
+
+    if (scan.stdout) {
+      const parsed = scan.stdout
+        .split("\n")
+        .map((line) => parseNmapLine(line.trim()))
+        .filter((item): item is DiscoveryCandidate => Boolean(item));
+
+      if (parsed.length > 0) {
+        return parsed.filter((candidate) => isRemoteIp(candidate.ip));
+      }
+    }
+  }
+
+  const deduped = Array.from(new Set(seedIps.filter((ip) => isEligibleIp(ip) && isRemoteIp(ip)))).sort();
+  let targets = sliceWithOffset(deduped, targetOffset, maxTargets);
+
+  if (targets.length === 0) {
+    const localCandidates = buildHostCandidatesFromLocalInterfaces(localInterfaces);
+    if (localCandidates.length === 0) {
+      return [];
+    }
+
+    targets = sliceWithOffset(localCandidates, targetOffset, maxTargets)
+      .filter((ip) => isRemoteIp(ip));
+  }
+
+  if (targets.length < maxTargets) {
+    const fallbackSubnets = uniqueSubnetsFromIps([
+      ...seedIps,
+      ...targets,
+      ...localIps,
+    ], localInterfaces);
+    const fallbackHosts = buildHostCandidatesFromSubnets(fallbackSubnets)
+      .filter((ip) => !targets.includes(ip) && isRemoteIp(ip));
+    if (fallbackHosts.length > 0) {
+      const needed = maxTargets - targets.length;
+      targets = [...targets, ...sliceWithOffset(fallbackHosts, targetOffset, needed)];
+    }
+  }
+
+  targets = targets.filter((ip) => isRemoteIp(ip));
+  const pingCandidates = await pingSweep(targets);
+  const ipsToPortScan = sliceWithOffset(
+    Array.from(new Set([...targets, ...pingCandidates.map((candidate) => candidate.ip)])).filter((ip) => isRemoteIp(ip)),
+    targetOffset,
+    maxPortScanHosts,
+  );
+
+  const enriched: Array<DiscoveryCandidate | undefined> = await Promise.all(
+    ipsToPortScan.map(async (ip) => {
+      const [services, hostname] = await Promise.all([
+        scanTcpServices(ip),
+        reverseLookup(ip),
+      ]);
+
+      const observations = [
+        ...services.map((service) =>
+          buildObservation({
+            ip,
+            source: "active",
+            evidenceType: "tcp_open",
+            confidence: 0.88,
+            observedAt: new Date().toISOString(),
+            ttlMs: 30 * 60_000,
+            details: {
+              transport: service.transport,
+              port: service.port,
+              name: service.name,
+              scanner: "tcp-connect",
+            },
+          })),
+        ...(hostname
+          ? [
+              buildObservation({
+                ip,
+                source: "active",
+                evidenceType: "dns_ptr",
+                confidence: 0.45,
+                observedAt: new Date().toISOString(),
+                ttlMs: 12 * 60 * 60_000,
+                details: {
+                  hostname,
+                },
+              }),
+            ]
+          : []),
+      ];
+
+      if (observations.length === 0) {
+        return undefined;
+      }
+
+      return {
+        ip,
+        ...(hostname ? { hostname } : {}),
+        services,
+        source: "active" as const,
+        observations,
+        metadata: {
+          scanner: "tcp-connect",
+          deepScan,
+        },
+      };
+    }),
+  );
+
+  return [...pingCandidates, ...enriched.filter((item): item is DiscoveryCandidate => Boolean(item))]
+    .filter((candidate) => isRemoteIp(candidate.ip));
+};
+

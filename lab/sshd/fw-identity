@@ -1,0 +1,6 @@
+# Identidad sintetica del firewall de laboratorio (nunca un dispositivo real)
+vendor=LabSim
+model=FW-2000-Sim
+role=firewall
+site=lab
+firmware=sim-1.0.0

@@ -1,0 +1,1255 @@
+{
+  "steps": [],
+  "device": {
+    "id": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+    "siteId": "site.local.default",
+    "name": "fw-lab-01",
+    "ip": "172.28.200.10",
+    "hostname": "fw-lab-01.steward-sprint0-lab_lab-net",
+    "os": "Debian",
+    "type": "server",
+    "status": "online",
+    "autonomyTier": 1,
+    "tags": [],
+    "protocols": [
+      "ssh"
+    ],
+    "services": [
+      {
+        "id": "ebbe6fd6-2015-4b6d-9d17-3782ec11c3cf",
+        "port": 22,
+        "transport": "tcp",
+        "name": "ssh",
+        "secure": true,
+        "lastSeenAt": "2026-08-18T00:46:51.542Z",
+        "product": "OpenSSH",
+        "version": "9.2p1 Debian 2+deb12u10 protocol 2.0",
+        "banner": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
+      }
+    ],
+    "firstSeenAt": "2026-08-18T00:43:05.874Z",
+    "lastSeenAt": "2026-08-18T00:48:09.539Z",
+    "lastChangedAt": "2026-08-18T00:48:09.540Z",
+    "metadata": {
+      "source": "manual",
+      "identity": {
+        "nameManuallySet": true,
+        "nameManuallySetAt": "2026-08-18T00:48:09.539Z",
+        "nameSetBy": "user"
+      },
+      "adoption": {
+        "status": "adopted",
+        "onboardingVersion": 2,
+        "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
+        "runStatus": "awaiting_user",
+        "runStage": "contract",
+        "profileSummary": "Steward onboarded fw-lab-01 and prepared management intents.",
+        "profileCount": 1,
+        "selectedProfileIds": [
+          "steward.linux-server"
+        ],
+        "requiredCredentials": [
+          "ssh"
+        ],
+        "workloadCount": 0,
+        "assuranceCount": 0,
+        "serviceContractCount": 0,
+        "unresolvedRequiredQuestions": 2,
+        "missingRequiredCredentials": [],
+        "lastProfiledAt": "2026-08-18T00:48:09.540Z"
+      },
+      "scanner": "nmap",
+      "advancedNetworkIntel": {
+        "managedBy": "steward.advanced-network-intel",
+        "scriptPreset": "banner,http-title,http-headers,ssl-cert,upnp-info"
+      },
+      "linuxServer": {
+        "managedBy": "steward.linux-server",
+        "hardeningMode": "baseline"
+      },
+      "discoveryEvidence": {
+        "confidence": 0.978975,
+        "status": "online",
+        "hasPositiveEvidence": true,
+        "hasStrongEvidence": true,
+        "evidenceTypes": [
+          "ssh_banner",
+          "tcp_open"
+        ],
+        "sourceCounts": {
+          "active": 1,
+          "fingerprint": 1
+        },
+        "observationCount": 2,
+        "fusedAt": "2026-08-18T00:46:48.104Z"
+      },
+      "hostname": "fw-lab-01.steward-sprint0-lab_lab-net",
+      "discovery": {
+        "confidence": 0.978975,
+        "hasPositiveEvidence": true,
+        "hasStrongEvidence": true,
+        "evidenceTypes": [
+          "ssh_banner",
+          "tcp_open"
+        ],
+        "sourceCounts": {
+          "active": 1,
+          "fingerprint": 1
+        },
+        "observationCount": 2,
+        "status": "online",
+        "lastEvaluatedAt": "2026-08-18T00:46:51.544Z"
+      },
+      "classification": {
+        "confidence": 0.43333333333333335,
+        "signals": [
+          {
+            "source": "port",
+            "type": "iot",
+            "weight": 25,
+            "reason": "SSH only with few ports"
+          },
+          {
+            "source": "hostname",
+            "type": "firewall",
+            "weight": 65,
+            "reason": "Firewall hostname pattern"
+          },
+          {
+            "source": "banner",
+            "type": "server",
+            "weight": 35,
+            "reason": "Server-class Linux: SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
+          }
+        ],
+        "classifiedAt": "2026-08-18T00:46:51.544Z"
+      },
+      "managementSurface": {
+        "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+        "preferredProtocol": "ssh",
+        "capabilities": [
+          {
+            "id": "ssh-core",
+            "title": "Shell Management",
+            "protocol": "ssh",
+            "actions": [
+              "Patch status audit",
+              "Service health checks",
+              "Disk and SMART inspection",
+              "Log analysis"
+            ]
+          },
+          {
+            "id": "capability.advanced-network-intel",
+            "title": "Advanced Network Intel",
+            "protocol": "http",
+            "actions": [
+              "Nmap NSE fingerprinting (banner/title/headers/SSL)",
+              "Favicon hashing and appliance signature hints",
+              "HTTP/HTTPS management surface contract analysis"
+            ]
+          },
+          {
+            "id": "capability.linux-server",
+            "title": "Linux Server Operations",
+            "protocol": "ssh",
+            "actions": [
+              "Collect host health snapshots",
+              "Audit package and service posture",
+              "Run safe hardening checks"
+            ]
+          }
+        ]
+      },
+      "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+      "secondaryIps": [],
+      "discoveryPhases": {
+        "hostname": {
+          "lastAttemptedAt": "2026-08-18T00:44:46.193Z",
+          "lastScanMode": "incremental",
+          "lastCompletedAt": "2026-08-18T00:44:46.193Z",
+          "lastStatus": "completed",
+          "lastBudgetMs": 10000,
+          "lastTargetCount": 1
+        },
+        "fingerprint": {
+          "lastAttemptedAt": "2026-08-18T00:44:51.622Z",
+          "lastScanMode": "deep",
+          "lastCompletedAt": "2026-08-18T00:44:51.622Z",
+          "lastStatus": "completed",
+          "lastBudgetMs": 25000,
+          "lastTargetCount": 2
+        },
+        "nmapDeep": {
+          "lastAttemptedAt": "2026-08-18T00:46:51.543Z",
+          "lastScanMode": "incremental",
+          "lastCompletedAt": "2026-08-18T00:46:51.543Z",
+          "lastStatus": "completed",
+          "lastBudgetMs": 25000,
+          "lastTargetCount": 1
+        }
+      },
+      "fingerprint": {
+        "sshBanner": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10",
+        "inferredOs": "Debian",
+        "protocolHints": [],
+        "lastFingerprintedAt": "2026-08-18T00:44:51.622Z",
+        "fingerprintVersion": 3
+      },
+      "nmapDeep": {
+        "command": "nmap -Pn -n --open -sV --version-light --script \"banner,http-title,http-headers,ssl-cert,upnp-info\" -p 22,80,443,554,8080,8443,5000,5001,161,1883,2375,3389 172.28.200.10 -oX -",
+        "scripts": [
+          {
+            "port": 22,
+            "id": "banner",
+            "output": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
+          }
+        ],
+        "collectedAt": "2026-08-18T00:46:51.542Z"
+      }
+    }
+  },
+  "terminal": null,
+  "api": {
+    "devices": {
+      "devices": [
+        {
+          "id": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "siteId": "site.local.default",
+          "name": "fw-lab-01",
+          "ip": "172.28.200.10",
+          "hostname": "fw-lab-01.steward-sprint0-lab_lab-net",
+          "os": "Debian",
+          "type": "server",
+          "status": "online",
+          "autonomyTier": 1,
+          "tags": [],
+          "protocols": [
+            "ssh"
+          ],
+          "services": [
+            {
+              "id": "ebbe6fd6-2015-4b6d-9d17-3782ec11c3cf",
+              "port": 22,
+              "transport": "tcp",
+              "name": "ssh",
+              "secure": true,
+              "lastSeenAt": "2026-08-18T00:46:51.542Z",
+              "product": "OpenSSH",
+              "version": "9.2p1 Debian 2+deb12u10 protocol 2.0",
+              "banner": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
+            }
+          ],
+          "firstSeenAt": "2026-08-18T00:43:05.874Z",
+          "lastSeenAt": "2026-08-18T00:48:09.539Z",
+          "lastChangedAt": "2026-08-18T00:48:11.213Z",
+          "metadata": {
+            "source": "manual",
+            "identity": {
+              "nameManuallySet": true,
+              "nameManuallySetAt": "2026-08-18T00:48:09.539Z",
+              "nameSetBy": "user"
+            },
+            "adoption": {
+              "status": "adopted",
+              "onboardingVersion": 2,
+              "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
+              "runStatus": "awaiting_user",
+              "runStage": "contract",
+              "profileSummary": "Steward onboarded fw-lab-01 and prepared management intents.",
+              "profileCount": 1,
+              "selectedProfileIds": [
+                "steward.linux-server"
+              ],
+              "requiredCredentials": [
+                "ssh"
+              ],
+              "workloadCount": 0,
+              "assuranceCount": 0,
+              "serviceContractCount": 0,
+              "unresolvedRequiredQuestions": 2,
+              "missingRequiredCredentials": [],
+              "lastProfiledAt": "2026-08-18T00:48:11.213Z"
+            },
+            "scanner": "nmap",
+            "advancedNetworkIntel": {
+              "managedBy": "steward.advanced-network-intel",
+              "scriptPreset": "banner,http-title,http-headers,ssl-cert,upnp-info"
+            },
+            "linuxServer": {
+              "managedBy": "steward.linux-server",
+              "hardeningMode": "baseline"
+            },
+            "discoveryEvidence": {
+              "confidence": 0.978975,
+              "status": "online",
+              "hasPositiveEvidence": true,
+              "hasStrongEvidence": true,
+              "evidenceTypes": [
+                "ssh_banner",
+                "tcp_open"
+              ],
+              "sourceCounts": {
+                "active": 1,
+                "fingerprint": 1
+              },
+              "observationCount": 2,
+              "fusedAt": "2026-08-18T00:46:48.104Z"
+            },
+            "hostname": "fw-lab-01.steward-sprint0-lab_lab-net",
+            "discovery": {
+              "confidence": 0.978975,
+              "hasPositiveEvidence": true,
+              "hasStrongEvidence": true,
+              "evidenceTypes": [
+                "ssh_banner",
+                "tcp_open"
+              ],
+              "sourceCounts": {
+                "active": 1,
+                "fingerprint": 1
+              },
+              "observationCount": 2,
+              "status": "online",
+              "lastEvaluatedAt": "2026-08-18T00:46:51.544Z"
+            },
+            "classification": {
+              "confidence": 0.43333333333333335,
+              "signals": [
+                {
+                  "source": "port",
+                  "type": "iot",
+                  "weight": 25,
+                  "reason": "SSH only with few ports"
+                },
+                {
+                  "source": "hostname",
+                  "type": "firewall",
+                  "weight": 65,
+                  "reason": "Firewall hostname pattern"
+                },
+                {
+                  "source": "banner",
+                  "type": "server",
+                  "weight": 35,
+                  "reason": "Server-class Linux: SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
+                }
+              ],
+              "classifiedAt": "2026-08-18T00:46:51.544Z"
+            },
+            "managementSurface": {
+              "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+              "preferredProtocol": "ssh",
+              "capabilities": [
+                {
+                  "id": "ssh-core",
+                  "title": "Shell Management",
+                  "protocol": "ssh",
+                  "actions": [
+                    "Patch status audit",
+                    "Service health checks",
+                    "Disk and SMART inspection",
+                    "Log analysis"
+                  ]
+                },
+                {
+                  "id": "capability.advanced-network-intel",
+                  "title": "Advanced Network Intel",
+                  "protocol": "http",
+                  "actions": [
+                    "Nmap NSE fingerprinting (banner/title/headers/SSL)",
+                    "Favicon hashing and appliance signature hints",
+                    "HTTP/HTTPS management surface contract analysis"
+                  ]
+                },
+                {
+                  "id": "capability.linux-server",
+                  "title": "Linux Server Operations",
+                  "protocol": "ssh",
+                  "actions": [
+                    "Collect host health snapshots",
+                    "Audit package and service posture",
+                    "Run safe hardening checks"
+                  ]
+                }
+              ]
+            },
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "secondaryIps": [],
+            "discoveryPhases": {
+              "hostname": {
+                "lastAttemptedAt": "2026-08-18T00:44:46.193Z",
+                "lastScanMode": "incremental",
+                "lastCompletedAt": "2026-08-18T00:44:46.193Z",
+                "lastStatus": "completed",
+                "lastBudgetMs": 10000,
+                "lastTargetCount": 1
+              },
+              "fingerprint": {
+                "lastAttemptedAt": "2026-08-18T00:44:51.622Z",
+                "lastScanMode": "deep",
+                "lastCompletedAt": "2026-08-18T00:44:51.622Z",
+                "lastStatus": "completed",
+                "lastBudgetMs": 25000,
+                "lastTargetCount": 2
+              },
+              "nmapDeep": {
+                "lastAttemptedAt": "2026-08-18T00:46:51.543Z",
+                "lastScanMode": "incremental",
+                "lastCompletedAt": "2026-08-18T00:46:51.543Z",
+                "lastStatus": "completed",
+                "lastBudgetMs": 25000,
+                "lastTargetCount": 1
+              }
+            },
+            "fingerprint": {
+              "sshBanner": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10",
+              "inferredOs": "Debian",
+              "protocolHints": [],
+              "lastFingerprintedAt": "2026-08-18T00:44:51.622Z",
+              "fingerprintVersion": 3
+            },
+            "nmapDeep": {
+              "command": "nmap -Pn -n --open -sV --version-light --script \"banner,http-title,http-headers,ssl-cert,upnp-info\" -p 22,80,443,554,8080,8443,5000,5001,161,1883,2375,3389 172.28.200.10 -oX -",
+              "scripts": [
+                {
+                  "port": 22,
+                  "id": "banner",
+                  "output": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
+                }
+              ],
+              "collectedAt": "2026-08-18T00:46:51.542Z"
+            }
+          }
+        },
+        {
+          "id": "467688ab-4b1f-4c13-b867-ee242050a0e6",
+          "siteId": "site.local.default",
+          "name": "device-172-28-200-1",
+          "ip": "172.28.200.1",
+          "type": "unknown",
+          "status": "online",
+          "autonomyTier": 1,
+          "tags": [],
+          "protocols": [],
+          "services": [
+            {
+              "id": "b50db3e6-db0a-4cae-b131-5666c5d261a9",
+              "port": 111,
+              "transport": "tcp",
+              "name": "rpcbind",
+              "secure": false,
+              "lastSeenAt": "2026-08-18T00:45:08.011Z",
+              "product": "Ignored State: closed (",
+              "version": "99"
+            }
+          ],
+          "firstSeenAt": "2026-08-18T00:44:43.259Z",
+          "lastSeenAt": "2026-08-18T00:46:48.102Z",
+          "lastChangedAt": "2026-08-18T00:46:48.102Z",
+          "metadata": {
+            "scanner": "nmap",
+            "discoveryEvidence": {
+              "confidence": 0.855,
+              "status": "online",
+              "hasPositiveEvidence": true,
+              "hasStrongEvidence": true,
+              "evidenceTypes": [
+                "tcp_open"
+              ],
+              "sourceCounts": {
+                "active": 1
+              },
+              "observationCount": 1,
+              "fusedAt": "2026-08-18T00:46:48.102Z"
+            },
+            "source": "active",
+            "discovery": {
+              "confidence": 0.855,
+              "hasPositiveEvidence": true,
+              "hasStrongEvidence": true,
+              "evidenceTypes": [
+                "tcp_open"
+              ],
+              "sourceCounts": {
+                "active": 1
+              },
+              "observationCount": 1,
+              "status": "online",
+              "lastEvaluatedAt": "2026-08-18T00:46:48.102Z",
+              "missCount": 0,
+              "lastSeenCycleAt": "2026-08-18T00:46:48.107Z"
+            },
+            "classification": {
+              "confidence": 0,
+              "signals": [],
+              "classifiedAt": "2026-08-18T00:46:48.102Z"
+            },
+            "managementSurface": {
+              "deviceId": "467688ab-4b1f-4c13-b867-ee242050a0e6",
+              "capabilities": []
+            },
+            "adoption": {
+              "status": "discovered",
+              "requiredCredentials": []
+            },
+            "deviceId": "467688ab-4b1f-4c13-b867-ee242050a0e6",
+            "secondaryIps": [],
+            "discoveryPhases": {
+              "fingerprint": {
+                "lastAttemptedAt": "2026-08-18T00:44:51.622Z",
+                "lastScanMode": "deep",
+                "lastCompletedAt": "2026-08-18T00:44:51.622Z",
+                "lastStatus": "completed",
+                "lastBudgetMs": 25000,
+                "lastTargetCount": 2
+              },
+              "nmapDeep": {
+                "lastAttemptedAt": "2026-08-18T00:45:08.013Z",
+                "lastScanMode": "deep",
+                "lastCompletedAt": "2026-08-18T00:45:08.013Z",
+                "lastStatus": "completed",
+                "lastBudgetMs": 25000,
+                "lastTargetCount": 1
+              },
+              "hostname": {
+                "lastAttemptedAt": "2026-08-18T00:45:08.140Z",
+                "lastScanMode": "deep",
+                "lastCompletedAt": "2026-08-18T00:45:08.140Z",
+                "lastStatus": "completed",
+                "lastBudgetMs": 10000,
+                "lastTargetCount": 1
+              }
+            },
+            "fingerprint": {
+              "protocolHints": [],
+              "lastFingerprintedAt": "2026-08-18T00:44:51.622Z",
+              "fingerprintVersion": 3
+            },
+            "nmapDeep": {
+              "command": "nmap -Pn -n --open -sV --version-light --script \"banner,http-title,http-headers,ssl-cert,upnp-info\" -p 111,80,443,554,8080,8443,5000,5001,22,161,1883,2375,3389 172.28.200.1 -oX -",
+              "scripts": [],
+              "collectedAt": "2026-08-18T00:45:08.011Z"
+            }
+          }
+        }
+      ]
+    },
+    "adoption": {
+      "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+      "run": {
+        "id": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
+        "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+        "status": "awaiting_user",
+        "stage": "contract",
+        "profileJson": {
+          "generatedProfile": {
+            "summary": "Steward onboarded fw-lab-01 and prepared management intents.",
+            "confidence": 0.55,
+            "workloads": [],
+            "watchItems": [
+              "Availability drift",
+              "Certificate expiry",
+              "Resource pressure"
+            ],
+            "credentialIntents": [],
+            "adapterCandidates": [],
+            "questions": [
+              {
+                "questionKey": "device_purpose",
+                "prompt": "What is this device primarily used for?",
+                "options": [
+                  {
+                    "label": "Infrastructure",
+                    "value": "infrastructure"
+                  },
+                  {
+                    "label": "Application Host",
+                    "value": "application_host"
+                  },
+                  {
+                    "label": "Peripheral / Edge Device",
+                    "value": "peripheral"
+                  }
+                ],
+                "required": true
+              },
+              {
+                "questionKey": "manual_service_contracts",
+                "prompt": "Any additional responsibilities or assurances to add manually? Provide comma-separated names and optional ports (example: laravel-api:443, queue-worker, nightly-backups).",
+                "options": [],
+                "required": false
+              }
+            ]
+          },
+          "onboardingDraft": {
+            "version": 2,
+            "summary": "Steward onboarded fw-lab-01 and prepared management intents.",
+            "selectedProfileIds": [
+              "steward.linux-server"
+            ],
+            "selectedAccessMethodKeys": [
+              "ssh:22"
+            ],
+            "credentialRequests": [
+              {
+                "protocol": "ssh",
+                "reason": "Credential required for ssh management.",
+                "priority": "high"
+              }
+            ],
+            "workloads": [
+              {
+                "workloadKey": "host-availability",
+                "displayName": "Host availability",
+                "category": "platform",
+                "criticality": "high",
+                "summary": "Keep the host reachable and responsive over its management surface.",
+                "evidenceJson": {}
+              },
+              {
+                "workloadKey": "system-services",
+                "displayName": "Core system services",
+                "category": "platform",
+                "criticality": "high",
+                "summary": "Track important services and restart or escalate when they drift.",
+                "evidenceJson": {}
+              }
+            ],
+            "assurances": [
+              {
+                "assuranceKey": "host-availability",
+                "workloadKey": "host-availability",
+                "displayName": "SSH reachability",
+                "criticality": "high",
+                "desiredState": "running",
+                "checkIntervalSec": 60,
+                "monitorType": "ssh_reachability",
+                "requiredProtocols": [
+                  "ssh"
+                ],
+                "rationale": "Steward needs a dependable management path before deeper automation is safe.",
+                "configJson": {}
+              },
+              {
+                "assuranceKey": "system-services",
+                "workloadKey": "system-services",
+                "displayName": "Core system services",
+                "criticality": "high",
+                "desiredState": "running",
+                "checkIntervalSec": 60,
+                "monitorType": "workload_presence",
+                "requiredProtocols": [],
+                "rationale": "Track important services and restart or escalate when they drift.",
+                "configJson": {}
+              }
+            ],
+            "nextActions": [
+              "Watch Availability drift",
+              "Watch Certificate expiry",
+              "Watch Resource pressure",
+              "Review Steward's proposed responsibilities and complete onboarding when ready."
+            ],
+            "unresolvedQuestions": [
+              "What is this device primarily used for?",
+              "Any additional responsibilities or assurances to add manually? Provide comma-separated names and optional ports (example: laravel-api:443, queue-worker, nightly-backups)."
+            ],
+            "residualUnknowns": [],
+            "dismissedWorkloadKeys": [],
+            "dismissedAssuranceKeys": [],
+            "completionReady": true
+          },
+          "missingRequiredCredentials": [],
+          "selectedProfileIds": [
+            "steward.linux-server"
+          ],
+          "selectedAccessMethodKeys": [
+            "ssh:22"
+          ],
+          "profileCandidates": [
+            {
+              "profileId": "steward.linux-server",
+              "status": "selected",
+              "confidence": 0.9599999999999999
+            }
+          ]
+        },
+        "summary": "Steward onboarded fw-lab-01 and prepared management intents.",
+        "createdAt": "2026-08-18T00:43:05.879Z",
+        "updatedAt": "2026-08-18T00:48:11.567Z"
+      },
+      "questions": [],
+      "unresolvedRequiredQuestions": 2,
+      "credentials": [
+        {
+          "id": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+          "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "protocol": "ssh",
+          "vaultSecretRef": "device.69a4ee76-f70d-481c-b574-18d2599a1c86.credential.f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+          "accountLabel": "fwlab",
+          "scopeJson": {
+            "level": "admin",
+            "operations": [
+              "shell",
+              "service-control"
+            ]
+          },
+          "status": "validated",
+          "lastValidatedAt": "2026-08-18T00:48:11.547Z",
+          "createdAt": "2026-08-18T00:45:29.416Z",
+          "updatedAt": "2026-08-18T00:48:11.547Z"
+        }
+      ],
+      "accessMethods": [
+        {
+          "id": "access-method-69a4ee76-f70d-481c-b574-18d2599a1c86-ssh:22",
+          "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "key": "ssh:22",
+          "kind": "ssh",
+          "title": "SSH :22",
+          "protocol": "ssh",
+          "port": 22,
+          "secure": true,
+          "selected": true,
+          "status": "validated",
+          "credentialProtocol": "ssh",
+          "summary": "OpenSSH",
+          "metadataJson": {
+            "serviceName": "ssh",
+            "product": "OpenSSH",
+            "transport": "tcp",
+            "source": "service"
+          },
+          "createdAt": "2026-08-18T00:44:51.857Z",
+          "updatedAt": "2026-08-18T00:48:11.567Z"
+        }
+      ],
+      "profiles": [
+        {
+          "id": "39fb143d-d291-433a-99a1-b454752ade8f",
+          "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "profileId": "steward.linux-server",
+          "adapterId": "steward.linux-server",
+          "name": "Linux Server",
+          "kind": "primary",
+          "confidence": 0.9599999999999999,
+          "status": "selected",
+          "summary": "Linux host managed over SSH for health, service, and hardening workflows.",
+          "requiredAccessMethods": [
+            "ssh"
+          ],
+          "requiredCredentialProtocols": [
+            "ssh"
+          ],
+          "evidenceJson": {
+            "type": "server",
+            "protocols": [
+              "ssh"
+            ]
+          },
+          "draftJson": {
+            "defaultWorkloads": [
+              {
+                "workloadKey": "host-availability",
+                "displayName": "Host availability",
+                "criticality": "high",
+                "category": "platform",
+                "summary": "Keep the host reachable and responsive over its management surface."
+              },
+              {
+                "workloadKey": "system-services",
+                "displayName": "Core system services",
+                "criticality": "high",
+                "category": "platform",
+                "summary": "Track important services and restart or escalate when they drift."
+              }
+            ],
+            "defaultAssurances": [
+              {
+                "assuranceKey": "host-availability",
+                "workloadKey": "host-availability",
+                "displayName": "SSH reachability",
+                "criticality": "high",
+                "checkIntervalSec": 60,
+                "monitorType": "ssh_reachability",
+                "requiredProtocols": [
+                  "ssh"
+                ],
+                "rationale": "Steward needs a dependable management path before deeper automation is safe."
+              }
+            ]
+          },
+          "createdAt": "2026-08-18T00:44:51.857Z",
+          "updatedAt": "2026-08-18T00:48:11.567Z"
+        }
+      ],
+      "workloads": [],
+      "assurances": [],
+      "assuranceRuns": [],
+      "draft": {
+        "version": 2,
+        "summary": "Steward onboarded fw-lab-01 and prepared management intents.",
+        "selectedProfileIds": [
+          "steward.linux-server"
+        ],
+        "selectedAccessMethodKeys": [
+          "ssh:22"
+        ],
+        "credentialRequests": [
+          {
+            "protocol": "ssh",
+            "reason": "Credential required for ssh management.",
+            "priority": "high"
+          }
+        ],
+        "workloads": [
+          {
+            "workloadKey": "host-availability",
+            "displayName": "Host availability",
+            "category": "platform",
+            "criticality": "high",
+            "summary": "Keep the host reachable and responsive over its management surface.",
+            "evidenceJson": {}
+          },
+          {
+            "workloadKey": "system-services",
+            "displayName": "Core system services",
+            "category": "platform",
+            "criticality": "high",
+            "summary": "Track important services and restart or escalate when they drift.",
+            "evidenceJson": {}
+          }
+        ],
+        "assurances": [
+          {
+            "assuranceKey": "host-availability",
+            "workloadKey": "host-availability",
+            "displayName": "SSH reachability",
+            "criticality": "high",
+            "desiredState": "running",
+            "checkIntervalSec": 60,
+            "monitorType": "ssh_reachability",
+            "requiredProtocols": [
+              "ssh"
+            ],
+            "rationale": "Steward needs a dependable management path before deeper automation is safe.",
+            "configJson": {}
+          },
+          {
+            "assuranceKey": "system-services",
+            "workloadKey": "system-services",
+            "displayName": "Core system services",
+            "criticality": "high",
+            "desiredState": "running",
+            "checkIntervalSec": 60,
+            "monitorType": "workload_presence",
+            "requiredProtocols": [],
+            "rationale": "Track important services and restart or escalate when they drift.",
+            "configJson": {}
+          }
+        ],
+        "nextActions": [
+          "Watch Availability drift",
+          "Watch Certificate expiry",
+          "Watch Resource pressure",
+          "Review Steward's proposed responsibilities and complete onboarding when ready."
+        ],
+        "unresolvedQuestions": [
+          "What is this device primarily used for?",
+          "Any additional responsibilities or assurances to add manually? Provide comma-separated names and optional ports (example: laravel-api:443, queue-worker, nightly-backups)."
+        ],
+        "residualUnknowns": [],
+        "dismissedWorkloadKeys": [],
+        "dismissedAssuranceKeys": [],
+        "completionReady": true
+      },
+      "accessSurfaces": [
+        {
+          "id": "39fb143d-d291-433a-99a1-b454752ade8f",
+          "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "adapterId": "steward.linux-server",
+          "protocol": "ssh",
+          "score": 0.9599999999999999,
+          "selected": true,
+          "reason": "Linux host managed over SSH for health, service, and hardening workflows.",
+          "configJson": {
+            "defaultWorkloads": [
+              {
+                "workloadKey": "host-availability",
+                "displayName": "Host availability",
+                "criticality": "high",
+                "category": "platform",
+                "summary": "Keep the host reachable and responsive over its management surface."
+              },
+              {
+                "workloadKey": "system-services",
+                "displayName": "Core system services",
+                "criticality": "high",
+                "category": "platform",
+                "summary": "Track important services and restart or escalate when they drift."
+              }
+            ],
+            "defaultAssurances": [
+              {
+                "assuranceKey": "host-availability",
+                "workloadKey": "host-availability",
+                "displayName": "SSH reachability",
+                "criticality": "high",
+                "checkIntervalSec": 60,
+                "monitorType": "ssh_reachability",
+                "requiredProtocols": [
+                  "ssh"
+                ],
+                "rationale": "Steward needs a dependable management path before deeper automation is safe."
+              }
+            ]
+          },
+          "createdAt": "2026-08-18T00:44:51.857Z",
+          "updatedAt": "2026-08-18T00:48:11.567Z"
+        }
+      ],
+      "bindings": [
+        {
+          "id": "39fb143d-d291-433a-99a1-b454752ade8f",
+          "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "adapterId": "steward.linux-server",
+          "protocol": "ssh",
+          "score": 0.9599999999999999,
+          "selected": true,
+          "reason": "Linux host managed over SSH for health, service, and hardening workflows.",
+          "configJson": {
+            "defaultWorkloads": [
+              {
+                "workloadKey": "host-availability",
+                "displayName": "Host availability",
+                "criticality": "high",
+                "category": "platform",
+                "summary": "Keep the host reachable and responsive over its management surface."
+              },
+              {
+                "workloadKey": "system-services",
+                "displayName": "Core system services",
+                "criticality": "high",
+                "category": "platform",
+                "summary": "Track important services and restart or escalate when they drift."
+              }
+            ],
+            "defaultAssurances": [
+              {
+                "assuranceKey": "host-availability",
+                "workloadKey": "host-availability",
+                "displayName": "SSH reachability",
+                "criticality": "high",
+                "checkIntervalSec": 60,
+                "monitorType": "ssh_reachability",
+                "requiredProtocols": [
+                  "ssh"
+                ],
+                "rationale": "Steward needs a dependable management path before deeper automation is safe."
+              }
+            ]
+          },
+          "createdAt": "2026-08-18T00:44:51.857Z",
+          "updatedAt": "2026-08-18T00:48:11.567Z"
+        }
+      ],
+      "serviceContracts": []
+    },
+    "audit": {
+      "events": [
+        {
+          "id": "f9bb79d4-67fe-40b8-a3ef-4b262324488f",
+          "at": "2026-08-18T00:48:11.547Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Remote terminal command completed on fw-lab-01 via SSH",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "transport": "ssh",
+            "ok": true,
+            "status": "succeeded",
+            "summary": "Command completed successfully",
+            "cwd": "/home/fwlab"
+          }
+        },
+        {
+          "id": "dc75768e-4357-4877-9f25-f2f564083755",
+          "at": "2026-08-18T00:48:11.547Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh",
+            "method": "ssh.command",
+            "adapterId": "ssh",
+            "operationId": "remote-terminal-fd4ca3d8-30bc-495e-9498-20ecfcde3dab",
+            "host": "172.28.200.10",
+            "port": 22
+          }
+        },
+        {
+          "id": "76e5a6ec-a47f-4c64-b23b-4f3b20d499a0",
+          "at": "2026-08-18T00:48:11.446Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh",
+            "method": "ssh.command",
+            "adapterId": "ssh",
+            "operationId": "remote-terminal-3b07eda4-4f98-4cdb-95c9-768fc8e241c1",
+            "host": "172.28.200.10",
+            "port": 22
+          }
+        },
+        {
+          "id": "5ced90c5-a8e3-4dc5-8897-8d16fd627563",
+          "at": "2026-08-18T00:48:11.446Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Remote terminal command completed on fw-lab-01 via SSH",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "transport": "ssh",
+            "ok": true,
+            "status": "succeeded",
+            "summary": "Command completed successfully",
+            "cwd": "/home/fwlab"
+          }
+        },
+        {
+          "id": "38206f2c-d126-484d-8f77-e3cce3e4b547",
+          "at": "2026-08-18T00:48:11.091Z",
+          "actor": "user",
+          "kind": "config",
+          "message": "Stored credential for fw-lab-01 (ssh)",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh"
+          }
+        },
+        {
+          "id": "47872b65-ba0b-4c30-9c02-c52bd64d4559",
+          "at": "2026-08-18T00:48:09.541Z",
+          "actor": "user",
+          "kind": "discover",
+          "message": "Device onboarding draft refreshed for fw-lab-01",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
+            "stage": "contract",
+            "selectedProfileIds": [
+              "steward.linux-server"
+            ],
+            "selectedAccessMethodKeys": [
+              "ssh:22"
+            ]
+          }
+        },
+        {
+          "id": "a96f35ba-a7ea-4c6f-b7fb-aaea0aa33927",
+          "at": "2026-08-18T00:48:09.540Z",
+          "actor": "user",
+          "kind": "config",
+          "message": "Device added/updated: fw-lab-01 (172.28.200.10)",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86"
+          }
+        },
+        {
+          "id": "a7e80298-67e7-456b-b896-64764aa93804",
+          "at": "2026-08-18T00:48:09.006Z",
+          "actor": "user",
+          "kind": "auth",
+          "message": "User logged in",
+          "context": {
+            "username": "admin",
+            "provider": "local"
+          }
+        },
+        {
+          "id": "e1751e63-9cf5-480a-b070-f6a9b3aa5a36",
+          "at": "2026-08-18T00:47:10.664Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Remote terminal command completed on fw-lab-01 via SSH",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "transport": "ssh",
+            "ok": true,
+            "status": "succeeded",
+            "summary": "Command completed successfully",
+            "cwd": "/home/fwlab"
+          }
+        },
+        {
+          "id": "4333fa87-9516-456a-90d3-b299ce233d83",
+          "at": "2026-08-18T00:47:10.664Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh",
+            "method": "ssh.command",
+            "adapterId": "ssh",
+            "operationId": "remote-terminal-246e6642-35b2-4a83-aa62-24aef5c34b59",
+            "host": "172.28.200.10",
+            "port": 22
+          }
+        },
+        {
+          "id": "4506e8ae-ca76-4e79-9c03-3419fb3ffd78",
+          "at": "2026-08-18T00:47:10.124Z",
+          "actor": "user",
+          "kind": "config",
+          "message": "Stored credential for fw-lab-01 (ssh)",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh"
+          }
+        },
+        {
+          "id": "7459d825-1d1f-48c9-ad75-22ac091c2fbe",
+          "at": "2026-08-18T00:47:08.236Z",
+          "actor": "steward",
+          "kind": "discover",
+          "message": "Scanner cycle started (manual)",
+          "context": {
+            "trigger": "manual",
+            "runId": "d5fdd980-cb0c-4b76-9271-2157e048d434"
+          }
+        },
+        {
+          "id": "71f6fe50-86ef-4f00-8773-2d47b1b155fa",
+          "at": "2026-08-18T00:47:07.980Z",
+          "actor": "user",
+          "kind": "discover",
+          "message": "Device onboarding draft refreshed for fw-lab-01",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
+            "stage": "contract",
+            "selectedProfileIds": [
+              "steward.linux-server"
+            ],
+            "selectedAccessMethodKeys": [
+              "ssh:22"
+            ]
+          }
+        },
+        {
+          "id": "ea814390-71e9-46f8-bbe9-2b14130477a1",
+          "at": "2026-08-18T00:47:07.979Z",
+          "actor": "user",
+          "kind": "config",
+          "message": "Device added/updated: fw-lab-01 (172.28.200.10)",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86"
+          }
+        },
+        {
+          "id": "ae109f03-3819-45bc-9421-0e8fb09b0e49",
+          "at": "2026-08-18T00:47:07.456Z",
+          "actor": "user",
+          "kind": "auth",
+          "message": "User logged in",
+          "context": {
+            "username": "admin",
+            "provider": "local"
+          }
+        },
+        {
+          "id": "a90d8e83-0b4f-425a-b760-e64a4d45302d",
+          "at": "2026-08-18T00:46:51.546Z",
+          "actor": "steward",
+          "kind": "discover",
+          "message": "Discovery enrichment nmapDeep processed 1 device(s), updated 1.",
+          "context": {
+            "phase": "nmapDeep",
+            "jobKind": "discovery.enrichment.nmap",
+            "deviceIds": [
+              "69a4ee76-f70d-481c-b574-18d2599a1c86"
+            ],
+            "scanMode": "incremental",
+            "dueTargetCount": 1,
+            "deferredTargetCount": 0
+          }
+        },
+        {
+          "id": "02f3ba8d-e435-4d14-86d2-80d94008f629",
+          "at": "2026-08-18T00:46:48.127Z",
+          "actor": "steward",
+          "kind": "learn",
+          "message": "Scanner cycle complete: discover=2, devices-updated=2, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=deep",
+          "context": {
+            "runId": "f47ecdb0-14df-4925-8c8c-9fff5e4d91fe"
+          }
+        },
+        {
+          "id": "dc152c0b-b70b-46f0-829a-23e912d8f2bd",
+          "at": "2026-08-18T00:46:13.443Z",
+          "actor": "user",
+          "kind": "config",
+          "message": "Stored credential for fw-lab-01 (ssh)",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh"
+          }
+        },
+        {
+          "id": "ef0e30a4-aacc-4072-b836-63d15a8232df",
+          "at": "2026-08-18T00:46:11.891Z",
+          "actor": "user",
+          "kind": "discover",
+          "message": "Device onboarding draft refreshed for fw-lab-01",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
+            "stage": "contract",
+            "selectedProfileIds": [
+              "steward.linux-server"
+            ],
+            "selectedAccessMethodKeys": [
+              "ssh:22"
+            ]
+          }
+        },
+        {
+          "id": "517e3128-de8c-4eb8-a311-767fe25321ca",
+          "at": "2026-08-18T00:46:11.889Z",
+          "actor": "user",
+          "kind": "config",
+          "message": "Device added/updated: fw-lab-01 (172.28.200.10)",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86"
+          }
+        }
+      ],
+      "nextCursor": "eyJhdCI6IjIwMjYtMDgtMThUMDA6NDY6MTEuODg5WiIsImlkIjoiNTE3ZTMxMjgtZGU4Yy00ZWI4LWEzMTEtNzY3ZmUyNTMyMWNhIn0",
+      "limit": 20
+    }
+  },
+  "url": "http://127.0.0.1:3000/",
+  "deviceUrl": "http://127.0.0.1:3000/devices/69a4ee76-f70d-481c-b574-18d2599a1c86",
+  "terminalUi": "SSH is the best observed terminal surface for this device. Type a command and press Enter. Use clear to reset the scrollback.\n~ $\nhostname; echo '---identity---'; cat /etc/steward-lab/fw-identity; echo '---kernel---'; uname -srm; head -2 /etc/os-release; echo '---interfaces---'; ip -brief addr\nRunning command…",
+  "terminalApi": {
+    "ok": true,
+    "status": "succeeded",
+    "summary": "Command completed successfully",
+    "transport": "ssh",
+    "transportLabel": "SSH",
+    "startedAt": "2026-08-18T00:48:11.319Z",
+    "completedAt": "2026-08-18T00:48:11.547Z",
+    "output": "ead9ba27523d\n---identity---\n# Identidad sintetica del firewall de laboratorio (nunca un dispositivo real)\nvendor=LabSim\nmodel=FW-2000-Sim\nrole=firewall\nsite=lab\nfirmware=sim-1.0.0---kernel---\nLinux 6.12.76-linuxkit aarch64\nPRETTY_NAME=\"Debian GNU/Linux 12 (bookworm)\"\nNAME=\"Debian GNU/Linux\"\n---interfaces---\nlo               UNKNOWN        127.0.0.1/8 ::1/128 \ntunl0@NONE       DOWN           \ngre0@NONE        DOWN           \ngretap0@NONE     DOWN           \nerspan0@NONE     DOWN           \nip_vti0@NONE     DOWN           \nip6_vti0@NONE    DOWN           \nsit0@NONE        DOWN           \nip6tnl0@NONE     DOWN           \nip6gre0@NONE     DOWN           \neth0@if42        UP             172.28.200.10/24 \n\n[stderr] Could not create directory '/nonexistent/.ssh' (No such file or directory).\nFailed to add the host to the list of known hosts (/nonexistent/.ssh/known_hosts)."
+  },
+  "stepsDone": true
+}

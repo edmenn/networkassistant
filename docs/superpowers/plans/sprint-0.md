@@ -14,9 +14,9 @@ Decisión sustentada sobre Steward (commit + licencia + auditoría), documentaci
 4. **ADR** — 0001 a 0007. ✅
 5. **Matrices y docs** — REUSE_MATRIX, UPSTREAM, ARCHITECTURE, THREAT_MODEL, CAPABILITY_MATRIX, IMPLEMENTATION_STATUS, TOOLING. ✅
 6. **Laboratorio sintético** — definir alcance (ADR-0007). ✅
-7. **Entorno web** — levantar Compose, abrir la UI desde navegador y verificar el empty state de sitio/equipo. → evidencia pendiente.
-8. **Primer firewall SSH** — crear sitio, registrar firewall, endpoint SSH y credencial sintética; ejecutar prueba read-only y mostrar evidencia. → evidencia pendiente.
-9. **Gate y actualización de SPRINTS.md** — cerrar solo cuando el recorrido funcional y la checklist A/B/C tengan salida real. → Sprint 0 `in_progress` hasta entonces.
+7. **Entorno web** — levantar Compose, abrir la UI desde navegador y verificar el empty state de sitio/equipo. ✅ (2026-08-18, `lab/`)
+8. **Primer firewall SSH** — crear sitio, registrar firewall, endpoint SSH y credencial sintética; ejecutar prueba read-only y mostrar evidencia. Parcial: el firewall SSH read-only quedo verificado; **crear sitio** no es soportado por el baseline (solo siembra `site.local.default`) y queda para Sprint 2. → evidencia en `docs/SPRINT_0_EVIDENCE.md`.
+9. **Gate y actualización de SPRINTS.md** — cerrar solo cuando el recorrido funcional y la checklist A/B/C tengan salida real. → Sprint 0 `in_progress` hasta que exista alta de sitio.
 
 ## Archivos creados
 
