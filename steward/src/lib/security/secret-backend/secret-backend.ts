@@ -96,7 +96,7 @@ export class FileSecretBackend implements SecretBackend {
     const keyFile = path.join(dir, "dev-key.bin");
     let key: Buffer;
     try {
-      key = Buffer.from(await readFile(keyFile), "binary");
+      key = await readFile(keyFile);
     } catch {
       key = randomBytes(KEY_BYTES);
       await writeFile(keyFile, key, { mode: 0o600 });
