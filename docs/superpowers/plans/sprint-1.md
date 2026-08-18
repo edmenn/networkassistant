@@ -10,7 +10,7 @@ Regla: seguridad primero; cambio mínimo; TDD. No usar secretos reales (solo can
 - **U2 — Backend OpenBao** (produccion) + contenedor de desarrollo con auto-unseal. Prueba: put/lease/revoke/rotate/backup/restore contra OpenBao real en contenedor; restauracion en host limpio reproduce secretos utilizables solo por workloads autorizados. ✅ (2026-08-18, `steward/src/lib/security/secret-backend/openbao.ts`, OpenBao 2.6.1 dev en `bao-s1-dev`, 1 canario de integracion). El restore "host limpio" definitivo se refuerza en U8/gate.
 - **U3 — Redaccion central.** Canarios no aparecen en respuestas API, logs, errores, auditoria, trazas ni prompts. Prueba: canarios buscados en cada superficie. ✅ (2026-08-18, `steward/src/lib/security/redact.ts`, `Redactor` + `redact()`, 7 canarios). El cableado en cada superficie del runtime se valida en el gate.
 - **U4 — RBAC por recurso.** usuario/sitio/equipo/metodo/secreto/clase de accion; `deny` prevalece. Prueba: matriz de casos permitidos y denegados. ✅ (2026-08-18, `steward/src/lib/security/rbac.ts`, `PolicyEngine` default-deny, 6 canarios de matriz).
-- **U5 — Politicas de red y SSRF.** allowlist, bloqueo loopback/metadata cloud, revalidacion DNS. Prueba: intentos SSRF contra loopback/metadata/DNS cambiante bloqueados.
+- **U5 — Politicas de red y SSRF.** allowlist, bloqueo loopback/metadata cloud, revalidacion DNS. Prueba: intentos SSRF contra loopback/metadata/DNS cambiante bloqueados. ✅ (2026-08-18, `steward/src/lib/security/network-policy.ts`, `TargetValidator` fail-closed, 9 canarios).
 - **U6 — Control plane sin `NET_ADMIN`/`NET_RAW`.** Prueba: inspeccion de capabilities del contenedor (sin NET_ADMIN/NET_RAW en runtime).
 - **U7 — Auditoria append-only / integridad.** Prueba: no se puede reescribir/borrar un evento previo sin detectarlo.
 - **U8 — Backup/restore cifrado del vault** con datos ficticios. Prueba: restore en entorno limpio reproduce los secretos.
@@ -25,4 +25,4 @@ Restaurar backup cifrado anterior y revocar todos los leases emitidos durante la
 
 ## Estado
 
-`in_progress`. U1-U4 completadas. Siguiente: U5 (politicas de red y SSRF).
+`in_progress`. U1-U5 completadas. Siguiente: U6 (control plane sin `NET_ADMIN`/`NET_RAW`).
