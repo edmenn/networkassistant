@@ -12,7 +12,8 @@
     "autonomyTier": 1,
     "tags": [],
     "protocols": [
-      "ssh"
+      "ssh",
+      "http"
     ],
     "services": [
       {
@@ -28,13 +29,13 @@
       }
     ],
     "firstSeenAt": "2026-08-18T00:43:05.874Z",
-    "lastSeenAt": "2026-08-18T00:48:09.539Z",
-    "lastChangedAt": "2026-08-18T00:48:09.540Z",
+    "lastSeenAt": "2026-08-18T03:12:33.893Z",
+    "lastChangedAt": "2026-08-18T03:12:33.896Z",
     "metadata": {
       "source": "manual",
       "identity": {
         "nameManuallySet": true,
-        "nameManuallySetAt": "2026-08-18T00:48:09.539Z",
+        "nameManuallySetAt": "2026-08-18T03:12:33.893Z",
         "nameSetBy": "user"
       },
       "adoption": {
@@ -56,9 +57,9 @@
         "serviceContractCount": 0,
         "unresolvedRequiredQuestions": 2,
         "missingRequiredCredentials": [],
-        "lastProfiledAt": "2026-08-18T00:48:09.540Z"
+        "lastProfiledAt": "2026-08-18T03:12:33.896Z"
       },
-      "scanner": "nmap",
+      "scanner": "tcp-connect",
       "advancedNetworkIntel": {
         "managedBy": "steward.advanced-network-intel",
         "scriptPreset": "banner,http-title,http-headers,ssl-cert,upnp-info"
@@ -68,37 +69,42 @@
         "hardeningMode": "baseline"
       },
       "discoveryEvidence": {
-        "confidence": 0.978975,
+        "confidence": 0.996118785,
         "status": "online",
         "hasPositiveEvidence": true,
         "hasStrongEvidence": true,
         "evidenceTypes": [
+          "dns_ptr",
           "ssh_banner",
           "tcp_open"
         ],
         "sourceCounts": {
-          "active": 1,
+          "active": 3,
           "fingerprint": 1
         },
-        "observationCount": 2,
-        "fusedAt": "2026-08-18T00:46:48.104Z"
+        "observationCount": 4,
+        "fusedAt": "2026-08-18T03:04:09.875Z"
       },
       "hostname": "fw-lab-01.steward-sprint0-lab_lab-net",
       "discovery": {
-        "confidence": 0.978975,
+        "confidence": 0.996118785,
         "hasPositiveEvidence": true,
         "hasStrongEvidence": true,
         "evidenceTypes": [
+          "dns_ptr",
           "ssh_banner",
           "tcp_open"
         ],
         "sourceCounts": {
-          "active": 1,
+          "active": 3,
           "fingerprint": 1
         },
-        "observationCount": 2,
+        "observationCount": 4,
         "status": "online",
-        "lastEvaluatedAt": "2026-08-18T00:46:51.544Z"
+        "lastEvaluatedAt": "2026-08-18T03:04:09.875Z",
+        "missCount": 4,
+        "lastSeenCycleAt": "2026-08-18T03:04:09.880Z",
+        "lastMissedAt": "2026-08-18T03:12:10.455Z"
       },
       "classification": {
         "confidence": 0.43333333333333335,
@@ -122,7 +128,7 @@
             "reason": "Server-class Linux: SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
           }
         ],
-        "classifiedAt": "2026-08-18T00:46:51.544Z"
+        "classifiedAt": "2026-08-18T03:04:09.875Z"
       },
       "managementSurface": {
         "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
@@ -173,12 +179,12 @@
           "lastTargetCount": 1
         },
         "fingerprint": {
-          "lastAttemptedAt": "2026-08-18T00:44:51.622Z",
-          "lastScanMode": "deep",
-          "lastCompletedAt": "2026-08-18T00:44:51.622Z",
+          "lastAttemptedAt": "2026-08-18T02:44:59.771Z",
+          "lastScanMode": "incremental",
+          "lastCompletedAt": "2026-08-18T02:44:59.771Z",
           "lastStatus": "completed",
           "lastBudgetMs": 25000,
-          "lastTargetCount": 2
+          "lastTargetCount": 1
         },
         "nmapDeep": {
           "lastAttemptedAt": "2026-08-18T00:46:51.543Z",
@@ -193,7 +199,7 @@
         "sshBanner": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10",
         "inferredOs": "Debian",
         "protocolHints": [],
-        "lastFingerprintedAt": "2026-08-18T00:44:51.622Z",
+        "lastFingerprintedAt": "2026-08-18T02:44:59.771Z",
         "fingerprintVersion": 3
       },
       "nmapDeep": {
@@ -206,7 +212,8 @@
           }
         ],
         "collectedAt": "2026-08-18T00:46:51.542Z"
-      }
+      },
+      "deepScan": false
     }
   },
   "terminal": null,
@@ -225,7 +232,8 @@
           "autonomyTier": 1,
           "tags": [],
           "protocols": [
-            "ssh"
+            "ssh",
+            "http"
           ],
           "services": [
             {
@@ -241,13 +249,13 @@
             }
           ],
           "firstSeenAt": "2026-08-18T00:43:05.874Z",
-          "lastSeenAt": "2026-08-18T00:48:09.539Z",
-          "lastChangedAt": "2026-08-18T00:48:11.213Z",
+          "lastSeenAt": "2026-08-18T03:12:33.893Z",
+          "lastChangedAt": "2026-08-18T03:12:35.642Z",
           "metadata": {
             "source": "manual",
             "identity": {
               "nameManuallySet": true,
-              "nameManuallySetAt": "2026-08-18T00:48:09.539Z",
+              "nameManuallySetAt": "2026-08-18T03:12:33.893Z",
               "nameSetBy": "user"
             },
             "adoption": {
@@ -269,9 +277,9 @@
               "serviceContractCount": 0,
               "unresolvedRequiredQuestions": 2,
               "missingRequiredCredentials": [],
-              "lastProfiledAt": "2026-08-18T00:48:11.213Z"
+              "lastProfiledAt": "2026-08-18T03:12:35.642Z"
             },
-            "scanner": "nmap",
+            "scanner": "tcp-connect",
             "advancedNetworkIntel": {
               "managedBy": "steward.advanced-network-intel",
               "scriptPreset": "banner,http-title,http-headers,ssl-cert,upnp-info"
@@ -281,37 +289,42 @@
               "hardeningMode": "baseline"
             },
             "discoveryEvidence": {
-              "confidence": 0.978975,
+              "confidence": 0.996118785,
               "status": "online",
               "hasPositiveEvidence": true,
               "hasStrongEvidence": true,
               "evidenceTypes": [
+                "dns_ptr",
                 "ssh_banner",
                 "tcp_open"
               ],
               "sourceCounts": {
-                "active": 1,
+                "active": 3,
                 "fingerprint": 1
               },
-              "observationCount": 2,
-              "fusedAt": "2026-08-18T00:46:48.104Z"
+              "observationCount": 4,
+              "fusedAt": "2026-08-18T03:04:09.875Z"
             },
             "hostname": "fw-lab-01.steward-sprint0-lab_lab-net",
             "discovery": {
-              "confidence": 0.978975,
+              "confidence": 0.996118785,
               "hasPositiveEvidence": true,
               "hasStrongEvidence": true,
               "evidenceTypes": [
+                "dns_ptr",
                 "ssh_banner",
                 "tcp_open"
               ],
               "sourceCounts": {
-                "active": 1,
+                "active": 3,
                 "fingerprint": 1
               },
-              "observationCount": 2,
+              "observationCount": 4,
               "status": "online",
-              "lastEvaluatedAt": "2026-08-18T00:46:51.544Z"
+              "lastEvaluatedAt": "2026-08-18T03:04:09.875Z",
+              "missCount": 4,
+              "lastSeenCycleAt": "2026-08-18T03:04:09.880Z",
+              "lastMissedAt": "2026-08-18T03:12:10.455Z"
             },
             "classification": {
               "confidence": 0.43333333333333335,
@@ -335,7 +348,7 @@
                   "reason": "Server-class Linux: SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10"
                 }
               ],
-              "classifiedAt": "2026-08-18T00:46:51.544Z"
+              "classifiedAt": "2026-08-18T03:04:09.875Z"
             },
             "managementSurface": {
               "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
@@ -386,12 +399,12 @@
                 "lastTargetCount": 1
               },
               "fingerprint": {
-                "lastAttemptedAt": "2026-08-18T00:44:51.622Z",
-                "lastScanMode": "deep",
-                "lastCompletedAt": "2026-08-18T00:44:51.622Z",
+                "lastAttemptedAt": "2026-08-18T02:44:59.771Z",
+                "lastScanMode": "incremental",
+                "lastCompletedAt": "2026-08-18T02:44:59.771Z",
                 "lastStatus": "completed",
                 "lastBudgetMs": 25000,
-                "lastTargetCount": 2
+                "lastTargetCount": 1
               },
               "nmapDeep": {
                 "lastAttemptedAt": "2026-08-18T00:46:51.543Z",
@@ -406,7 +419,7 @@
               "sshBanner": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u10",
               "inferredOs": "Debian",
               "protocolHints": [],
-              "lastFingerprintedAt": "2026-08-18T00:44:51.622Z",
+              "lastFingerprintedAt": "2026-08-18T02:44:59.771Z",
               "fingerprintVersion": 3
             },
             "nmapDeep": {
@@ -419,7 +432,8 @@
                 }
               ],
               "collectedAt": "2026-08-18T00:46:51.542Z"
-            }
+            },
+            "deepScan": false
           }
         },
         {
@@ -439,14 +453,14 @@
               "transport": "tcp",
               "name": "rpcbind",
               "secure": false,
-              "lastSeenAt": "2026-08-18T00:45:08.011Z",
+              "lastSeenAt": "2026-08-18T03:00:07.342Z",
               "product": "Ignored State: closed (",
               "version": "99"
             }
           ],
           "firstSeenAt": "2026-08-18T00:44:43.259Z",
-          "lastSeenAt": "2026-08-18T00:46:48.102Z",
-          "lastChangedAt": "2026-08-18T00:46:48.102Z",
+          "lastSeenAt": "2026-08-18T02:59:42.595Z",
+          "lastChangedAt": "2026-08-18T03:00:07.409Z",
           "metadata": {
             "scanner": "nmap",
             "discoveryEvidence": {
@@ -461,7 +475,7 @@
                 "active": 1
               },
               "observationCount": 1,
-              "fusedAt": "2026-08-18T00:46:48.102Z"
+              "fusedAt": "2026-08-18T02:59:42.595Z"
             },
             "source": "active",
             "discovery": {
@@ -476,14 +490,14 @@
               },
               "observationCount": 1,
               "status": "online",
-              "lastEvaluatedAt": "2026-08-18T00:46:48.102Z",
-              "missCount": 0,
-              "lastSeenCycleAt": "2026-08-18T00:46:48.107Z"
+              "lastEvaluatedAt": "2026-08-18T03:00:07.409Z",
+              "missCount": 7,
+              "lastMissedAt": "2026-08-18T03:12:10.455Z"
             },
             "classification": {
               "confidence": 0,
               "signals": [],
-              "classifiedAt": "2026-08-18T00:46:48.102Z"
+              "classifiedAt": "2026-08-18T03:00:07.409Z"
             },
             "managementSurface": {
               "deviceId": "467688ab-4b1f-4c13-b867-ee242050a0e6",
@@ -497,25 +511,25 @@
             "secondaryIps": [],
             "discoveryPhases": {
               "fingerprint": {
-                "lastAttemptedAt": "2026-08-18T00:44:51.622Z",
+                "lastAttemptedAt": "2026-08-18T02:59:51.077Z",
                 "lastScanMode": "deep",
-                "lastCompletedAt": "2026-08-18T00:44:51.622Z",
+                "lastCompletedAt": "2026-08-18T02:59:51.077Z",
                 "lastStatus": "completed",
                 "lastBudgetMs": 25000,
-                "lastTargetCount": 2
+                "lastTargetCount": 1
               },
               "nmapDeep": {
-                "lastAttemptedAt": "2026-08-18T00:45:08.013Z",
+                "lastAttemptedAt": "2026-08-18T03:00:07.344Z",
                 "lastScanMode": "deep",
-                "lastCompletedAt": "2026-08-18T00:45:08.013Z",
+                "lastCompletedAt": "2026-08-18T03:00:07.344Z",
                 "lastStatus": "completed",
                 "lastBudgetMs": 25000,
                 "lastTargetCount": 1
               },
               "hostname": {
-                "lastAttemptedAt": "2026-08-18T00:45:08.140Z",
+                "lastAttemptedAt": "2026-08-18T03:00:07.409Z",
                 "lastScanMode": "deep",
-                "lastCompletedAt": "2026-08-18T00:45:08.140Z",
+                "lastCompletedAt": "2026-08-18T03:00:07.409Z",
                 "lastStatus": "completed",
                 "lastBudgetMs": 10000,
                 "lastTargetCount": 1
@@ -523,13 +537,13 @@
             },
             "fingerprint": {
               "protocolHints": [],
-              "lastFingerprintedAt": "2026-08-18T00:44:51.622Z",
+              "lastFingerprintedAt": "2026-08-18T02:59:51.077Z",
               "fingerprintVersion": 3
             },
             "nmapDeep": {
               "command": "nmap -Pn -n --open -sV --version-light --script \"banner,http-title,http-headers,ssl-cert,upnp-info\" -p 111,80,443,554,8080,8443,5000,5001,22,161,1883,2375,3389 172.28.200.1 -oX -",
               "scripts": [],
-              "collectedAt": "2026-08-18T00:45:08.011Z"
+              "collectedAt": "2026-08-18T03:00:07.342Z"
             }
           }
         }
@@ -676,7 +690,7 @@
         },
         "summary": "Steward onboarded fw-lab-01 and prepared management intents.",
         "createdAt": "2026-08-18T00:43:05.879Z",
-        "updatedAt": "2026-08-18T00:48:11.567Z"
+        "updatedAt": "2026-08-18T03:12:35.976Z"
       },
       "questions": [],
       "unresolvedRequiredQuestions": 2,
@@ -695,9 +709,9 @@
             ]
           },
           "status": "validated",
-          "lastValidatedAt": "2026-08-18T00:48:11.547Z",
+          "lastValidatedAt": "2026-08-18T03:12:35.962Z",
           "createdAt": "2026-08-18T00:45:29.416Z",
-          "updatedAt": "2026-08-18T00:48:11.547Z"
+          "updatedAt": "2026-08-18T03:12:35.962Z"
         }
       ],
       "accessMethods": [
@@ -721,7 +735,25 @@
             "source": "service"
           },
           "createdAt": "2026-08-18T00:44:51.857Z",
-          "updatedAt": "2026-08-18T00:48:11.567Z"
+          "updatedAt": "2026-08-18T03:12:35.976Z"
+        },
+        {
+          "id": "access-method-69a4ee76-f70d-481c-b574-18d2599a1c86-http-api",
+          "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+          "key": "http-api",
+          "kind": "http-api",
+          "title": "HTTP / Web UI",
+          "protocol": "http-api",
+          "secure": true,
+          "selected": false,
+          "status": "observed",
+          "credentialProtocol": "http-api",
+          "summary": "Observed protocol hint",
+          "metadataJson": {
+            "source": "protocol"
+          },
+          "createdAt": "2026-08-18T00:57:54.530Z",
+          "updatedAt": "2026-08-18T03:12:35.976Z"
         }
       ],
       "profiles": [
@@ -744,7 +776,8 @@
           "evidenceJson": {
             "type": "server",
             "protocols": [
-              "ssh"
+              "ssh",
+              "http"
             ]
           },
           "draftJson": {
@@ -780,7 +813,7 @@
             ]
           },
           "createdAt": "2026-08-18T00:44:51.857Z",
-          "updatedAt": "2026-08-18T00:48:11.567Z"
+          "updatedAt": "2026-08-18T03:12:35.976Z"
         }
       ],
       "workloads": [],
@@ -905,7 +938,7 @@
             ]
           },
           "createdAt": "2026-08-18T00:44:51.857Z",
-          "updatedAt": "2026-08-18T00:48:11.567Z"
+          "updatedAt": "2026-08-18T03:12:35.976Z"
         }
       ],
       "bindings": [
@@ -950,7 +983,7 @@
             ]
           },
           "createdAt": "2026-08-18T00:44:51.857Z",
-          "updatedAt": "2026-08-18T00:48:11.567Z"
+          "updatedAt": "2026-08-18T03:12:35.976Z"
         }
       ],
       "serviceContracts": []
@@ -958,8 +991,25 @@
     "audit": {
       "events": [
         {
-          "id": "f9bb79d4-67fe-40b8-a3ef-4b262324488f",
-          "at": "2026-08-18T00:48:11.547Z",
+          "id": "df197cb0-27a2-4267-9b0c-abf10dc9930d",
+          "at": "2026-08-18T03:12:35.962Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh",
+            "method": "ssh.command",
+            "adapterId": "ssh",
+            "operationId": "remote-terminal-f5ac1291-8116-4a33-9c63-3493159b2a9f",
+            "host": "172.28.200.10",
+            "port": 22
+          }
+        },
+        {
+          "id": "09985aa3-47a8-4bcc-a7f2-4f8a4d5e9ee5",
+          "at": "2026-08-18T03:12:35.962Z",
           "actor": "user",
           "kind": "diagnose",
           "message": "Remote terminal command completed on fw-lab-01 via SSH",
@@ -973,42 +1023,8 @@
           }
         },
         {
-          "id": "dc75768e-4357-4877-9f25-f2f564083755",
-          "at": "2026-08-18T00:48:11.547Z",
-          "actor": "user",
-          "kind": "diagnose",
-          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
-            "protocol": "ssh",
-            "method": "ssh.command",
-            "adapterId": "ssh",
-            "operationId": "remote-terminal-fd4ca3d8-30bc-495e-9498-20ecfcde3dab",
-            "host": "172.28.200.10",
-            "port": 22
-          }
-        },
-        {
-          "id": "76e5a6ec-a47f-4c64-b23b-4f3b20d499a0",
-          "at": "2026-08-18T00:48:11.446Z",
-          "actor": "user",
-          "kind": "diagnose",
-          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
-            "protocol": "ssh",
-            "method": "ssh.command",
-            "adapterId": "ssh",
-            "operationId": "remote-terminal-3b07eda4-4f98-4cdb-95c9-768fc8e241c1",
-            "host": "172.28.200.10",
-            "port": 22
-          }
-        },
-        {
-          "id": "5ced90c5-a8e3-4dc5-8897-8d16fd627563",
-          "at": "2026-08-18T00:48:11.446Z",
+          "id": "f95bad5e-8735-45cf-8681-fbf96f5d7451",
+          "at": "2026-08-18T03:12:35.895Z",
           "actor": "user",
           "kind": "diagnose",
           "message": "Remote terminal command completed on fw-lab-01 via SSH",
@@ -1022,8 +1038,25 @@
           }
         },
         {
-          "id": "38206f2c-d126-484d-8f77-e3cce3e4b547",
-          "at": "2026-08-18T00:48:11.091Z",
+          "id": "20aaf4ba-9e8c-427f-9967-cfcfb4498982",
+          "at": "2026-08-18T03:12:35.894Z",
+          "actor": "user",
+          "kind": "diagnose",
+          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
+          "context": {
+            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
+            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
+            "protocol": "ssh",
+            "method": "ssh.command",
+            "adapterId": "ssh",
+            "operationId": "remote-terminal-a989b292-012a-44ff-a6d0-7f9886d055c3",
+            "host": "172.28.200.10",
+            "port": 22
+          }
+        },
+        {
+          "id": "3d5bac9b-3871-4462-bb0f-015e81295d94",
+          "at": "2026-08-18T03:12:35.521Z",
           "actor": "user",
           "kind": "config",
           "message": "Stored credential for fw-lab-01 (ssh)",
@@ -1034,102 +1067,19 @@
           }
         },
         {
-          "id": "47872b65-ba0b-4c30-9c02-c52bd64d4559",
-          "at": "2026-08-18T00:48:09.541Z",
-          "actor": "user",
-          "kind": "discover",
-          "message": "Device onboarding draft refreshed for fw-lab-01",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
-            "stage": "contract",
-            "selectedProfileIds": [
-              "steward.linux-server"
-            ],
-            "selectedAccessMethodKeys": [
-              "ssh:22"
-            ]
-          }
-        },
-        {
-          "id": "a96f35ba-a7ea-4c6f-b7fb-aaea0aa33927",
-          "at": "2026-08-18T00:48:09.540Z",
-          "actor": "user",
-          "kind": "config",
-          "message": "Device added/updated: fw-lab-01 (172.28.200.10)",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86"
-          }
-        },
-        {
-          "id": "a7e80298-67e7-456b-b896-64764aa93804",
-          "at": "2026-08-18T00:48:09.006Z",
-          "actor": "user",
-          "kind": "auth",
-          "message": "User logged in",
-          "context": {
-            "username": "admin",
-            "provider": "local"
-          }
-        },
-        {
-          "id": "e1751e63-9cf5-480a-b070-f6a9b3aa5a36",
-          "at": "2026-08-18T00:47:10.664Z",
-          "actor": "user",
-          "kind": "diagnose",
-          "message": "Remote terminal command completed on fw-lab-01 via SSH",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "transport": "ssh",
-            "ok": true,
-            "status": "succeeded",
-            "summary": "Command completed successfully",
-            "cwd": "/home/fwlab"
-          }
-        },
-        {
-          "id": "4333fa87-9516-456a-90d3-b299ce233d83",
-          "at": "2026-08-18T00:47:10.664Z",
-          "actor": "user",
-          "kind": "diagnose",
-          "message": "Validated credential f45f60cd-b7b8-4bea-9519-c82b39dbd8a8 for 69a4ee76-f70d-481c-b574-18d2599a1c86 via ssh.command",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
-            "protocol": "ssh",
-            "method": "ssh.command",
-            "adapterId": "ssh",
-            "operationId": "remote-terminal-246e6642-35b2-4a83-aa62-24aef5c34b59",
-            "host": "172.28.200.10",
-            "port": 22
-          }
-        },
-        {
-          "id": "4506e8ae-ca76-4e79-9c03-3419fb3ffd78",
-          "at": "2026-08-18T00:47:10.124Z",
-          "actor": "user",
-          "kind": "config",
-          "message": "Stored credential for fw-lab-01 (ssh)",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
-            "protocol": "ssh"
-          }
-        },
-        {
-          "id": "7459d825-1d1f-48c9-ad75-22ac091c2fbe",
-          "at": "2026-08-18T00:47:08.236Z",
+          "id": "5f51685c-b7f5-4cf2-b0dd-b9b9590c13ac",
+          "at": "2026-08-18T03:12:34.118Z",
           "actor": "steward",
           "kind": "discover",
           "message": "Scanner cycle started (manual)",
           "context": {
             "trigger": "manual",
-            "runId": "d5fdd980-cb0c-4b76-9271-2157e048d434"
+            "runId": "cfa17fe1-0bf7-4053-9801-8e34b302e73c"
           }
         },
         {
-          "id": "71f6fe50-86ef-4f00-8773-2d47b1b155fa",
-          "at": "2026-08-18T00:47:07.980Z",
+          "id": "0023a924-18f4-402d-ab18-c26e32e747b5",
+          "at": "2026-08-18T03:12:33.898Z",
           "actor": "user",
           "kind": "discover",
           "message": "Device onboarding draft refreshed for fw-lab-01",
@@ -1146,8 +1096,8 @@
           }
         },
         {
-          "id": "ea814390-71e9-46f8-bbe9-2b14130477a1",
-          "at": "2026-08-18T00:47:07.979Z",
+          "id": "925c8edc-bc32-47cb-8892-79b53219b44f",
+          "at": "2026-08-18T03:12:33.895Z",
           "actor": "user",
           "kind": "config",
           "message": "Device added/updated: fw-lab-01 (172.28.200.10)",
@@ -1156,8 +1106,8 @@
           }
         },
         {
-          "id": "ae109f03-3819-45bc-9421-0e8fb09b0e49",
-          "at": "2026-08-18T00:47:07.456Z",
+          "id": "e5a03e26-f957-4aeb-9b36-b24f571cddce",
+          "at": "2026-08-18T03:12:33.517Z",
           "actor": "user",
           "kind": "auth",
           "message": "User logged in",
@@ -1167,74 +1117,125 @@
           }
         },
         {
-          "id": "a90d8e83-0b4f-425a-b760-e64a4d45302d",
-          "at": "2026-08-18T00:46:51.546Z",
-          "actor": "steward",
-          "kind": "discover",
-          "message": "Discovery enrichment nmapDeep processed 1 device(s), updated 1.",
-          "context": {
-            "phase": "nmapDeep",
-            "jobKind": "discovery.enrichment.nmap",
-            "deviceIds": [
-              "69a4ee76-f70d-481c-b574-18d2599a1c86"
-            ],
-            "scanMode": "incremental",
-            "dueTargetCount": 1,
-            "deferredTargetCount": 0
-          }
-        },
-        {
-          "id": "02f3ba8d-e435-4d14-86d2-80d94008f629",
-          "at": "2026-08-18T00:46:48.127Z",
+          "id": "1aa2cfe1-17fb-4618-9447-ca16c5db63b7",
+          "at": "2026-08-18T03:12:10.470Z",
           "actor": "steward",
           "kind": "learn",
-          "message": "Scanner cycle complete: discover=2, devices-updated=2, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=deep",
+          "message": "Scanner cycle complete: discover=0, devices-updated=0, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=incremental",
           "context": {
-            "runId": "f47ecdb0-14df-4925-8c8c-9fff5e4d91fe"
+            "runId": "8e382079-6851-4a51-a721-1f939035a079"
           }
         },
         {
-          "id": "dc152c0b-b70b-46f0-829a-23e912d8f2bd",
-          "at": "2026-08-18T00:46:13.443Z",
-          "actor": "user",
-          "kind": "config",
-          "message": "Stored credential for fw-lab-01 (ssh)",
-          "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "credentialId": "f45f60cd-b7b8-4bea-9519-c82b39dbd8a8",
-            "protocol": "ssh"
-          }
-        },
-        {
-          "id": "ef0e30a4-aacc-4072-b836-63d15a8232df",
-          "at": "2026-08-18T00:46:11.891Z",
-          "actor": "user",
+          "id": "cad4fef2-a99b-4c9e-855e-23e9ce0ae331",
+          "at": "2026-08-18T03:12:06.517Z",
+          "actor": "steward",
           "kind": "discover",
-          "message": "Device onboarding draft refreshed for fw-lab-01",
+          "message": "Scanner cycle started (interval)",
           "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86",
-            "runId": "2c3e188f-c45b-4848-bff8-67c9c4ff7b79",
-            "stage": "contract",
-            "selectedProfileIds": [
-              "steward.linux-server"
-            ],
-            "selectedAccessMethodKeys": [
-              "ssh:22"
-            ]
+            "trigger": "interval",
+            "runId": "8e382079-6851-4a51-a721-1f939035a079"
           }
         },
         {
-          "id": "517e3128-de8c-4eb8-a311-767fe25321ca",
-          "at": "2026-08-18T00:46:11.889Z",
-          "actor": "user",
-          "kind": "config",
-          "message": "Device added/updated: fw-lab-01 (172.28.200.10)",
+          "id": "66343683-69b4-4d29-802c-b16605784138",
+          "at": "2026-08-18T03:10:10.341Z",
+          "actor": "steward",
+          "kind": "learn",
+          "message": "Scanner cycle complete: discover=0, devices-updated=0, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=incremental",
           "context": {
-            "deviceId": "69a4ee76-f70d-481c-b574-18d2599a1c86"
+            "runId": "0f96ad3f-128a-47ee-94a6-3d19e7d0712a"
+          }
+        },
+        {
+          "id": "9d6f5a38-b6fc-4e3b-ae1d-16dddd2b4b10",
+          "at": "2026-08-18T03:10:06.385Z",
+          "actor": "steward",
+          "kind": "discover",
+          "message": "Scanner cycle started (interval)",
+          "context": {
+            "trigger": "interval",
+            "runId": "0f96ad3f-128a-47ee-94a6-3d19e7d0712a"
+          }
+        },
+        {
+          "id": "00aaf562-f0ce-45f9-9285-97d021d00bec",
+          "at": "2026-08-18T03:08:10.185Z",
+          "actor": "steward",
+          "kind": "learn",
+          "message": "Scanner cycle complete: discover=0, devices-updated=0, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=incremental",
+          "context": {
+            "runId": "97624cd4-7665-48ea-a84e-33ed8fed480e"
+          }
+        },
+        {
+          "id": "0ade0e61-5a03-4e3d-901d-b053c60a1f2e",
+          "at": "2026-08-18T03:08:06.221Z",
+          "actor": "steward",
+          "kind": "discover",
+          "message": "Scanner cycle started (interval)",
+          "context": {
+            "trigger": "interval",
+            "runId": "97624cd4-7665-48ea-a84e-33ed8fed480e"
+          }
+        },
+        {
+          "id": "a80eba97-81f7-412c-a469-23be3ca32b82",
+          "at": "2026-08-18T03:06:10.171Z",
+          "actor": "steward",
+          "kind": "learn",
+          "message": "Scanner cycle complete: discover=0, devices-updated=0, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=incremental",
+          "context": {
+            "runId": "5d75f7dd-caac-4425-8a20-c443b5159060"
+          }
+        },
+        {
+          "id": "8f3e2584-69fe-4596-bead-6202b718eb68",
+          "at": "2026-08-18T03:06:06.097Z",
+          "actor": "steward",
+          "kind": "discover",
+          "message": "Scanner cycle started (interval)",
+          "context": {
+            "trigger": "interval",
+            "runId": "5d75f7dd-caac-4425-8a20-c443b5159060"
+          }
+        },
+        {
+          "id": "05b5f7da-1126-4813-afcd-2196f89c2af8",
+          "at": "2026-08-18T03:04:09.908Z",
+          "actor": "steward",
+          "kind": "learn",
+          "message": "Scanner cycle complete: discover=1, devices-updated=1, incidents-opened=0, recommendations-added=0, playbooks=0, approvals=0, scan=incremental",
+          "context": {
+            "runId": "aeb2200b-083c-4fc0-8c79-a0a3c62217a9"
+          }
+        },
+        {
+          "id": "f453bb8e-cb99-4acf-ad4d-7013a23f9ea0",
+          "at": "2026-08-18T03:04:05.947Z",
+          "actor": "steward",
+          "kind": "discover",
+          "message": "Scanner cycle started (interval)",
+          "context": {
+            "trigger": "interval",
+            "runId": "aeb2200b-083c-4fc0-8c79-a0a3c62217a9"
+          }
+        },
+        {
+          "id": "6db90607-cf5b-4015-8641-2aad40186f1b",
+          "at": "2026-08-18T03:03:15.906Z",
+          "actor": "steward",
+          "kind": "mission",
+          "message": "Availability watch sees all scoped devices online.",
+          "context": {
+            "missionId": "mission.availability-overwatch",
+            "missionRunId": "69b5674e-555c-4314-a0dd-fcb8a69bbb49",
+            "kind": "availability-guardian",
+            "shadowMode": false
           }
         }
       ],
-      "nextCursor": "eyJhdCI6IjIwMjYtMDgtMThUMDA6NDY6MTEuODg5WiIsImlkIjoiNTE3ZTMxMjgtZGU4Yy00ZWI4LWEzMTEtNzY3ZmUyNTMyMWNhIn0",
+      "nextCursor": "eyJhdCI6IjIwMjYtMDgtMThUMDM6MDM6MTUuOTA2WiIsImlkIjoiNmRiOTA2MDctY2Y1Yi00MDE1LTg2NDEtMmFhZDQwMTg2ZjFiIn0",
       "limit": 20
     }
   },
@@ -1247,8 +1248,8 @@
     "summary": "Command completed successfully",
     "transport": "ssh",
     "transportLabel": "SSH",
-    "startedAt": "2026-08-18T00:48:11.319Z",
-    "completedAt": "2026-08-18T00:48:11.547Z",
+    "startedAt": "2026-08-18T03:12:35.772Z",
+    "completedAt": "2026-08-18T03:12:35.962Z",
     "output": "ead9ba27523d\n---identity---\n# Identidad sintetica del firewall de laboratorio (nunca un dispositivo real)\nvendor=LabSim\nmodel=FW-2000-Sim\nrole=firewall\nsite=lab\nfirmware=sim-1.0.0---kernel---\nLinux 6.12.76-linuxkit aarch64\nPRETTY_NAME=\"Debian GNU/Linux 12 (bookworm)\"\nNAME=\"Debian GNU/Linux\"\n---interfaces---\nlo               UNKNOWN        127.0.0.1/8 ::1/128 \ntunl0@NONE       DOWN           \ngre0@NONE        DOWN           \ngretap0@NONE     DOWN           \nerspan0@NONE     DOWN           \nip_vti0@NONE     DOWN           \nip6_vti0@NONE    DOWN           \nsit0@NONE        DOWN           \nip6tnl0@NONE     DOWN           \nip6gre0@NONE     DOWN           \neth0@if42        UP             172.28.200.10/24 \n\n[stderr] Could not create directory '/nonexistent/.ssh' (No such file or directory).\nFailed to add the host to the list of known hosts (/nonexistent/.ssh/known_hosts)."
   },
   "stepsDone": true
