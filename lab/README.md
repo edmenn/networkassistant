@@ -6,7 +6,7 @@ Red ficticia dedicada `172.28.200.0/24` (privada y aislada, ADR-0007; se eligio 
 
 | Servicio | Contenedor | IP | Rol |
 |---|---|---|---|
-| Steward (baseline `ea6a476` + capa de herramientas + OpenBao vault) | `steward-sprint0-web` | dinamica | Control plane / web minima (`http://127.0.0.1:3010`) |
+| Steward (baseline `ea6a476` + capa de herramientas + OpenBao vault) | `steward-sprint0-web` | dinamica | Control plane / web minima (`http://127.0.0.1:3022`) |
 | OpenBao (dev, auto-unseal) | `bao-s1-lab` | dinamica | Vault de secretos (`SecretBackend`, ADR-0003) |
 | SSH sintetico (firewall simulado) | `fw-lab-01` | `172.28.200.10` | Dispositivo de laboratorio, usuario read-only `fwlab` |
 

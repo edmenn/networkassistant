@@ -58,5 +58,6 @@ Sprint 0 esta `done` (2026-08-18): el recorrido `web -> firewall SSH read-only -
 ## Laboratorio de Sprint 0
 
 - `steward/`: baseline `ea6a476` vendido (mit).
-- `lab/`: red ficticia `172.28.200.0/24`, firewall simulado SSH, capa de herramientas SSH, compose y probe de Playwright. Credenciales sinteticas.
+- `lab/`: red ficticia `172.28.200.0/24`, firewall simulado SSH, OpenBao, capa de herramientas SSH, compose y probe de Playwright. Credenciales sinteticas.
+- Web del lab en `http://127.0.0.1:3022` (el puerto `3010`/`3011` se dejaron libres para no chocar con el proyecto `Asistente-networking-steward`).
 - Evidencia: `docs/SPRINT_0_EVIDENCE.md`, `docs/SPRINT_GATE_CHECKLIST.md`, `lab/evidence/`.
