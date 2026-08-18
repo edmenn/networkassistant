@@ -38,6 +38,7 @@ docker compose -f lab/compose.lab.yml down -v --rmi local
 
 ## Alcance y exclusions documentadas
 
-- `cap_add NET_ADMIN/NET_RAW` en el contenedor Steward: herencia del baseline; en el producto final se excluye y se mueve a workers aislados (REUSE_MATRIX).
+- El contenedor del control plane corre **sin** `NET_ADMIN` ni `NET_RAW` (`cap_drop` en `lab/compose.lab.yml`); se verifica en runtime (U6). El descubrimiento con nmap funciona con escaneo TCP connect (`-sT`) por ser no-root.
 - `sshpass`/`openssh-client`: capa de laboratorio porque el broker SSH del baseline los requiere y la imagen original no los instala (el collector SSH de produccion se reimplementa en Sprint 4).
-- El baseline no permite crear sitios desde la UI (siembra uno por defecto, `site.local.default`); la creacion de sitios queda para Sprint 2.
+- El baseline no permite crear sitios desde la UI (siembra uno por defecto, `site.local.default`); la creacion de sitios es Sprint 2.
+- Vault del baseline (AES-GCM + `vault.key`): fragil; la clave derivada de la maquina cambia al recrear el contenedor y rompe el descifrado. Confirmado en Sprint 1 (U6); se reemplaza por OpenBao (`SecretBackend`, ADR-0003).

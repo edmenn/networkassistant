@@ -11,7 +11,7 @@ Regla: seguridad primero; cambio mínimo; TDD. No usar secretos reales (solo can
 - **U3 — Redaccion central.** Canarios no aparecen en respuestas API, logs, errores, auditoria, trazas ni prompts. Prueba: canarios buscados en cada superficie. ✅ (2026-08-18, `steward/src/lib/security/redact.ts`, `Redactor` + `redact()`, 7 canarios). El cableado en cada superficie del runtime se valida en el gate.
 - **U4 — RBAC por recurso.** usuario/sitio/equipo/metodo/secreto/clase de accion; `deny` prevalece. Prueba: matriz de casos permitidos y denegados. ✅ (2026-08-18, `steward/src/lib/security/rbac.ts`, `PolicyEngine` default-deny, 6 canarios de matriz).
 - **U5 — Politicas de red y SSRF.** allowlist, bloqueo loopback/metadata cloud, revalidacion DNS. Prueba: intentos SSRF contra loopback/metadata/DNS cambiante bloqueados. ✅ (2026-08-18, `steward/src/lib/security/network-policy.ts`, `TargetValidator` fail-closed, 9 canarios).
-- **U6 — Control plane sin `NET_ADMIN`/`NET_RAW`.** Prueba: inspeccion de capabilities del contenedor (sin NET_ADMIN/NET_RAW en runtime).
+- **U6 — Control plane sin `NET_ADMIN`/`NET_RAW`.** Prueba: inspeccion de capabilities del contenedor (sin NET_ADMIN/NET_RAW en runtime). ✅ (2026-08-18, `cap_drop` en `lab/compose.lab.yml`; runtime `CapBnd=...05fb`, `NET_ADMIN=0`, `NET_RAW=0`, `CapEff=0`; flujo E2E SSH re-verificado sin esos caps). Hallazgo confirmado: el vault del baseline (clave derivada de la maquina) se rompe al recrear el contenedor; refuerza la necesidad de OpenBao.
 - **U7 — Auditoria append-only / integridad.** Prueba: no se puede reescribir/borrar un evento previo sin detectarlo.
 - **U8 — Backup/restore cifrado del vault** con datos ficticios. Prueba: restore en entorno limpio reproduce los secretos.
 
@@ -25,4 +25,4 @@ Restaurar backup cifrado anterior y revocar todos los leases emitidos durante la
 
 ## Estado
 
-`in_progress`. U1-U5 completadas. Siguiente: U6 (control plane sin `NET_ADMIN`/`NET_RAW`).
+`in_progress`. U1-U6 completadas. Siguiente: U7 (auditoria append-only).

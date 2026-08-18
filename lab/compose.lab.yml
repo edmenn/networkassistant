@@ -33,7 +33,7 @@ services:
       - ./probe.mjs:/app/lab/probe.mjs:ro
     networks:
       lab-net: {}
-    cap_add:
+    cap_drop:
       - NET_ADMIN
       - NET_RAW
     healthcheck:
